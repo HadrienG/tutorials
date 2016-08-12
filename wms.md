@@ -9,6 +9,8 @@ In this tutorial you'll analyze a sample from Pig Gut Metagenome.
     * [Whole Metagenome sequencing](#whole-metagenome-sequencing)
 * [Softwares required for this tutorial](#softwares-required-for-this-tutorial)
 * [getting the data and checking their quality](#getting-the-data-and-checking-their-quality)
+* [Taxonomic classification](#taxonomic-classification)
+* [Visualization](#visualization)
 
 ### Introduction
 
@@ -43,11 +45,11 @@ gzip -d DHN_Pig_60K.fastq.gz
 We'll use FastQC to check the quality of our data. FastQC can be downloaded and
 ran on a Windows or LINUX computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
-Start FastQC and select the fastq file you just downloaded with `file -> open`
+Start FastQC and select the fastq file you just downloaded with `file -> open`  
 What do you think about the quality of the reads? Do they need trimming? Is there still adapters
-present?  Overrepresented sequences?
+present? Overrepresented sequences?
 
-If the quality appears to be that good, it's because it was the cleaned reads that were deposited in SRA.
+If the quality appears to be that good, it's because it was probably the cleaned reads that were deposited into SRA.
 We can directly move to the classification step.
 
 ### Taxonomic classification
@@ -69,8 +71,7 @@ Now run kraken on the reads
 
 `kraken --db minikraken_20141208/ --threads 8 --fastq-input DHN_Pig_60K.fastq > DHN_Pig.tab`
 
-which produces a tab-delimited file with an assigned TaxID for each read. Kraken includes a script called `kraken-report` to transform
-this file into a "tree" view with the percentage of reads assigned to each taxa.
+which produces a tab-delimited file with an assigned TaxID for each read. Kraken includes a script called `kraken-report` to transform this file into a "tree" view with the percentage of reads assigned to each taxa.
 
 `kraken-report --db minikraken_20141208/ DHN_Pig.tab > DHN_Pig_tax.txt`
 
@@ -94,4 +95,4 @@ Run the script and Krona
 ktImportText kraken.krona.in
 ```
 
-And open the generated html file in your browser!
+And open the generated html file in your browser! What are the most abundant taxa?

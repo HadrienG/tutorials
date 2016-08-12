@@ -48,12 +48,25 @@ How long is the longest contig and to what organism does it belong to?
 
 ### taxonomic classification and visualization
 
+For the vizualisation of the assembly we will use a tool called blobtools.
+Blobtools produces "Taxon annotated GC-coverage plots" (TAGC) and was orignially made for
+the visualisation of (draft) genome assemblies.  
+
 ```
 mkdir blobtools && cd $_
 blastn -num_threads 8 -db nt -query ../assembly/scaffolds.fasta -out blastresults.txt -outfmt '6 qseqid staxids bitscore'
+```
+
+This blast step is necessary to obtain the taxonomic information of your contigs.
+It might take a while. Be patient!
+
+```
 blobtools create -i ../assembly/scaffolds.fasta -y spades -t blastresults.txt \
     --nodes /export/databases/taxonomy/nodes.dmp \
     --names /export/databases/taxonomy/names.dmp \
     -o scaffolds --title SRS018585
 blobtools plot -i scaffolds.blob.BlobDB.json -o scaffolds --title -r family
 ```
+
+Inspect the plot, what is the most abundant families? try to play with the parameters
+(especially `-r`)

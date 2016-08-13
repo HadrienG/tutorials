@@ -18,10 +18,10 @@ HMP Core Microbiome Sampling Protocol A (HMP-A)"
 ### Softwares required for this tutorial
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-* sickle
-* SPAdes
-* Blast
-* blobtools
+* [sickle](https://github.com/najoshi/sickle)
+* [SPAdes](http://bioinf.spbau.ru/en/spades)
+* [Blast](https://blast.ncbi.nlm.nih.gov)
+* [blobtools](https://drl.github.io/blobtools/)
 
 ### getting the data
 

@@ -7,6 +7,22 @@ We will use data under the accession SRS018585 in the Sequence Read Archive. thi
 "a Human Metagenome sample from G_DNA_Anterior nares of a male participant in the dbGaP study
 HMP Core Microbiome Sampling Protocol A (HMP-A)"
 
+### Table of contents
+
+* [Softwares required for this tutorial](#softwares-required-for-this-tutorial)
+* [getting the data](#getting-the-data)
+* [quality control](#quality-control)
+* [assembly](#assembly)
+* [taxonomic classification and visualization](#taxonomic-classification-and-visualization)
+
+### Softwares required for this tutorial
+
+* [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+* sickle
+* SPAdes
+* Blast
+* blobtools
+
 ### getting the data
 
 ```

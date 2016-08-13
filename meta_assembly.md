@@ -1,4 +1,4 @@
-# Metagenome assembly
+# Metagenome Assembly
 
 In this tutorial you'll learn how to inspect the quality of High-throughput sequencing and
 perform a metagenomic assembly.
@@ -7,15 +7,15 @@ We will use data under the accession SRS018585 in the Sequence Read Archive. thi
 "a Human Metagenome sample from G_DNA_Anterior nares of a male participant in the dbGaP study
 HMP Core Microbiome Sampling Protocol A (HMP-A)"
 
-### Table of contents
+### Table of Contents
 
-* [Softwares required for this tutorial](#softwares-required-for-this-tutorial)
-* [getting the data](#getting-the-data)
-* [quality control](#quality-control)
-* [assembly](#assembly)
-* [taxonomic classification and visualization](#taxonomic-classification-and-visualization)
+* [Softwares Required for this Tutorial](#softwares-required-for-this-tutorial)
+* [Getting the Data](#getting-the-data)
+* [Quality Control](#quality-control)
+* [Assembly](#assembly)
+* [Taxonomic Classification and Visualization](#taxonomic-classification-and-visualization)
 
-### Softwares required for this tutorial
+### Softwares Required for this Tutorial
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 * [sickle](https://github.com/najoshi/sickle)
@@ -23,7 +23,7 @@ HMP Core Microbiome Sampling Protocol A (HMP-A)"
 * [Blast](https://blast.ncbi.nlm.nih.gov)
 * [blobtools](https://drl.github.io/blobtools/)
 
-### getting the data
+### Getting the Data
 
 ```
 wget http://downloads.hmpdacc.org/data/Illumina/anterior_nares/SRS018585.tar.bz2
@@ -31,7 +31,7 @@ tar xjf SRS018585.tar.bz2
 cd SRS018585
 ```
 
-### quality control
+### Quality Control
 
 we'll use FastQC to check the quality of our data. FastQC can be downloaded and
 ran on a Windows or LINUX computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
@@ -50,7 +50,7 @@ sickle pe -f SRS018585.denovo_duplicates_marked.trimmed.1.fastq \
 
 sickle normally gives you a summary of how many reads were trimmed.
 
-### assembly
+### Assembly
 
 SPAdes will be used for the assembly. Since version 3.7, SPAdes includes a metagenomic version of its algorithm, callable
 with the option --meta
@@ -62,7 +62,7 @@ spades.py --meta -1 SRS018585_trimmed_1.fastq -2 SRS018585_trimmed_2.fastq -t 8 
 the resulting assenmbly can be found under assembly/scaffolds.fasta. How many contigs does this assembly contain?
 How long is the longest contig and to what organism does it belong to?
 
-### taxonomic classification and visualization
+### Taxonomic Classification and Visualization
 
 For the vizualisation of the assembly we will use a tool called blobtools.
 Blobtools produces "Taxon annotated GC-coverage plots" (TAGC) and was orignially made for

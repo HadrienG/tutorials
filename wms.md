@@ -1,15 +1,15 @@
-# Whole Metagenome sequencing
+# Whole Metagenome Sequencing
 
 In this tutorial you'll analyze a sample from Pig Gut Metagenome.
 
-### Table of contents
+### Table of Contents
 
 * [Introduction](#introduction)
     * [The Pig Microbiome](#the-pig-microbiome)
-    * [Whole Metagenome sequencing](#whole-metagenome-sequencing)
-* [Softwares required for this tutorial](#softwares-required-for-this-tutorial)
-* [getting the data and checking their quality](#getting-the-data-and-checking-their-quality)
-* [Taxonomic classification](#taxonomic-classification)
+    * [Whole Metagenome Sequencing](#whole-metagenome-sequencing)
+* [Softwares Required for this Tutorial](#softwares-required-for-this-tutorial)
+* [Getting the Data and Checking their Quality](#getting-the-data-and-checking-their-quality)
+* [Taxonomic Classification](#taxonomic-classification)
 * [Visualization](#visualization)
 
 ### Introduction
@@ -20,20 +20,20 @@ In this tutorial you'll analyze a sample from Pig Gut Metagenome.
 
 To speed up the analysis, we'll only use the first 60K reads from the first sample of the study. The full samples are accessible under BioProject [PRJEB11755](http://www.ncbi.nlm.nih.gov/bioproject/308698)
 
-#### Whole Metagenome sequencing
+#### Whole Metagenome Sequencing
 
 Whole Metagenome sequencing (WMS), or shotgun metagenome sequencing, is a relatively new and powerful sequencing approach that provides insight into community biodiversity and function. On the contrary of Metabarcoding, where only a specific region of the bacterial community (the 16s rRNA) is sequenced, WMS aims at sequencing all the genomic material present in the environment.
 
 The choice of shotgun or 16S approaches is usually dictated by the nature of the studies being conducted. For instance, 16S is well suited for analysis of large number of samples, i.e., multiple patients, longitudinal studies, etc. but offers limited taxonomical and functional resolution. WMS is generally more expensive but offers increased resolution, and allows the discovery of archaea and viruses.
 
-### Softwares required for this tutorial
+### Softwares Required for this Tutorial
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 * [Kraken](https://ccb.jhu.edu/software/kraken/)
 * kraken_to_krona (script part of [MetLab](https://github.com/norling/metlab))
 * [KronaTools](https://github.com/marbl/Krona/wiki)
 
-### getting the data and checking their quality
+### Getting the Data and Checking their Quality
 
 If you are reading this tutorial online and haven't cloned the directory, first download and unzip the data:
 
@@ -52,7 +52,7 @@ present? Overrepresented sequences?
 If the quality appears to be that good, it's because it was probably the cleaned reads that were deposited into SRA.
 We can directly move to the classification step.
 
-### Taxonomic classification
+### Taxonomic Classification
 
 [Kraken](https://ccb.jhu.edu/software/kraken/) is a system for assigning taxonomic labels to short DNA sequences (i.e. reads)  
 Kraken aims to achieve high sensitivity and high speed by utilizing exact alignments of k-mers and a novel classification algorithm (sic).

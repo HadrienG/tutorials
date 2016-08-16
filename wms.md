@@ -38,7 +38,7 @@ The choice of shotgun or 16S approaches is usually dictated by the nature of the
 If you are reading this tutorial online and haven't cloned the directory, first download and unzip the data:
 
 ```
-wget https://github.com/HadrienG/tutorials/blob/master/data/DHN_Pig_60K.fastq.gz
+wget https://github.com/HadrienG/tutorials/raw/master/data/DHN_Pig_60K.fastq.gz
 gzip -d DHN_Pig_60K.fastq.gz
 ```
 
@@ -91,8 +91,8 @@ chmod 755 kraken_to_krona.py
 Run the script and Krona
 
 ```
-./kraken_to_krona.py kraken.txt
-ktImportText kraken.krona.in
+./kraken_to_krona.py DHN_Pig_tax.txt
+ktImportText DHN_Pig_tax.krona.in
 ```
 
 And open the generated html file in your browser! What are the most abundant taxa?

@@ -1,13 +1,13 @@
-# tutorials
+# Tutorials
 
 This repository contains basic tutorials and walkthroughs on various
 bioinformatics subjects:
 
 ### Table of contents
 
-* [16s Metabarcoding analysis](16s.md)
-* [Whole Metagenome sequencing](wms.md)
-* [Metagenome assembly](meta_assembly.md)
+* [16s Metabarcoding Analysis](16s.md)
+* [Whole Metagenome Sequencing](wms.md)
+* [Metagenome Assembly](meta_assembly.md)
 
 ### Contributing
 

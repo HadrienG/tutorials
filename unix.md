@@ -2,92 +2,108 @@
 
 This tutorial is largely inspired of the [Introduction to UNIX](ftp://ftp.sanger.ac.uk/pub/project/pathogens/jm15/unix.pdf) course from the Sanger Institute.
 
-The aim of this module is to introduce Unix and cover some of the basics that will allow you to run some of the programs used in this workshop. Several of the programs that you are going to use during the workshop, plus many others that are useful for bioinformatics analyses, are run in Unix. This module is only designed to provide a very brief introduction to some of the features and useful commands of Unix. During this module we will also obtain a genome sequence and examine the basic structure of an EMBL entry.
+The aim of this module is to introduce Unix and cover some of the basics that will allow you to be more comfortable with the command-line. Several of the programs that you are going to use during this course are useful for bioinformatics analyses. This module is only designed to provide a very brief introduction to some of the features and useful commands of Unix. During this module we will also obtain a genome sequence and examine the basic structure of an EMBL entry.
 
 ### Introduction
 
-Unix is the standard operating system on most large computer systems in scientific research, in the same way that Microsoft Windows is the dominant operating system on desktop PCs. Unix and MS Windows both perform the important job of managing the computer’s hardware (screen, keyboard, mouse, hard disks, network connections, etc…) on your behalf. They also provide you with tools to manage your files and to run application software. They both offer a graphical user interface (desktop). The desktops look different, call things different names and have different pictures but they mostly can do the same things. Unix is a powerful, secure, robust and stable operating system that allows dozens of people to run programs on the same computer at the same time. This is why it is the preferred operating system for large-scale scientific computing. It runs on all kinds of machines, like mobile phones (Android), desktop PCs, kitchen appliances,…, all the way up to supercomputers. Unix powers the majority of the Internet.
+Unix is the standard operating system on most large computer systems in scientific research, in the same way that Microsoft Windows is the dominant operating system on desktop PCs. Unix and MS Windows both perform the important job of managing the computer’s hardware (screen, keyboard, mouse, hard disks, network connections, etc...) on your behalf. They also provide you with tools to manage your files and to run application software. They both offer a graphical user interface (desktop). The desktops look different, call things by different names but they mostly can do the same things. Unix is a powerful, secure, robust and stable operating system that allows dozens of people to run programs on the same computer at the same time. This is why it is the preferred operating system for large-scale scientific computing. It is run on all kind of machines, like mobile phones (Android), desktop PCs, kitchen appliances,... all the way up to supercomputers. Unix powers the majority of the Internet.
 
 ### Aims
 
-The aim of this module is to introduce Unix and cover some of the basics that will allow you to run some of the programs used in this workshop. Several of the programs that you are going to use during the workshop, plus many others that are useful for bioinformatics analyses, are run in Unix. This module is only designed to provide a very brief introduction to some of the features and useful commands of Unix. During this module we will also obtain a genome sequence and examine the basic structure of an EMBL entry.
+The aim of this course is to introduce Unix and cover the basics. The programs that you are going to use during the courses, plus many others that are useful for bioinformatics analyses, are run in Unix. This module is only designed to provide a very brief introduction to some of the features and useful commands of Unix. During this module we will also obtain a genome sequence and examine the basic structure of an EMBL entry.
 
 ### Why use Unix?
 
-* Unix is a well established, very widespread operating system. You probably have a device running on Unix in your home without realising it (e.g. playstation, TV box, wireless router, android tablets/phones,…
+* Unix is a well established, very widespread operating system. You probably have a device running on Unix in your home without realising it (e.g. playstation, TV box, wireless router, android tablets/phones,...
 * Command line driven, with a huge number of often terse, but powerful commands.
 * In contrast to Windows, it is designed to allow many users to run their programs simultaneously on the same computer
 * Designed to work in computer networks - for example, most of the Internet is Unix based.
-* It is used on many of the powerful computers at bioinformatics centres and also on many desktops and laptops.
+* It is used on many of the powerful computers at bioinformatics centres and also on many desktops and laptops (Mac OSX is UNIX based).
 * The major difference between Unix and Windows is that it is free (as in freedom) and you can modify it to work however you want. This same principle of freedom is also used in most bioinformatics software.
-* There are many distributions of Unix such as Ubuntu, RedHat, Fedora, Mint,…). These are all Unix, but they bundle up extra software in a different way or combinations. Some are known for being conservative and reliable; whilst others are know for being on the cutting edge (and less reliable).
-* The MacOSX operating system used by the eBioKit is also based on Unix.
+* There are many distributions of Unix such as Ubuntu, RedHat, Fedora, Mint,...). These are all Unix, but they bundle up extra software in a different way or combinations. Some are known for being conservative and reliable; whilst others are know for being cutting-edge (and less reliable).
+* The MacOSX operating system used by the [eBioKit](77.235.253.122) is also based on Unix.
 
 ### Getting started
 
-We will use a terminal window to type in our Unix command line. This is similar to the "Command Prompt" window on MS Windows systems, which allows the user to type DOS commands to manage files. You should see a window labelled "Terminal" which will be empty except for a ’$' character at the top left. The '$' character is the Unix prompt, similar to "C:\" in DOS. Note: the prompt will often be different on different Unix computers, for example it may be displayed as a ‘%’ character.
+For this course, you will have to connect to the eBiokit using SSH. SSH stands for Secure Shell and is a network protocol used to securely connect to a server. To do so, you will need an SSH client:
 
-<img class="  wp-image-446 aligncenter" src="http://77.235.253.122/tutorials/wp-content/uploads/2015/06/Screen-shot-2015-06-23-at-4.00.59-PM.png" alt="Screen shot 2015-06-23 at 4.00.59 PM" width="720" height="275" />
+* On Linux: it is included by default, named Terminal.
+* On OSX: it is included by default, also named Terminal.
+* On Windows: you'll have to download and install [MobaXterm](http://mobaxterm.mobatek.net), a terminal emulator.
 
-You can type commands directly into the terminal at the ‘$' prompt. A list of useful commands can be found on the next page. Many of them are two- or three-letter abbreviations. The earliest Unix systems (*circa* 1970) only had slow Teletype terminals, so it was faster to type 'rm' to remove a file than 'delete' or 'erase'. This terseness is a feature of Unix that still survives. Open a terminal window.
+Once you've opened your terminal (or terminal emulator), type
+
+`ssh username@ip_address`
+
+replacing `username` and `ip_address` by your username and the ip address of the server you are connecting to.
+Type your password when prompted. As you type, nothing will show on screen. No stars, no dots.
+It is supposed to be that way. Just type the password and press enter!
+
+![Unix Prompt](http://77.235.253.122/tutorials/wp-content/uploads/2016/09/unix_prompt.png)
+
+You can type commands directly into the terminal at the ‘$' prompt. A list of useful commands can be found on the next page. Many of them are two- or three-letter abbreviations. The earliest Unix systems (*circa* 1970) only had slow Teletype terminals, so it was faster to type 'rm' to remove a file than 'delete' or 'erase'. This terseness is a feature of Unix that still survives.
 
 #### The command line
 
-All Unix programs may be run by typing commands at the Unix prompt $. The command line tells the computer what to do. You may subtly alter these commands by specifying certain options when typing in the command line.
+All Unix programs may be run by typing commands at the Unix prompt. The command line tells the computer what to do. You may subtly alter these commands by specifying certain options when typing in the command line.
 
-#### Command line Arguments Typing any Unix command for example
+#### Command line Arguments
 
-**ls**, **mv** or **cd** at the Unix prompt with the appropriate variables such as files names or directories will result in the tasks being performed on pressing the enter key.
+Typing any Unix command for example **ls**, **mv** or **cd** at the Unix prompt with the appropriate variables such as files names or directories will result in the tasks being performed on pressing the enter key.
 
-<pre>command                    options   arguments!</pre>
+![Command Arguments](http://77.235.253.122/tutorials/wp-content/uploads/2016/09/unix_prompt_arguments.png)
 
-The command is separated from the options and arguments by a space. Additional options and/or arguments can be added to the commands to affect the way the command works. Options usually have one dash and a letter (e.g. -h) or two dashes and a word (--help) with no space between the dash and the letter/word. Arguments are usually filenames or directories. For example: List the contents of a directory
+The command is separated from the options and arguments by a space. Additional options and/or arguments can be added to the commands to affect the way the command works. Options usually have one dash and a letter (e.g. -h) or two dashes and a word (--help) with no space between the dash and the letter/word. Arguments are usually filenames or directories.
 
-**ls** List the contents of a directory with extra information about the files **ls –l** List all contents including hidden files & directories **ls –al** List the contents of the directory called Module_Artemis with extra information **ls –l **Module_Artemis** ** To get a list of files in the terminal you can use the **ls** command with no other options. This tells the computer you want a list of all the files in the current directory. The same information is also displayed in the file browser but with nice looking pictures.
+For example: List the contents of a directory
 
-#### Finding out more about your files with ls –l  
-
-<img class="  wp-image-445 aligncenter" src="http://77.235.253.122/tutorials/wp-content/uploads/2015/06/Screen-shot-2015-06-23-at-3.58.17-PM.png" alt="Screen shot 2015-06-23 at 3.58.17 PM" width="823" height="318" />
-
-By using the **–l** option we can change the behaviour of the **ls** command. Instead of printing out a simple list, it will print out additional information about each file. There is a space between the command **ls** and the **–l** option. There is no space between the dash and the letter **l**.
-#### Permissions
-
-Every file has permissions which restrict what can be done with a file or directory. Read (r):        permission to read from a file/directory Write (w):      permission to modify a file/directory Execute (x):   Tells the operating system that the file contains code for the computer to run, as opposed to a file of text which you open in a text editor. The first set of permissions (characters 2,3,4) refer to what the owner of the file can do, the second set of permissions (5,6,7) refers to what members of the Unix group can do and the third set of permissions (8,9,10) refers to what everyone else can do.
-
+**ls** List the contents of a directoryList the contents of a directory with extra information about the files
+**ls –l** List the contents of a directory with extra information about the files
+**ls –a** List all contents including hidden files & directories
+**ls -al** List all contents including hidden files & directories, with extra information about the files
+**ls –l /usr/** List the contents of the directory /usr/, with extra information about the files
 
 #### Files and Directories
 
-Directories are the Unix equivalent of folders on a PC or Mac. They are organised in a hierarchy, so directories can have sub-directories and so on. Directories are very useful for organising your work and keeping your account tidy - for example, if you have more than one project, you can organise the files for each project into different directories to keep them separate. You can think of directories as rooms in a house. You can only be in one room (directory) at a time. When you are in a room you can see everything in that room easily. To see things in other rooms, you have to go to the appropriate door and crane your head around. Unix works in a similar manner, moving from directory to directory to access files. The location or directory that you are in is referred to as the current working directory.
+Directories are the Unix equivalent of folders on a PC or Mac. They are organised in a hierarchy, so directories can have sub-directories. Directories are very useful for organising your work and keeping your account tidy - for example, if you have more than one project, you can organise the files for each project into different directories to keep them separate. You can think of directories as rooms in a house. You can only be in one room (directory) at a time. When you are in a room you can see everything in that room easily. To see things in other rooms, you have to go to the appropriate door and crane your head around. Unix works in a similar manner, moving from directory to directory to access files. The location or directory that you are in is referred to as the current working directory.
 
-** ** **Directory structure example**
-<img class=" size-full wp-image-431 aligncenter" src="http://77.235.253.122/tutorials/wp-content/uploads/2015/06/Unix_3_directory.png" alt="Unix_3_directory" width="731" height="384" />
+**Directory structure example**
+
+![filesystem structure](http://77.235.253.122/tutorials/wp-content/uploads/2015/06/Unix_3_directory.png)
 
 Therefore if there is a file called genome.seq in the **dna** directory its location or full pathname can be expressed as /nfs/dna/genome.seq.
 
 #### General Points
 
-Unix is pretty straightforward, but there are some general points to remember that will make your life easier: Unix is case sensitive - typing "ls" is not the same as typing "LS". You need to put a space between a command and its argument - for example, "more myfile" will show you the contents of the file called myfile; "moremyfile" will just give you an error! Unix is not psychic! If you mis-spell the name of a command or the name of a file, it will not understand you. Many of the commands are only a few letters long; this can be confusing until you start to think logically about why those letters were chosen - ls for list, rm for remove and so on. Often when you have problems with Unix, it is due to a spelling mistake, or perhaps you have omitted a space. If you want to know more about Unix and its commands there are plenty of resources available that provide a more comprehensive guide (including a cheat sheet at the end of this chapter.
+Unix is pretty straightforward, but there are some general points to remember that will make your life easier: most flavors of UNIX are case sensitive - typing **ls** is generally not the same as typing **LS**. You need to put a space between a command and its argument - for example, **less my_file** will show you the contents of the file called my_file; **moremyfile** will just give you an error! Unix is not psychic: If you misspell the name of a command or the name of a file, it will not understand you. Many of the commands are only a few letters long; this can be confusing until you start to think logically about why those letters were chosen - ls for list, rm for remove and so on. Often when you have problems with Unix, it is due to a spelling mistake, or perhaps you have omitted a space. If you want to know more about Unix and its commands there are plenty of resources available that provide a more comprehensive guide (including a cheat sheet at the end of this chapter.
 
 *     [http://Unixhelp.ed.ac.uk](http://Linuxhelp.ed.ac.uk/)
 *     [http://Unix.t-a-y-l-o-r.com/](http://Linux.t-a-y-l-o-r.com/)
 
-In what follows, we shall use the following typographical conventions: Characters written in **bold typewriter font** are commands to be typed into the computer as they stand. Characters written in *italic typewriter font* indicate non-specific file or directory names. Words inserted within square brackets [Ctrl] indicate keys to be pressed. So, for example, $ **ls** anydirectory [Enter] means "at the Unix prompt $, type ls followed by the name of some directory, then press the key marked Enter" Don't forget to press the [Enter] key: commands are not sent to the computer until this is done.
+In what follows, we shall use the following typographical conventions: Characters written in **bold typewriter font** are commands to be typed into the computer as they stand. Characters written in *italic typewriter font* indicate non-specific file or directory names. Words inserted within square brackets [Ctrl] indicate keys to be pressed. So, for example,
+`$ **ls** *any_directory* [Enter]` means "at the Unix prompt $, type ls followed by the name of some directory, then press Enter"
+Don't forget to press the [Enter] key: commands are not sent to the computer until this is done.
 
 #### Some useful Unix commands Command and What it does
 
-**ls**                Lists the contents of the current directory
-**mkdir                **Makes a new directory
-**mv**                Moves or renames a file
-**cp**                Copies a file
-**rm**                Removes a file
-**cat                **Concatenates files
-**less**                Displays the contents of a file one page at a time
-**head**                Displays the first ten lines of a file **tail**                Displays the last ten lines of a file
-**cd**                Changes current working directory
-**pwd**                Prints working directory
-**find                **Finds files matching an expression **grep                **Searches a file for patterns
-**wc**                Counts the lines, words, characters, and bytes in a file **kill                **Stops a process
-**jobs**                Lists the processes that are running  
+| Command | What it does
+--- | ---
+| **ls** | Lists the contents of the current directory
+| **mkdir** | Creates a new directory
+| **mv** | Moves or renames a file
+| **cp** | Copies a file
+| **rm** | Removes a file
+| **cat** | Concatenates files
+| **less** | Displays the contents of a file one page at a time
+| **head** | Displays the first ten lines of a file
+| **tail** | Displays the last ten lines of a file
+| **cd** | Changes current working directory
+| **pwd** | Prints working directory
+| **find** | Finds files matching an expression
+| **grep** | Searches a file for patterns
+| **wc** | Counts the lines, words, characters, and bytes in a file
+| **kill** | Stops a process
+| **jobs** | Lists the processes that are running  
 
 ### Firts steps
 The following exercise introduces a few useful Unix commands and provides examples of how they can be used. Many people panic when they are confronted with an Unix prompt! Don’t! The exercise is designed to be step-by-step, so all the commands you need are provided in the text. If you get lost ask a demonstrator. If you are a person skilled at Unix, be patient it is only a short exercise. Finding where you are and what you’ve got

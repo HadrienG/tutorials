@@ -5,6 +5,7 @@ bioinformatics subjects:
 
 ### Table of contents
 
+* [Introduction to Unix](unix/first_steps.md)
 * [16s Metabarcoding Analysis](16s.md)
 * [Whole Metagenome Sequencing](wms.md)
 * [Metagenome Assembly](meta_assembly.md)

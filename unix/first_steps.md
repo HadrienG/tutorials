@@ -124,7 +124,9 @@ Change current working directory The cd command will change the current working 
 
 `cd ngs_course_data [enter]`
 
- Now use the pwd command to check your location in the directory hierarchy.
+Now use the pwd command to check your location in the directory hierarchy.
+
+Change again the directory to `Module_Unix`  
 
 **ls**  
 List the contents of a directory To find out what are the contents of the current directory type **ls** [enter] The ls command lists the contents of your current directory, this includes files and directories You should see that there are several other directories.
@@ -296,12 +298,9 @@ The wildcard * symbol represents a string of any character and of any length.
 
 <p style="text-align: center;">
   <a href="http://77.235.253.122/tutorials/wp-content/uploads/2015/06/Unix_exercise12.png"><img class="alignnone size-full wp-image-443" src="http://77.235.253.122/tutorials/wp-content/uploads/2015/06/Unix_exercise12.png" alt="Unix_exercise12" width="865" height="267" /></a>
-</p> For more information on Unix command see EMBNet UNIX Quick Guide.  
+
+For more information on Unix command see EMBNet UNIX Quick Guide.  
 
 <h1 style="text-align: center;">
-  END OF THE MODULE
+  End of the module
 </h1>
-
-<p style="text-align: center;">
-  <a href="http://77.235.253.122/tutorials/all-courses/"Back to all courses</a>
-</p>

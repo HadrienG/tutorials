@@ -61,4 +61,61 @@ To list the contents of a gzipped tar archive, use
 
 To unpack files from a tar archive, use
 
-$ tar -xzvf archivename
+`tar -xzvf archivename`
+
+Try to archive the folder `Module_Unix` from the previous exercise!
+
+You will notice a file called tutorials.tar.bz2 in your home directory. This is also a compressed archive, but compressed in the bzip format. Read the tar manual and find a way to decompress it
+
+Hint: you can read the manual for any command using `man`
+
+`man tar`
+
+### Redirection
+
+Some commands give you an output to your screen, but you would have preferred it to go into another program or into a file. For those cases you have some redirection characters.
+
+#### Output redirection
+
+The output from a command normally intended for standard output (that is, your screen) can be easily diverted to a file instead. This capability is known as output redirection:
+
+If the notation `> file` is appended to any command that normally writes its output to standard output, the output of that command will be written to file instead of your terminal
+
+I.e, the following who command:
+
+`who > users.txt`
+
+No output appears at the terminal. This is because the output has been redirected  into the specified file.
+
+`less users.txt`
+
+Be careful, if a command has its output redirected to a file and the file already contains some data, that data will be lost. Consider this example:
+
+`echo Hello > users.txt`
+
+`less users.txt`
+
+You can use the `>>` operator to append the output in an existing file as follows:
+
+```
+who > users.txt
+echo "This goes at the end of the file" >> users.txt
+```
+
+`less users.txt`
+
+#### Piping
+
+You can connect two commands together so that the output from one program becomes the input of the next program. Two or more commands connected in this way form a pipe.
+
+To make a pipe, put a vertical bar `|` on the command line between two commands.
+
+Remember the command `grep`? We can pipe other commands to it, to refine searches per example:
+
+`ls -l ngs_course_data | grep "Jan"`
+
+will only give you the files and directories created in January
+
+Tip: There are various options you can use with the grep command, look at the manual!
+
+Pipes are extremely useful to connect various bioinformatics softwares together. We'll use them extensively later.

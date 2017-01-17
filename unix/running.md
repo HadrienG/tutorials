@@ -88,3 +88,77 @@ cd ncbi-blast-2.6.0+
 you should have a `bin` directory, go inside and look at the files. You have a bunch of executable files.
 
 ### Execute a file
+
+
+Most of the lunix commands that you execute on a regular basis (ls, cp, mkdir) are located in `/usr/bin`, but you don't have to invoke them with their full path: i.e. you dont type `/usr/bin/ls` but just `ls`. This is because `/usr/bin/ls` is in your $PATH.
+
+to execute a file that you just downloaded, and is therefore not in your path, you have to type the absolute or relative path to that file. Meaning, for the blast program suite that we just downloaded:
+
+`bin/blastn -help`
+
+or
+
+```
+cd bin
+./blastn -help
+```
+
+and that's it!
+But it is not very convenient. You want to be able to execute blast without having to remember where it is. If you have administrator rights (sudo), you can move the software in `/usr/bin`. If you don't you can modify your $PATH in a configuration file called `.bash_profile` that is located in your home.
+
+More information on how to correctly modify your PATH [here](http://unix.stackexchange.com/a/26059)
+
+## Compiling from source
+
+Sometimes pre-compiled binaries are not available. You then have to compile from source: transforming the human-readable code (written in one or another programming language) into machine-readable code (binary)
+
+The most common way to do so, if a software package has its source coud available online is
+
+```
+./configure
+make
+make install
+```
+
+If you don't have the administrator rights, you'll often have to pass an extra argument to ./configure:
+
+```
+./configure --prefix="/where_i_want_to_install"
+make
+make install
+```
+
+Most of the softwares come with instructions on how to install them. Always read the file called README or INSTALL in the package directory before installing!
+
+### Exercice
+
+The most popular unix distributions come with a version of python (a programming language) that is not the most recent one. Install from source the most recent version of python in a folder called `bin` in your home directory.
+
+You can download the python source code at https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz
+
+## Install python packages
+
+Python is a really popular programming language in the world of bioinformatics. Python has a package manager called `pip` that you can use to install softwares written in python.
+
+Please us the python executable you installed in the above exercise!
+
+Firstly, get pip:
+
+`wget https://bootstrap.pypa.io/get-pip.py`
+
+then execute the script
+
+`python get-pip.py`
+
+Thenm you can use pip to install package, either globally (if you're an administrator):
+
+`pip install youtube_dl`
+
+or just for you:
+
+`pip install --user youtube_dl`
+
+## Final exercise
+
+One of the oldest and most famous bioinformatics package is called EMBOSS.
+Install EMBOSS in the bin directory of your home. Good luck!

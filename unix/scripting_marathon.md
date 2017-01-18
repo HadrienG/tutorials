@@ -90,3 +90,42 @@ or a command. In bash, the correct way to store a command in a variable is withi
 `variable=$(command –options arguments)`
 
 Store the date and time in a variable. Test the date command first in your terminal, then when you got the right format, store it in a variable in your script.
+
+It is generally bad practice to put spaces in file names in unix, so we'll want the following date format:
+
+`date +%m_%d_%y-%H.%M.%S`
+
+and for putting it into a variable:
+
+date_formatted=$(date +%m_%d_%y-%H.%M.%S)
+
+Your script now can print thedate without too much more coding:
+
+```
+#!/usr/bin/env bash
+
+# this script will copy a file, appending the data and time to
+# the end of the file name
+
+date_formatted=$(date +%m_%d_%y-%H.%M.%S)
+echo "This is the date and time:" $date_formatted
+
+```
+
+Now we need to add the copying part:
+
+`cp –iv $1 $2.$date_formatted`
+
+This will invoke the copy command, with two options: -i for asking for permission before overwriting a file, and -v for verbose.
+
+You can also notice two variables: $1 and $2. When scripting in bash, a dollar sign ($) followed by a number will denote an argument of the script. For example in the following command:
+
+`cp –iv a_file a_file_copy` the first argument ($1) is `a_file` and the second argument ($2) is `a_file_copy`
+
+What our script will do is a simple copy of a file, but with adding the date to the end of the file name. Save it and try it out!
+
+## Conditionals
+
+Conditionals let you decide whether to perform an action or not, this decision is taken by evaluating an expression.
+
+### if / then / else

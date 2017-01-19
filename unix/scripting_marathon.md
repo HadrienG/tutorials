@@ -124,8 +124,16 @@ You can also notice two variables: $1 and $2. When scripting in bash, a dollar s
 
 What our script will do is a simple copy of a file, but with adding the date to the end of the file name. Save it and try it out!
 
-## Conditionals
+### Exercise
+
+Write a script that backs itself up, that is, copies itself to a file named backup.sh.
+
+Hint: Use the cat command and the appropriate positional parameter.
+
+
+
+<!-- ## Conditionals
 
 Conditionals let you decide whether to perform an action or not, this decision is taken by evaluating an expression.
 
-### if / then / else
+### if / then / else -->

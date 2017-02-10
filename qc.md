@@ -1,0 +1,71 @@
+# Quality control
+
+In this practical you will learn to import, view and check the quality of NGS read data in FASTQ format.
+
+You will be working with an Illumina MiSeq read dataset from a genome sequence project. The sequenced organism is an enterohaemorrhagic E. coli (EHEC) of the serotype O157, a potentially fatal gastrointestinal pathogen. The sequenced bacterium was part of an outbreak investigation in the St. Louis area, USA in 2011.
+The sequencing was done as paired-end 2x150bp.
+
+## Downloading the data
+
+The Raw data were deposited at the European nucleotide archive, under the accession number SRR957824, go the the ENA [website](http://www.ebi.ac.uk/ena) and search for the run with the accession SRR957824. Download the two fastq files associated with the run:
+
+```
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
+```
+
+## FastQC
+
+To check the quality of the sequence data we will use a tool called FastQC. With this you can check things like read length distribution, quality distribution across the read length, sequencing artifacts and much more.
+
+FastQC has a graphical interface and can be downloaded and ran on a Windows or LINUX computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
+
+However, FastQC is also available as a command line utility on the training server you are using. You can load the module and execute the program as follow:
+
+`module load fastqc`
+`fastqc $read1 $read2`
+
+which will produce both a .zip archive containing all the plots, and a html document for you to look at the result in your browser.
+
+Open the html file with your favourite web browser, and try to interpret them
+
+Pay special attention to the per base sequence quality and sequence length distribution. Explanations for the various quality modules can be found [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/). Also, have a look at examples of a [good](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and a [bad](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) illumina read set for comparison.
+
+You will note that the reads in your uploaded dataset have fairly poor quality (<20) towards the end. There are also outlier reads that have very poor quality for most of the second half of the reads.
+
+There are overrepresented sequences in the data. Where do they come from?
+
+## Scythe
+
+Scythe uses a Naive Bayesian approach to classify contaminant substrings in sequence reads. It considers quality information, which can make it robust in picking out 3'-end adapters, which often include poor quality bases.
+
+First, install scythe:
+
+```
+git clone https://github.com/vsbuffalo/scythe.git
+cd scythe
+make all
+```
+
+Then, copy or move "scythe" to a directory in your $PATH.
+
+Scythe can be run minimally with:
+
+`scythe -a adapter_file.fasta -o trimmed_sequences.fastq sequences.fastq`
+
+Trim the adapters in both your read files!
+
+## Sickle
+
+https://github.com/najoshi/sickle
+
+We will trim each read individually down to the good quality part to keep the bad part from interfering with downstream applications.
+
+and set the quality score to 25. This means the trimmer will work its way from both ends of each read, cutting away any bases with a quality score < 25.
+
+
+What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution?
+
+What is the sequence duplication levels graph about? Why should you care about a high level of duplication, and why is the level of duplication very low for this data?
+
+Based on the FastQC report, there seems to be a population of shorter reads that are technical artefacts. We will ignore them for now as they will not interfere with our analysis.

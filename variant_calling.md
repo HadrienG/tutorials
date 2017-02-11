@@ -50,3 +50,53 @@ Navigate the mapping using the zoom and pan left/right etc. Under Colour schemes
 ![tablet3](images/tablet3.png)
 
 Does the mapping data confirm the presence of an intact pO157 plasmid in the St. Louis outbreak strain?
+
+You will note that one region has extremely high coverage. This region corresponds to two adjacent CDSs
+
+Check their identity, what do they have in common?
+
+Extract the sequence of the biggest of these two by right-clicking on it and selecting copy reference subsequence to clipboard
+
+Your read data was from the whole genome, but you are only mapping to a reference for the pO157 plasmid. Go to BLAST and use nucleotide BLAST to check if the problematic region is present on the chromosome of the reference strain Sakai (BA000007.2) using the Align two sequences option with your subsequence copied from Tablet and BA000007.2. You don’t have to enter the whole genome sequence, just the code.
+
+![blast1](images/blast1.png)
+
+How many matches do you find on the chromosome?
+
+Why do you think the coverage is so high for this region in the mapping to the pO157 reference?
+
+## Variant Calling
+
+A frequent application for mapping reads is variant calling, i.e. finding positions where the reference and your sequences differ. Single nucleotide polymorphism (SNP)-based typing is particularly popular and used for a broad range of applications. For an EHEC O157 outbreak you could use it to identify the source, for instance. Indels are insertions and deletions in the mapped data compared to the reference.
+
+You could find SNPs by just staring at the alignment in Tablet. A variant caller is a program that automates this process, finding variable positions anywhere in the sequence and weighing the evidence for a true variant (number of reads agreeing, quality of those reads etc.) We will be using SAMtools for variant calling.
+
+### Sorting and indexing a bam file
+
+First you need to sort the reads in the BAM-file so the variant caller can easily find the relevant ones for a given position in the reference sequence.
+
+You may need to convert your sam file into a bam file first:
+
+`samtools view -b -o $output.bam $input.sam`
+
+then sort and index the bam file:
+
+```
+samtools sort $output.bam > $output_sorted.bam
+samtools index $output_sorted.bam
+```
+
+Now we can perform the SNP and Indel calling:
+
+`samtools mpileup -o output.vcf -f pO157_Sakai.fasta test_sorted.bam`
+
+You can read about the structure of vcf files here
+
+How many SNPs did the variant caller find? Did you find any indels?
+
+Each variant in the vcf comes with a lot of different quality metrics from the variant calling process. The “QUAL” column tells you how confident the variant caller is feeling about that variant.
+
+Use the coordinates from the vcf-file and manually check a high quality SNP and a low quality SNP in your Tablet view of the sam file. (Hint: there is a “Jump to base” button that can make it easier for you.)
+
+If you have time:
+Read the original paper about the St. Louis outbreak investigation, in particular check the supplemental material and methods to see how the authors performed read mapping and variant calling.

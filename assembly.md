@@ -81,17 +81,17 @@ You can read how Pilon works in detail [here](https://github.com/broadinstitute/
 Before running Pilon itself, you have to map your reads back to the assembly!
 
 ```
-bowtie2-build $assembly $output/index
-(bowtie2 -x $output/index -1 $r1 -2 $r2 | samtools view -bS -o $mapping - ) 2> bowtie.err
-samtools sort $mapping $mapping.sorted
-samtools index $mapping.sorted.bam
+bowtie2-build assembly.fasta index_prefix
+(bowtie2 -x index_prefix -1 read_1.fastq -2 read_2.fastq | samtools view -bS -o output_to_sort.bam - ) 2> bowtie.err
+samtools sort output_to_sort.bam alignment.bam
+samtools index alignment.bam
 ```
 
 Run Pilon with the following command:
 
 ```
 module load pilon
-pilon --genome $assembly --frags $mapping.sorted.bam --output $output
+pilon --genome assembly.fasta --frags alignment.bam --output pilon_output
 ```
 
 Once Pilon is finished running, compare the new assembly with the old one using Quast!

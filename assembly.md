@@ -43,6 +43,7 @@ If you have time, try out the following genome assemblers:
 
 * MaSurCa
 * Ray
+* Velvet
 
 ## Comparing assemblies
 

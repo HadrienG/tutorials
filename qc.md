@@ -22,8 +22,10 @@ FastQC has a graphical interface and can be downloaded and ran on a Windows or L
 
 However, FastQC is also available as a command line utility on the training server you are using. You can load the module and execute the program as follow:
 
-`module load fastqc`
-`fastqc $read1 $read2`
+```
+module load fastqc
+fastqc $read1 $read2
+```
 
 which will produce both a .zip archive containing all the plots, and a html document for you to look at the result in your browser.
 
@@ -94,3 +96,7 @@ What did the trimming do to the per-base sequence quality, the per sequence qual
 What is the sequence duplication levels graph about? Why should you care about a high level of duplication, and why is the level of duplication very low for this data?
 
 Based on the FastQC report, there seems to be a population of shorter reads that are technical artefacts. We will ignore them for now as they will not interfere with our analysis.
+
+## Extra exercises
+
+Perform quality control on the extra datasets given by your instructors

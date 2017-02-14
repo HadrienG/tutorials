@@ -10,6 +10,7 @@ bioinformatics subjects:
 * [Quality Control](qc.md)
 * [Variant Calling](variant_calling.md)
 * [Assembly](assembly.md)
+* [Annotation](annotation.md)
 * [16s Metabarcoding Analysis](16s.md)
 * [Whole Metagenome Sequencing](wms.md)
 * [Metagenome Assembly](meta_assembly.md)

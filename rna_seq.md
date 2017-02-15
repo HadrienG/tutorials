@@ -159,7 +159,7 @@ Then, we create a sample distance heatmap:
 
 ```R
 library(RColorBrewer)
-library(gplots)
+library(gplots) # you may need to install this package
 
 (mycols <- brewer.pal(8, "Dark2")[1:length(unique(samples$condition))])
 sampleDists <- as.matrix(dist(t(assay(rld))))
@@ -215,7 +215,7 @@ library(gage)
 library(gageData)
 ```
 
-Let’s use the mapIds function to add more columns to the results. The row.names of our results table has the Ensembl gene ID (our key), so we need to specify  keytype=ENSEMBL. The column argument tells the mapIds function which information we want, and the multiVals argument tells the function what to do if there are multiple possible values for a single input value. Here we ask to just give us back the first one that occurs in the database. Let’s get the Entrez IDs, gene symbols, and full gene names.
+Let’s use the `mapIds` function to add more columns to the results. The row.names of our results table has the Ensembl gene ID (our key), so we need to specify  `keytype=ENSEMBL`. The column argument tells the `mapIds` function which information we want, and the `multiVals` argument tells the function what to do if there are multiple possible values for a single input value. Here we ask to just give us back the first one that occurs in the database. Let’s get the Entrez IDs, gene symbols, and full gene names.
 
 ```R
 res$symbol = mapIds(org.Hs.eg.db,
@@ -237,6 +237,11 @@ res$name =   mapIds(org.Hs.eg.db,
 head(res)
 ```
 
+We’re going to use the [gage](http://bioconductor.org/packages/release/bioc/html/gage.html) package for pathway analysis, and the [pathview](http://bioconductor.org/packages/release/bioc/html/pathview.html) package to draw a pathway diagram.
+
+
+The gageData package has pre-compiled databases mapping genes to KEGG pathways and GO terms for common organisms:
+
 ```R
 data(kegg.sets.hs)
 data(sigmet.idx.hs)
@@ -244,19 +249,18 @@ kegg.sets.hs = kegg.sets.hs[sigmet.idx.hs]
 head(kegg.sets.hs, 3)
 ```
 
+Run the pathway analysis. See help on the gage function with ?gage. Specifically, you might want to try changing the value of same.dir
+
 ```R
 foldchanges = res$log2FoldChange
 names(foldchanges) = res$entrez
-head(foldchanges)
+keggres = gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
+lapply(keggres, head)
 ```
 
+pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting.
+
 ```R
-# Get the results
-keggres = gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
-
-# Look at both up (greater), down (less), and statatistics.
-lapply(keggres, head)
-
 # Get the pathways
 keggrespathways = data.frame(id=rownames(keggres$greater), keggres$greater) %>%
   tbl_df() %>%
@@ -270,6 +274,8 @@ keggresids = substr(keggrespathways, start=1, stop=8)
 keggresids
 ```
 
+Finally, the pathview() function in the pathview package makes the plots. Let’s write a function so we can loop through and draw plots for the top 5 pathways we created above.
+
 ```R
 # Define plotting function for applying later
 plot_pathway = function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa", new.signature=FALSE)
@@ -278,12 +284,8 @@ plot_pathway = function(pid) pathview(gene.data=foldchanges, pathway.id=pid, spe
 tmp = sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa"))
 ```
 
-```R
-data(go.sets.hs)
-data(go.subs.hs)
-gobpsets = go.sets.hs[go.subs.hs$BP]
+#### Thanks
 
-gobpres = gage(foldchanges, gsets=gobpsets, same.dir=TRUE)
+This material was inspired by Stephen Turner's blog post:
 
-lapply(gobpres, head)
-```
+> Tutorial: RNA-seq differential expression & pathway analysis with Sailfish, DESeq2, GAGE, and Pathview: http://www.gettinggeneticsdone.com/2015/12/tutorial-rna-seq-differential.html

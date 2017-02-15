@@ -100,8 +100,190 @@ now we can import the salmon quantification:
 
 ```R
 samples <- read.table("samples.txt", header = TRUE)
-
-files <- file.path("salmon", samples$quant, "quant.sf")
-names(files) <- paste0("sample", 1:6)
+files <- file.path("quant", samples$quant, "quant.sf")
+names(files) <- paste0(samples$sample)
 txi.salmon <- tximport(files, type = "salmon", tx2gene = tx2gene, reader = read_tsv)
+```
+
+take a look at the data:
+
+```R
+head(txi.salmon$counts)
+```
+
+## differential expression using DeSeq2
+
+install the necessary package
+
+```R
+biocLite('DESeq2')
+```
+
+then load it:
+
+```R
+library(DESeq2)
+```
+
+Instantiate the DESeqDataSet and generate result table. See ?DESeqDataSetFromTximport and ?DESeq for more information about the steps performed by the program.
+
+
+```R
+dds <- DESeqDataSetFromTximport(txi.salmon, samples, ~condition)
+dds <- DESeq(dds)
+res <- results(dds)
+```
+
+run the `summary` command to have an idea of how many genes are up and down-regulated between the two conditions
+
+`summary(res)`
+
+DESeq uses a negative binomial distribution. Such distribution has two parameters: mean and dispersion. The dispersion is a parameter describing how much the variance deviates from the mean.
+
+You can read more about the methods used by DESeq2 in the [paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) or the [vignette](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq/inst/doc/DESeq.pdf)
+
+Plot dispersions:
+
+```R
+plotDispEsts(dds, main="Dispersion plot")
+```
+
+For clustering and heatmaps, we need to log transform our data:
+
+```R
+rld <- rlogTransformation(dds)
+head(assay(rld))
+```
+
+Then, we create a sample distance heatmap:
+
+```R
+library(RColorBrewer)
+library(gplots)
+
+(mycols <- brewer.pal(8, "Dark2")[1:length(unique(samples$condition))])
+sampleDists <- as.matrix(dist(t(assay(rld))))
+heatmap.2(as.matrix(sampleDists), key=F, trace="none",
+          col=colorpanel(100, "black", "white"),
+          ColSideColors=mycols[samples$condition],
+          RowSideColors=mycols[samples$condition],
+          margin=c(10, 10), main="Sample Distance Matrix")
+```
+
+We can also plot a PCA:
+
+```R
+DESeq2::plotPCA(rld, intgroup="condition")
+```
+
+It is time to look at some p-values:
+
+```R
+table(res$padj<0.05)
+res <- res[order(res$padj), ]
+resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE)), by="row.names", sort=FALSE)
+names(resdata)[1] <- "Gene"
+head(resdata)
+```
+
+Examine plot of p-values, the MA plot and the Volcano Plot:
+
+```R
+hist(res$pvalue, breaks=50, col="grey")
+DESeq2::plotMA(dds, ylim=c(-1,1), cex=1)
+
+# Volcano plot
+with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main="Volcano plot", xlim=c(-2.5,2)))
+with(subset(res, padj<.05 ), points(log2FoldChange, -log10(pvalue), pch=20, col="red"))
+```
+
+## KEGG pathway analysis
+
+As always, install and load the necessary packages:
+
+```R
+biocLite("AnnotationDbi")
+biocLite("org.Hs.eg.db")
+biocLite("pathview")
+biocLite("gage")
+biocLite("gageData")
+
+library(AnnotationDbi)
+library(org.Hs.eg.db)
+library(pathview)
+library(gage)
+library(gageData)
+```
+
+Let’s use the mapIds function to add more columns to the results. The row.names of our results table has the Ensembl gene ID (our key), so we need to specify  keytype=ENSEMBL. The column argument tells the mapIds function which information we want, and the multiVals argument tells the function what to do if there are multiple possible values for a single input value. Here we ask to just give us back the first one that occurs in the database. Let’s get the Entrez IDs, gene symbols, and full gene names.
+
+```R
+res$symbol = mapIds(org.Hs.eg.db,
+                     keys=row.names(res),
+                     column="SYMBOL",
+                     keytype="ENSEMBL",
+                     multiVals="first")
+res$entrez = mapIds(org.Hs.eg.db,
+                     keys=row.names(res),
+                     column="ENTREZID",
+                     keytype="ENSEMBL",
+                     multiVals="first")
+res$name =   mapIds(org.Hs.eg.db,
+                     keys=row.names(res),
+                     column="GENENAME",
+                     keytype="ENSEMBL",
+                     multiVals="first")
+
+head(res)
+```
+
+```R
+data(kegg.sets.hs)
+data(sigmet.idx.hs)
+kegg.sets.hs = kegg.sets.hs[sigmet.idx.hs]
+head(kegg.sets.hs, 3)
+```
+
+```R
+foldchanges = res$log2FoldChange
+names(foldchanges) = res$entrez
+head(foldchanges)
+```
+
+```R
+# Get the results
+keggres = gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
+
+# Look at both up (greater), down (less), and statatistics.
+lapply(keggres, head)
+
+# Get the pathways
+keggrespathways = data.frame(id=rownames(keggres$greater), keggres$greater) %>%
+  tbl_df() %>%
+  filter(row_number()<=5) %>%
+  .$id %>%
+  as.character()
+keggrespathways
+
+# Get the IDs.
+keggresids = substr(keggrespathways, start=1, stop=8)
+keggresids
+```
+
+```R
+# Define plotting function for applying later
+plot_pathway = function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa", new.signature=FALSE)
+
+# plot multiple pathways (plots saved to disk and returns a throwaway list object)
+tmp = sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa"))
+```
+
+```R
+data(go.sets.hs)
+data(go.subs.hs)
+gobpsets = go.sets.hs[go.subs.hs$BP]
+
+gobpres = gage(foldchanges, gsets=gobpsets, same.dir=TRUE)
+
+lapply(gobpres, head)
 ```

@@ -1,0 +1,7 @@
+sample  condition
+HBR_Rep1    HBR
+HBR_Rep2    HBR
+HBR_Rep3    HBR
+UHR_Rep1    UHR
+UHR_Rep2    UHR
+UHR_Rep3    UHR

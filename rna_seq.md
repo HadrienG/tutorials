@@ -27,7 +27,7 @@ So to summarize we have:
 * HBR + ERCC Spike-In Mix2, Replicate 2
 * HBR + ERCC Spike-In Mix2, Replicate 3
 
-You can download the data from [here](link)
+You can download the data from [here](http://139.162.178.46/files/tutorials/toy_rna.tar.gz)
 
 Unpack the data and go into the toy_rna directory
 
@@ -73,4 +73,35 @@ First, open up your favourite R IDE and install the necessary packages:
 ```R
 source("https://bioconductor.org/biocLite.R")
 biocLite("tximport")
+biocLite("GenomicFeatures")
+
+install.packages("readr")
+```
+
+Then load the modules:
+
+```R
+library(tximport)
+library(GenomicFeatures)
+library(readr)
+```
+
+Salmon did the quantifiation of the transcript level. We want to see which genes are differentially expressed, so we need to link the transcripts name to the gene names. We can use our .gtf annotation for that, and the GenomicFeatures package:
+
+```R
+txdb <- makeTxDbFromGFF("chr22_genes.gtf")
+k <- keys(txdb, keytype = "GENEID")
+df <- select(txdb, keys = k, keytype = "GENEID", columns = "TXNAME")
+tx2gene <- df[, 2:1]
+head(tx2gene)
+```
+
+now we can import the salmon quantification:
+
+```R
+samples <- read.table("samples.txt", header = TRUE)
+
+files <- file.path("salmon", samples$quant, "quant.sf")
+names(files) <- paste0("sample", 1:6)
+txi.salmon <- tximport(files, type = "salmon", tx2gene = tx2gene, reader = read_tsv)
 ```

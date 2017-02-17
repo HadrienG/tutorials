@@ -77,7 +77,7 @@ First you need to sort the reads in the BAM-file so the variant caller can easil
 
 You may need to convert your sam file into a bam file first:
 
-`samtools view -b -o $output.bam $input.sam`
+`samtools view -bS -o $output.bam $input.sam`
 
 then sort and index the bam file:
 

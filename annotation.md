@@ -10,7 +10,7 @@ Prokka finds and annotates features (both protein coding regions and RNA genes, 
 
 Prokka requires assembled contigs. You will need your best assembly from the assembly tutorial.
 
-Alternatively, you can download an assembly [here](data/assembly.fasta)
+Alternatively, you can download an assembly [here](https://raw.githubusercontent.com/HadrienG/tutorials/master/data/assembly.fasta)
 
 ## Running prokka
 

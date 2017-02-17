@@ -16,8 +16,9 @@ Alternatively, you can download an assembly [here](data/assembly.fasta)
 
 ```
 module load prokka
-prokka --compliant --centre SLU --outdir annotation \
-    --kingdom Bacteria --proteins m_genitalium.faa assembly.fasta
+awk '/^>/{print ">ctg" ++i; next}{print}' < assembly.fasta > good_contigs.fasta
+prokka --outdir annotation --kingdom Bacteria \
+--proteins m_genitalium.faa good_contigs.fasta
 ```
 
 Once Prokka has finished, examine each of its output files.

@@ -88,7 +88,7 @@ samtools index $output_sorted.bam
 
 Now we can perform the SNP and Indel calling:
 
-`samtools mpileup -o output.vcf -f pO157_Sakai.fasta test_sorted.bam`
+`samtools mpileup -uv -o output.vcf -f pO157_Sakai.fasta test_sorted.bam`
 
 You can read about the structure of vcf files here
 

@@ -1,5 +1,7 @@
 # Whole Metagenome Sequencing
 
+In this tutorial you'll analyze a samples from human and pig put metagenomes.
+
 ### Table of Contents
 
 * [Introduction](#introduction)
@@ -28,13 +30,14 @@ The Human Microbiome:
 
 Whole Metagenome sequencing (WMS), or shotgun metagenome sequencing, is a relatively new and powerful sequencing approach that provides insight into community biodiversity and function. On the contrary of Metabarcoding, where only a specific region of the bacterial community (the 16s rRNA) is sequenced, WMS aims at sequencing all the genomic material present in the environment.
 
-The choice of shotgun or 16S approaches is usually dictated by the nature of the studies being conducted. For instance, 16S is well suited for analysis of large number of samples, i.e., multiple patients, longitudinal studies, etc. but offers limited taxonomical and functional resolution. WMS is generally more expensive but offers increased resolution, and allows the discovery of archaea and viruses.
+The choice of shotgun or 16S approaches is usually dictated by the nature of the studies being conducted. For instance, 16S is well suited for analysis of large number of samples, i.e., multiple patients, longitudinal studies, etc. but offers limited taxonomical and functional resolution. WMS is generally more expensive but offers increased resolution, and allows the discovery of viruses as well as other mobile genetic elements.
 
 ### Softwares Required for this Tutorial
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 * [Kraken](https://ccb.jhu.edu/software/kraken/)
-* [Bracken](https://github.com/jenniferlu717/Bracken)
+* [Bracken](http://ccb.jhu.edu/software/bracken/)
+* [R](https://www.r-project.org/)
 * [Pavian](https://github.com/fbreitwieser/pavian)
 
 ### Getting the Data and Checking their Quality

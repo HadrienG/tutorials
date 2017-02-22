@@ -32,9 +32,8 @@ The choice of shotgun or 16S approaches is usually dictated by the nature of the
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 * [Kraken](https://ccb.jhu.edu/software/kraken/)
-<!-- * [scythe](https://github.com/vsbuffalo/scythe) -->
-<!-- * kraken_to_krona (script part of [MetLab](https://github.com/norling/metlab))
-* [KronaTools](https://github.com/marbl/Krona/wiki) -->
+* [Bracken](https://github.com/jenniferlu717/Bracken)
+* [Pavian](https://github.com/fbreitwieser/pavian)
 
 ### Getting the Data and Checking their Quality
 
@@ -172,4 +171,4 @@ source("https://raw.githubusercontent.com/fbreitwieser/pavian/master/inst/shinya
 pavian::runApp(port=5000)
 ```
 
-Pavian will be available at http://127.0.0.1:5000 .
+Pavian will be available at http://127.0.0.1:5000

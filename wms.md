@@ -1,7 +1,5 @@
 # Whole Metagenome Sequencing
 
-In this tutorial you'll analyze a samples from human and pig put metagenomes.
-
 ### Table of Contents
 
 * [Introduction](#introduction)

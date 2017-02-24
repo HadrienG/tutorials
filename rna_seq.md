@@ -217,17 +217,17 @@ library(gageData)
 Let’s use the `mapIds` function to add more columns to the results. The row.names of our results table has the Ensembl gene ID (our key), so we need to specify  `keytype=ENSEMBL`. The column argument tells the `mapIds` function which information we want, and the `multiVals` argument tells the function what to do if there are multiple possible values for a single input value. Here we ask to just give us back the first one that occurs in the database. Let’s get the Entrez IDs, gene symbols, and full gene names.
 
 ```R
-res$symbol = mapIds(org.Hs.eg.db,
+res$symbol <- mapIds(org.Hs.eg.db,
                      keys=row.names(res),
                      column="SYMBOL",
                      keytype="ENSEMBL",
                      multiVals="first")
-res$entrez = mapIds(org.Hs.eg.db,
+res$entrez <- mapIds(org.Hs.eg.db,
                      keys=row.names(res),
                      column="ENTREZID",
                      keytype="ENSEMBL",
                      multiVals="first")
-res$name =   mapIds(org.Hs.eg.db,
+res$name <- mapIds(org.Hs.eg.db,
                      keys=row.names(res),
                      column="GENENAME",
                      keytype="ENSEMBL",
@@ -243,16 +243,16 @@ The gageData package has pre-compiled databases mapping genes to KEGG pathways a
 ```R
 data(kegg.sets.hs)
 data(sigmet.idx.hs)
-kegg.sets.hs = kegg.sets.hs[sigmet.idx.hs]
+kegg.sets.hs <- kegg.sets.hs[sigmet.idx.hs]
 head(kegg.sets.hs, 3)
 ```
 
 Run the pathway analysis. See help on the gage function with `?gage`. Specifically, you might want to try changing the value of same.dir.
 
 ```R
-foldchanges = res$log2FoldChange
-names(foldchanges) = res$entrez
-keggres = gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
+foldchanges <- res$log2FoldChange
+names(foldchanges) <- res$entrez
+keggres <- gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
 lapply(keggres, head)
 ```
 
@@ -262,7 +262,7 @@ Pull out the top 5 upregulated pathways, then further process that just to get t
 library(dplyr)
 
 # Get the pathways
-keggrespathways = data.frame(id=rownames(keggres$greater), keggres$greater) %>%
+keggrespathways <- data.frame(id=rownames(keggres$greater), keggres$greater) %>%
   tbl_df() %>%
   filter(row_number()<=5) %>%
   .$id %>%
@@ -270,7 +270,7 @@ keggrespathways = data.frame(id=rownames(keggres$greater), keggres$greater) %>%
 keggrespathways
 
 # Get the IDs.
-keggresids = substr(keggrespathways, start=1, stop=8)
+keggresids <- substr(keggrespathways, start=1, stop=8)
 keggresids
 ```
 
@@ -278,13 +278,13 @@ Finally, the `pathview()` function in the pathview package makes the plots. Let�
 
 ```R
 # Define plotting function for applying later
-plot_pathway = function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa", new.signature=FALSE)
+plot_pathway <- function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa", new.signature=FALSE)
 
 # Unload dplyr since it conflicts with the next line
 detach("package:dplyr", unload=T)
 
 # plot multiple pathways (plots saved to disk and returns a throwaway list object)
-tmp = sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa"))
+tmp <- sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa"))
 ```
 
 #### Thanks

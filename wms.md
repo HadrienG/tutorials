@@ -34,7 +34,7 @@ The choice of shotgun or 16S approaches is usually dictated by the nature of the
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 * [Kraken](https://ccb.jhu.edu/software/kraken/)
-* [Bracken](http://ccb.jhu.edu/software/bracken/)
+* [Bracken](https://ccb.jhu.edu/software/bracken/)
 * [R](https://www.r-project.org/)
 * [Pavian](https://github.com/fbreitwieser/pavian)
 
@@ -49,17 +49,17 @@ cd wms
 ```
 
 We'll use FastQC to check the quality of our data. FastQC can be downloaded and
-ran on a Windows or LINUX computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+run on a Windows or Linux computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
 Start FastQC and select the fastq file you just downloaded with `file -> open`  
-What do you think about the quality of the reads? Do they need trimming? Is there still adapters
+What do you think about the quality of the reads? Do they need trimming? Are there still adapters
 present? Overrepresented sequences?
 
 Alternatively, run fastqc on the command-line:
 
 `fastqc *.fastq.gz`
 
-If the quality appears to be that good, it's because it was probably the cleaned reads that were deposited into SRA.
+If the quality appears to be good, it's because it was probably the cleaned reads that were deposited into SRA.
 We can directly move to the classification step.
 
 ### Taxonomic Classification
@@ -68,14 +68,14 @@ We can directly move to the classification step.
 Kraken aims to achieve high sensitivity and high speed by utilizing exact alignments of k-mers and a novel classification algorithm (sic).
 
 In short, kraken uses a new approach with exact k-mer matching to assign taxonomy to short reads. It is *extremely* fast compared to traditional
-approaches (i.e. Blast)
+approaches (i.e. BLAST).
 
 By default, the authors of kraken built their database based on RefSeq Bacteria, Archea and Viruses. We'll use it for the purpose of this tutorial.
 
 **NOTE: The database may have been installed already! Ask your instructor!**
 
 ```bash
-# You might not need this step (example if you're working on Uppmax!)
+# You might not need this step (for example if you're working on Uppmax!)
 wget https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz
 tar xzf minikraken.tgz
 $KRAKEN_DB=minikraken_20141208

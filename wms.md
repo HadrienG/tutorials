@@ -88,7 +88,9 @@ mkdir kraken_results
 for i in *_1.fastq.gz
 do
     prefix=$(basename $i _1.fastq.gz)
-    kraken --db $KRAKEN_DB --threads 2 --fastq-input --gzip-compressed \
+    # set number of threads to number of cores if running under SLURM, otherwise use 2 threads
+    nthreads=${SLURM_NPROCS:=2}
+    kraken --db $KRAKEN_DB --threads ${nthreads} --fastq-input --gzip-compressed \
         ${prefix}_1.fastq.gz ${prefix}_2.fastq.gz > kraken_results/${prefix}.tab
     kraken-report --db $KRAKEN_DB \
         kraken_results/${prefix}.tab > kraken_results/${prefix}_tax.txt
@@ -134,7 +136,7 @@ Three steps are necessary to set up Kraken abundance estimation.
 ```bash
 find -L $KRAKEN_DB/library -name "*.fna" -o -name "*.fa" -o -name "*.fasta" > genomes.list
 cat $(grep -v '^#' genomes.list) > genomes.fasta
-kraken --db=${KRAKEN_DB} --fasta-input --threads=10 kraken.fasta > database.kraken
+kraken --db=${KRAKEN_DB} --fasta-input --threads=${SLURM_NPROCS:=10} kraken.fasta > database.kraken
 count-kmer-abundances.pl --db=${KRAKEN_DB} --read-length=100 database.kraken > database100mers.kraken_cnts
 ```
 

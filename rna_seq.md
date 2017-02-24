@@ -91,8 +91,7 @@ Salmon did the quantifiation of the transcript level. We want to see which genes
 ```R
 txdb <- makeTxDbFromGFF("chr22_genes.gtf")
 k <- keys(txdb, keytype = "GENEID")
-df <- select(txdb, keys = k, keytype = "GENEID", columns = "TXNAME")
-tx2gene <- df[, 2:1]
+tx2gene <- select(txdb, keys = k, keytype = "GENEID", columns = "TXNAME")
 head(tx2gene)
 ```
 

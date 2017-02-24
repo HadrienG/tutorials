@@ -11,7 +11,7 @@ bioinformatics subjects:
 * [Assembly](assembly.md)
 * [Annotation](annotation.md)
 * [Variant Calling](variant_calling.md)
-* [Pan-genome Analysis](pan-genome.md)
+* [Pan-genome Analysis](pan_genome.md)
 * [RNA-Seq](rna_seq.md)
 * [16s Metabarcoding Analysis](16s.md)
 * [Whole Metagenome Sequencing](wms.md)

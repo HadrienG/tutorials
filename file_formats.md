@@ -1,6 +1,6 @@
 # File Formats
 
-This lecture is aimed at making you discover the most popular file formats used in bioinforatics. You're expected to have basic working knowledge of linux to be able to follow the lesson.
+This lecture is aimed at making you discover the most popular file formats used in bioinformatics. You're expected to have basic working knowledge of Linux to be able to follow the lesson.
 
 ## Table of Contents
 * [The fasta format](#the-fasta-format)
@@ -11,7 +11,7 @@ This lecture is aimed at making you discover the most popular file formats used 
 
 ### The fasta format
 
-The fasta format was invented in 1988 and designed to represent nucleotide or peptide sequences. It originates from the [FASTA](https://en.wikipedia.org/wiki/FASTA) software package, but is now a standard in the world of bioinformatics
+The fasta format was invented in 1988 and designed to represent nucleotide or peptide sequences. It originates from the [FASTA](https://en.wikipedia.org/wiki/FASTA) software package, but is now a standard in the world of bioinformatics. 
 
 The first line in a FASTA file starts with a ">" (greater-than) symbol followed by the description or identifier of the sequence. Following the initial line (used for a unique description of the sequence) is the actual sequence itself in standard one-letter code.
 
@@ -31,7 +31,7 @@ HDGVLSVNAKRDSFNDESDSEGNVIASERSYGRFARQYSLPNVDESGIKAKCEDGVLKLTLPKLAEEKIN
 GNHIEIE
 ```
 
-A fasta file can contain multiple sequence. Each sequence will be separated by their "header" line, starting by ">"
+A fasta file can contain multiple sequence. Each sequence will be separated by their "header" line, starting by ">". 
 
 Example:
 
@@ -49,7 +49,7 @@ SQFIGYPITLFVEK
 
 ### The fastq format
 
-The fastq format is also a text based format to represent nucleotide sequences, but also contains the coresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.
+The fastq format is also a text based format to represent nucleotide sequences, but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.
 
 A fastq file uses four lines per sequence:
 
@@ -69,9 +69,9 @@ GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
 
 #### Quality
 
-The quality, also called phred scores is the probability that the corresponding basecall is incorrect.
+The quality, also called phred score, is the probability that the corresponding basecall is incorrect.
 
-Phred scores use a logarithmic scale, and are represented by ASCII characters, mapping to a quality usually going from 0 to 40
+Phred scores use a logarithmic scale, and are represented by ASCII characters, mapping to a quality usually going from 0 to 40.
 
 | Phred Quality Score | Probability of incorrect base call | Base call accuracy
 | --- | --- | ---
@@ -90,9 +90,9 @@ SAM (file format) is a text-based format for storing biological sequences aligne
 
 The SAM format consists of a header and an alignment section. The binary representation of a SAM file is a BAM file, which is a compressed SAM file.[1] SAM files can be analysed and edited with the software SAMtools.
 
-The SAM format has a really extensive and complex specification that you can find [here](https://samtools.github.io/hts-specs/SAMv1.pdf)
+The SAM format has a really extensive and complex specification that you can find [here](https://samtools.github.io/hts-specs/SAMv1.pdf).
 
-In brief it consists in a header section and reads (with other information) in tab delimited format.
+In brief it consists of a header section and reads (with other information) in tab delimited format.
 
 #### Example header section
 
@@ -111,9 +111,9 @@ M01137:130:00-A:17009:1352/14 * 0 0 * * 0 0 AGCAAAATACAACGATCTGGATGGTAGCATTAGCGA
 
 ### the vcf format
 
-the vcf is also a text-based file format. VCF stands for Variant Call Format and is used to store gene sequence variations (SNVs, indels). The format hs been developped for genotyping projects, and is the standard to represent variations in the genome of a species.
+The vcf format is also a text-based file format. VCF stands for Variant Call Format and is used to store gene sequence variations (SNVs, indels). The format has been developped for genotyping projects, and is the standard to represent variations in the genome of a species.
 
-A vcf is a tab-delimited file with 9 columns, described [here](https://samtools.github.io/hts-specs/VCFv4.2.pdf)
+A vcf is a tab-delimited file, described [here](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 
 #### VCF Example
 
@@ -163,9 +163,9 @@ chr2    215634055       .       C       T
 
 ### the gff format
 
-The general feature format (gff) is another text file format. used for describing genes and other features of DNA, RNA and protein sequences. It is the standrad for annotation of genomes.
+The general feature format (gff) is another text file format, used for describing genes and other features of DNA, RNA and protein sequences. It is the standard for annotation of genomes.
 
-A gff file should, as a vcf, conatins 9 columns described [here](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)
+A gff file should contain 9 columns, described [here](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)
 
 #### Example gff
 

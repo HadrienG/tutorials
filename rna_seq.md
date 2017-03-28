@@ -3,10 +3,10 @@
 ## Load salmon
 
 ```
-module load salmon
+module load Salmon
 ```
 
-## Downloading the data.
+## Downloading the data
 
 For this tutorial we will use the test data from [this](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004393) paper:
 
@@ -27,7 +27,7 @@ So to summarize we have:
 * HBR + ERCC Spike-In Mix2, Replicate 2
 * HBR + ERCC Spike-In Mix2, Replicate 3
 
-You can download the data from [here](http://139.162.178.46/files/tutorials/toy_rna.tar.gz)
+You can download the data from [here](http://139.162.178.46/files/tutorials/toy_rna.tar.gz).
 
 Unpack the data and go into the toy_rna directory
 
@@ -36,13 +36,13 @@ tar xzf toy_rna.tar.gz
 cd toy_rna
 ```
 
-## indexing transcriptome
+## Indexing transcriptome
 
 ```
 salmon index -t chr22_transcripts.fa -i chr22_index
 ```
 
-## quantify reads using salmon
+## Quantify reads using salmon
 
 ```bash
 for i in *_R1.fastq.gz
@@ -64,9 +64,9 @@ Salmon exposes many different options to the user that enable extra features or 
 
 After the salmon commands finish running, you should have a directory named `quant`, which will have a sub-directory for each sample. These sub-directories contain the quantification results of salmon, as well as a lot of other information salmon records about the sample and the run. The main output file (called quant.sf) is rather self-explanatory. For example, take a peek at the quantification file for sample `HBR_Rep1` in `quant/HBR_Rep1/quant.sf` and you’ll see a simple TSV format file listing the name (Name) of each transcript, its length (Length), effective length (EffectiveLength) (more details on this in the documentation), and its abundance in terms of Transcripts Per Million (TPM) and estimated number of reads (NumReads) originating from this transcript.
 
-## import read counts using tximport
+## Import read counts using tximport
 
-Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis
+Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis. 
 
 First, open up your favourite R IDE and install the necessary packages:
 
@@ -86,47 +86,45 @@ library(GenomicFeatures)
 library(readr)
 ```
 
-Salmon did the quantifiation of the transcript level. We want to see which genes are differentially expressed, so we need to link the transcripts name to the gene names. We can use our .gtf annotation for that, and the GenomicFeatures package:
+Salmon did the quantifiation of the transcript level. We want to see which genes are differentially expressed, so we need to link the transcript names to the gene names. We can use our .gtf annotation for that, and the GenomicFeatures package:
 
 ```R
 txdb <- makeTxDbFromGFF("chr22_genes.gtf")
 k <- keys(txdb, keytype = "GENEID")
-df <- select(txdb, keys = k, keytype = "GENEID", columns = "TXNAME")
-tx2gene <- df[, 2:1]
+tx2gene <- select(txdb, keys = k, keytype = "GENEID", columns = "TXNAME")
 head(tx2gene)
 ```
 
-now we can import the salmon quantification:
+Now we can import the salmon quantification. First, download the file with sample descriptions from [here](https://raw.githubusercontent.com/HadrienG/tutorials/master/data/samples.txt) and put it in the toy_rna directory. Then, use that file to load the corresponding quantification data.
 
 ```R
 samples <- read.table("samples.txt", header = TRUE)
-files <- file.path("quant", samples$quant, "quant.sf")
+files <- file.path("quant", samples$sample, "quant.sf")
 names(files) <- paste0(samples$sample)
 txi.salmon <- tximport(files, type = "salmon", tx2gene = tx2gene, reader = read_tsv)
 ```
 
-take a look at the data:
+Take a look at the data:
 
 ```R
 head(txi.salmon$counts)
 ```
 
-## differential expression using DeSeq2
+## Differential expression using DESeq2
 
-install the necessary package
+Install the necessary package:
 
 ```R
 biocLite('DESeq2')
 ```
 
-then load it:
+Then load it:
 
 ```R
 library(DESeq2)
 ```
 
-Instantiate the DESeqDataSet and generate result table. See ?DESeqDataSetFromTximport and ?DESeq for more information about the steps performed by the program.
-
+Instantiate the DESeqDataSet and generate result table. See `?DESeqDataSetFromTximport` and `?DESeq` for more information about the steps performed by the program.
 
 ```R
 dds <- DESeqDataSetFromTximport(txi.salmon, samples, ~condition)
@@ -134,11 +132,11 @@ dds <- DESeq(dds)
 res <- results(dds)
 ```
 
-run the `summary` command to have an idea of how many genes are up and down-regulated between the two conditions
+Run the `summary` command to get an idea of how many genes are up- and downregulated between the two conditions:
 
 `summary(res)`
 
-DESeq uses a negative binomial distribution. Such distribution has two parameters: mean and dispersion. The dispersion is a parameter describing how much the variance deviates from the mean.
+DESeq uses a negative binomial distribution. Such distributions have two parameters: mean and dispersion. The dispersion is a parameter describing how much the variance deviates from the mean.
 
 You can read more about the methods used by DESeq2 in the [paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) or the [vignette](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq/inst/doc/DESeq.pdf)
 
@@ -218,17 +216,17 @@ library(gageData)
 Let’s use the `mapIds` function to add more columns to the results. The row.names of our results table has the Ensembl gene ID (our key), so we need to specify  `keytype=ENSEMBL`. The column argument tells the `mapIds` function which information we want, and the `multiVals` argument tells the function what to do if there are multiple possible values for a single input value. Here we ask to just give us back the first one that occurs in the database. Let’s get the Entrez IDs, gene symbols, and full gene names.
 
 ```R
-res$symbol = mapIds(org.Hs.eg.db,
+res$symbol <- mapIds(org.Hs.eg.db,
                      keys=row.names(res),
                      column="SYMBOL",
                      keytype="ENSEMBL",
                      multiVals="first")
-res$entrez = mapIds(org.Hs.eg.db,
+res$entrez <- mapIds(org.Hs.eg.db,
                      keys=row.names(res),
                      column="ENTREZID",
                      keytype="ENSEMBL",
                      multiVals="first")
-res$name =   mapIds(org.Hs.eg.db,
+res$name <- mapIds(org.Hs.eg.db,
                      keys=row.names(res),
                      column="GENENAME",
                      keytype="ENSEMBL",
@@ -237,32 +235,33 @@ res$name =   mapIds(org.Hs.eg.db,
 head(res)
 ```
 
-We’re going to use the [gage](http://bioconductor.org/packages/release/bioc/html/gage.html) package for pathway analysis, and the [pathview](http://bioconductor.org/packages/release/bioc/html/pathview.html) package to draw a pathway diagram.
-
+We’re going to use the [gage](https://bioconductor.org/packages/release/bioc/html/gage.html) package for pathway analysis, and the [pathview](https://bioconductor.org/packages/release/bioc/html/pathview.html) package to draw a pathway diagram.
 
 The gageData package has pre-compiled databases mapping genes to KEGG pathways and GO terms for common organisms:
 
 ```R
 data(kegg.sets.hs)
 data(sigmet.idx.hs)
-kegg.sets.hs = kegg.sets.hs[sigmet.idx.hs]
+kegg.sets.hs <- kegg.sets.hs[sigmet.idx.hs]
 head(kegg.sets.hs, 3)
 ```
 
-Run the pathway analysis. See help on the gage function with ?gage. Specifically, you might want to try changing the value of same.dir
+Run the pathway analysis. See help on the gage function with `?gage`. Specifically, you might want to try changing the value of same.dir.
 
 ```R
-foldchanges = res$log2FoldChange
-names(foldchanges) = res$entrez
-keggres = gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
+foldchanges <- res$log2FoldChange
+names(foldchanges) <- res$entrez
+keggres <- gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
 lapply(keggres, head)
 ```
 
-pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting.
+Pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting. The `dplyr` package is required to use the pipe (`%>%`) construct. 
 
 ```R
+library(dplyr)
+
 # Get the pathways
-keggrespathways = data.frame(id=rownames(keggres$greater), keggres$greater) %>%
+keggrespathways <- data.frame(id=rownames(keggres$greater), keggres$greater) %>%
   tbl_df() %>%
   filter(row_number()<=5) %>%
   .$id %>%
@@ -270,18 +269,21 @@ keggrespathways = data.frame(id=rownames(keggres$greater), keggres$greater) %>%
 keggrespathways
 
 # Get the IDs.
-keggresids = substr(keggrespathways, start=1, stop=8)
+keggresids <- substr(keggrespathways, start=1, stop=8)
 keggresids
 ```
 
-Finally, the pathview() function in the pathview package makes the plots. Let’s write a function so we can loop through and draw plots for the top 5 pathways we created above.
+Finally, the `pathview()` function in the pathview package makes the plots. Let’s write a function so we can loop through and draw plots for the top 5 pathways we created above.
 
 ```R
 # Define plotting function for applying later
-plot_pathway = function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa", new.signature=FALSE)
+plot_pathway <- function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa", new.signature=FALSE)
+
+# Unload dplyr since it conflicts with the next line
+detach("package:dplyr", unload=T)
 
 # plot multiple pathways (plots saved to disk and returns a throwaway list object)
-tmp = sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa"))
+tmp <- sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species="hsa"))
 ```
 
 #### Thanks

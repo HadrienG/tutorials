@@ -34,7 +34,7 @@ The choice of shotgun or 16S approaches is usually dictated by the nature of the
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 * [Kraken](https://ccb.jhu.edu/software/kraken/)
-* [Bracken](http://ccb.jhu.edu/software/bracken/)
+* [Bracken](https://ccb.jhu.edu/software/bracken/)
 * [R](https://www.r-project.org/)
 * [Pavian](https://github.com/fbreitwieser/pavian)
 
@@ -49,17 +49,17 @@ cd wms
 ```
 
 We'll use FastQC to check the quality of our data. FastQC can be downloaded and
-ran on a Windows or LINUX computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+run on a Windows or Linux computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
 Start FastQC and select the fastq file you just downloaded with `file -> open`  
-What do you think about the quality of the reads? Do they need trimming? Is there still adapters
+What do you think about the quality of the reads? Do they need trimming? Are there still adapters
 present? Overrepresented sequences?
 
 Alternatively, run fastqc on the command-line:
 
 `fastqc *.fastq.gz`
 
-If the quality appears to be that good, it's because it was probably the cleaned reads that were deposited into SRA.
+If the quality appears to be good, it's because it was probably the cleaned reads that were deposited into SRA.
 We can directly move to the classification step.
 
 ### Taxonomic Classification
@@ -68,14 +68,14 @@ We can directly move to the classification step.
 Kraken aims to achieve high sensitivity and high speed by utilizing exact alignments of k-mers and a novel classification algorithm (sic).
 
 In short, kraken uses a new approach with exact k-mer matching to assign taxonomy to short reads. It is *extremely* fast compared to traditional
-approaches (i.e. Blast)
+approaches (i.e. BLAST).
 
 By default, the authors of kraken built their database based on RefSeq Bacteria, Archea and Viruses. We'll use it for the purpose of this tutorial.
 
 **NOTE: The database may have been installed already! Ask your instructor!**
 
 ```bash
-# You might not need this step (example if you're working on Uppmax!)
+# You might not need this step (for example if you're working on Uppmax!)
 wget https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz
 tar xzf minikraken.tgz
 $KRAKEN_DB=minikraken_20141208
@@ -88,7 +88,9 @@ mkdir kraken_results
 for i in *_1.fastq.gz
 do
     prefix=$(basename $i _1.fastq.gz)
-    kraken --db $KRAKEN_DB --threads 2 --fastq-input --gzip-compressed \
+    # set number of threads to number of cores if running under SLURM, otherwise use 2 threads
+    nthreads=${SLURM_NPROCS:=2}
+    kraken --db $KRAKEN_DB --threads ${nthreads} --fastq-input --gzip-compressed \
         ${prefix}_1.fastq.gz ${prefix}_2.fastq.gz > kraken_results/${prefix}.tab
     kraken-report --db $KRAKEN_DB \
         kraken_results/${prefix}.tab > kraken_results/${prefix}_tax.txt
@@ -134,7 +136,7 @@ Three steps are necessary to set up Kraken abundance estimation.
 ```bash
 find -L $KRAKEN_DB/library -name "*.fna" -o -name "*.fa" -o -name "*.fasta" > genomes.list
 cat $(grep -v '^#' genomes.list) > genomes.fasta
-kraken --db=${KRAKEN_DB} --fasta-input --threads=10 kraken.fasta > database.kraken
+kraken --db=${KRAKEN_DB} --fasta-input --threads=${SLURM_NPROCS:=10} kraken.fasta > database.kraken
 count-kmer-abundances.pl --db=${KRAKEN_DB} --read-length=100 database.kraken > database100mers.kraken_cnts
 ```
 

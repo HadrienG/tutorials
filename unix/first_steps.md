@@ -16,9 +16,9 @@ The aim of this course is to introduce Unix and cover the basics. The programs t
 
 * Unix is a well established, very widespread operating system. You probably have a device running on Unix in your home without realising it (e.g. playstation, TV box, wireless router, android tablets/phones,...
 * Command line driven, with a huge number of often terse, but powerful commands.
-* In contrast to Windows, it is designed to allow many users to run their programs simultaneously on the same computer
+* In contrast to Windows, it is designed to allow many users to run their programs simultaneously on the same computer.
 * Designed to work in computer networks - for example, most of the Internet is Unix based.
-* It is used on many of the powerful computers at bioinformatics centres and also on many desktops and laptops (Mac OSX is UNIX based).
+* It is used on many of the powerful computers at bioinformatics centres and also on many desktops and laptops (MacOS is largely UNIX compatible).
 * The major difference between Unix and Windows is that it is free (as in freedom) and you can modify it to work however you want. This same principle of freedom is also used in most bioinformatics software.
 * There are many distributions of Unix such as Ubuntu, RedHat, Fedora, Mint,...). These are all Unix, but they bundle up extra software in a different way or combinations. Some are known for being conservative and reliable; whilst others are know for being cutting-edge (and less reliable).
 * The MacOSX operating system used by the [eBioKit](77.235.253.122) is also based on Unix.
@@ -28,14 +28,14 @@ The aim of this course is to introduce Unix and cover the basics. The programs t
 For this course, you will have to connect to the eBiokit using SSH. SSH stands for Secure Shell and is a network protocol used to securely connect to a server. To do so, you will need an SSH client:
 
 * On Linux: it is included by default, named Terminal.
-* On OSX: it is included by default, also named Terminal.
+* On MacOS: it is included by default, also named Terminal.
 * On Windows: you'll have to download and install [MobaXterm](http://mobaxterm.mobatek.net), a terminal emulator.
 
 Once you've opened your terminal (or terminal emulator), type
 
 `ssh username@ip_address`
 
-replacing `username` and `ip_address` by your username and the ip address of the server you are connecting to.
+replacing `username` and `ip_address` with your username and the ip address of the server you are connecting to.
 Type your password when prompted. As you type, nothing will show on screen. No stars, no dots.
 It is supposed to be that way. Just type the password and press enter!
 
@@ -75,10 +75,9 @@ Therefore if there is a file called genome.seq in the **dna** directory its loca
 
 ### General Points
 
-Unix is pretty straightforward, but there are some general points to remember that will make your life easier: most flavors of UNIX are case sensitive - typing **ls** is generally not the same as typing **LS**. You need to put a space between a command and its argument - for example, **less my_file** will show you the contents of the file called my_file; **moremyfile** will just give you an error! Unix is not psychic: If you misspell the name of a command or the name of a file, it will not understand you. Many of the commands are only a few letters long; this can be confusing until you start to think logically about why those letters were chosen - ls for list, rm for remove and so on. Often when you have problems with Unix, it is due to a spelling mistake, or perhaps you have omitted a space. If you want to know more about Unix and its commands there are plenty of resources available that provide a more comprehensive guide (including a cheat sheet at the end of this chapter.
+Unix is pretty straightforward, but there are some general points to remember that will make your life easier: most flavors of UNIX are case sensitive - typing **ls** is generally not the same as typing **LS**. You need to put a space between a command and its argument - for example, **less my_file** will show you the contents of the file called my_file; **lessmyfile** will just give you an error! Unix is not psychic: If you misspell the name of a command or the name of a file, it will not understand you. Many of the commands are only a few letters long; this can be confusing until you start to think logically about why those letters were chosen - ls for list, rm for remove and so on. Often when you have problems with Unix, it is due to a spelling mistake, or perhaps you have omitted a space. If you want to know more about Unix and its commands there are plenty of resources available that provide a more comprehensive guide (including a cheat sheet at the end of this chapter.
 
-*     [http://Unixhelp.ed.ac.uk](http://Linuxhelp.ed.ac.uk/)
-*     [http://Unix.t-a-y-l-o-r.com/](http://Linux.t-a-y-l-o-r.com/)
+*     [http://unix.t-a-y-l-o-r.com/](http://unix.t-a-y-l-o-r.com/)
 
 In what follows, we shall use the following typographical conventions: Characters written in **bold typewriter font** are commands to be typed into the computer as they stand. Characters written in *italic typewriter font* indicate non-specific file or directory names. Words inserted within square brackets [Ctrl] indicate keys to be pressed. So, for example,
 `$ **ls** *any_directory* [Enter]` means "at the Unix prompt $, type ls followed by the name of some directory, then press Enter"
@@ -175,10 +174,13 @@ Now use the **pwd** command to check your location in the directory hierarchy. N
 #### Tips
 
 There are some short cuts for referring to directories:
-.           Current directory (one full stop)  
-..           Directory above (two full stops)  
-~         Home directory (tilde)  
-/          Root of the file system (like C:\ in Windows)
+
+```
+.  Current directory (one full stop)  
+.. Directory above (two full stops)  
+~  Home directory (tilde)  
+/  Root of the file system (like C:\ in Windows)
+```
 
 Pressing the tab key twice will try and autocomplete what you’ve started typing or give you a list of all possible completions. This saves a lot of typing and typos. Pressing the up/down arrows will let you scroll through the previous commands. If you highlight some text, middle clicking will paste it on the command line.
 

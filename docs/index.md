@@ -1,20 +1,25 @@
-# Welcome to the SGBC tutorials
+# Home
 
 *TODO* introduction, info about the group and SLU
 
 ## Table of contents
 
-* [Introduction to Unix](unix.md) *TODO*
-* [File formats](file_formats.md) *TODO*
-* [Quality Control](qc.md) *TODO*
-* [Assembly](assembly.md) *TODO*
-* [Annotation](annotation.md) *TODO*
-* [Variant Calling](variant_calling.md) *TODO*
-* [Pan-genome Analysis](pan_genome.md) *TODO*
-* [RNA-Seq](rna_seq.md) *TODO*
-* [16s Metabarcoding Analysis](16s.md) *TODO*
-* [Whole Metagenome Sequencing](wms.md) *TODO*
-* [Metagenome Assembly](meta_assembly.md) *TODO*
+* [Introduction to Unix](unix.md)
+* [File formats](file_formats.md)
+* [Quality Control](qc.md)
+* [Assembly](assembly.md)
+* [Annotation](annotation.md)
+* [Variant Calling](variant_calling.md)
+* [Pan-genome Analysis](pan_genome.md)
+* [RNA-Seq](rna_seq.md)
+* [16s Metabarcoding Analysis](metabarcoding.md)
+* [Whole Metagenome Sequencing](wms.md)
+* [Metagenome Assembly](meta_assembly.md)
+
+## Contributing
+
+A typo? Something that irks you? Submit an [issue](https://github.com/HadrienG/tutorials/issues)
+or a pull request.
 
 ## License
 

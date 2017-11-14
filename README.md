@@ -3,25 +3,31 @@
 This repository contains basic tutorials and walkthroughs on various
 bioinformatics subjects:
 
-### Table of contents
+## Dev
 
-* [Introduction to Unix](unix/first_steps.md)
-* [File formats](file_formats.md)
-* [Quality Control](qc.md)
-* [Assembly](assembly.md)
-* [Annotation](annotation.md)
-* [Variant Calling](variant_calling.md)
-* [Pan-genome Analysis](pan_genome.md)
-* [RNA-Seq](rna_seq.md)
-* [16s Metabarcoding Analysis](16s.md)
-* [Whole Metagenome Sequencing](wms.md)
-* [Metagenome Assembly](meta_assembly.md)
+First install mkdocs in a virtual environment
 
-### Contributing
+```
+virtualenv mkdocs_env
+source mkdocs_env/bin/activate
+pip install mkdocs
+```
 
-A typo? Something that irks you? Submit an [issue](https://github.com/HadrienG/tutorials/issues)
-or a pull request!
+then the theme
 
-### License
+```
+pip install mkdocs-material
+```
 
-These tutorials are available under the [GNU Free Documentation License](LICENSE)
+Then clone the directory
+
+```
+git clone https://github.com/SGBC/cluster_doc.git
+cd cluster_doc
+```
+
+For a live preview in your browser do
+
+```
+mkdocs serve &
+```

@@ -31,3 +31,13 @@ For a live preview in your browser do
 ```
 mkdocs serve &
 ```
+
+## Deploy
+
+The following command will build and push your website to a `gh-pages` branch.
+Only do this if you want your own version of the website! If you are modifying
+the original, please open a pull request.
+
+```
+mkdocs gh-deploy
+```

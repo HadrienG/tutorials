@@ -1,2 +1,5 @@
-#backup of ebiokit tutorials
+# backup of ebiokit tutorials
 *.html
+
+# mkdocs things
+site/

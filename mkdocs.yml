@@ -1,6 +1,15 @@
-site_name: SGBC Bioinformatics Tutorials
+site_name: Bioinformatics Walkthroughs
 theme:
     name: 'material'
     palette:
         primary: 'pink'
         accent: 'pink'
+repo_name: 'HadrienG/tutorials'
+repo_url: 'https://github.com/HadrienG/tutorials'
+
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/HadrienG'
+    - type: 'twitter'
+      link: 'https://twitter.com/HGourle'

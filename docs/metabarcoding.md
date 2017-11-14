@@ -1,4 +1,4 @@
-# 16s Metabarcoding Analysis
+# Metabarcoding
 
 This tutorial is largely inspired of the [MiSeq SOP](http://www.mothur.org/wiki/MiSeq_SOP) from the Schloss Lab.
 

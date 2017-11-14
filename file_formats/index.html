@@ -1,0 +1,829 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.1, mkdocs-material-2.0.4">
+    
+    
+      
+        <title>File Formats - SGBC Bioinformatics Tutorials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-709eec9410.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-23f75ab9c7.palette.css">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-e826f8942a.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    
+    
+    
+      <body data-md-color-primary="pink" data-md-color-accent="pink">
+    
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="SGBC Bioinformatics Tutorials" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+            
+            File Formats
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    SGBC Bioinformatics Tutorials
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-nav__link">
+      Whole-genome de-novo Assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        File Formats
+      </label>
+    
+    <a href="./" title="File Formats" class="md-nav__link md-nav__link--active">
+      File Formats
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" title="Table of Contents" class="md-nav__link">
+    Table of Contents
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-fasta-format" title="The fasta format" class="md-nav__link">
+    The fasta format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-fastq-format" title="The fastq format" class="md-nav__link">
+    The fastq format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quality" title="Quality" class="md-nav__link">
+    Quality
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-sambam-format" title="the sam/bam format" class="md-nav__link">
+    the sam/bam format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-header-section" title="Example header section" class="md-nav__link">
+    Example header section
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-read" title="Example read" class="md-nav__link">
+    Example read
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-vcf-format" title="the vcf format" class="md-nav__link">
+    the vcf format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vcf-example" title="VCF Example" class="md-nav__link">
+    VCF Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-gff-format" title="the gff format" class="md-nav__link">
+    the gff format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-gff" title="Example gff" class="md-nav__link">
+    Example gff
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../meta_assembly/" title="Meta assembly" class="md-nav__link">
+      Meta assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../metabarcoding/" title="Metabarcoding" class="md-nav__link">
+      Metabarcoding
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../pan_genome/" title="Pan genome" class="md-nav__link">
+      Pan genome
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../qc/" title="Qc" class="md-nav__link">
+      Qc
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../rna_seq/" title="Rna seq" class="md-nav__link">
+      Rna seq
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../unix/" title="Unix" class="md-nav__link">
+      Unix
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../variant_calling/" title="Variant calling" class="md-nav__link">
+      Variant calling
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../wms/" title="Wms" class="md-nav__link">
+      Wms
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" title="Table of Contents" class="md-nav__link">
+    Table of Contents
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-fasta-format" title="The fasta format" class="md-nav__link">
+    The fasta format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-fastq-format" title="The fastq format" class="md-nav__link">
+    The fastq format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quality" title="Quality" class="md-nav__link">
+    Quality
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-sambam-format" title="the sam/bam format" class="md-nav__link">
+    the sam/bam format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-header-section" title="Example header section" class="md-nav__link">
+    Example header section
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-read" title="Example read" class="md-nav__link">
+    Example read
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-vcf-format" title="the vcf format" class="md-nav__link">
+    the vcf format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vcf-example" title="VCF Example" class="md-nav__link">
+    VCF Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-gff-format" title="the gff format" class="md-nav__link">
+    the gff format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-gff" title="Example gff" class="md-nav__link">
+    Example gff
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="file-formats">File Formats</h1>
+<p>This lecture is aimed at making you discover the most popular file formats used in bioinformatics. You're expected to have basic working knowledge of Linux to be able to follow the lesson.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#the-fasta-format">The fasta format</a></li>
+<li><a href="#the-fastq-format">The fastq format</a></li>
+<li><a href="#the-sam-format">The sam/bam format</a></li>
+<li><a href="#the-vcf-format">The vcf format</a></li>
+<li><a href="#the-gff-format">The gff format</a></li>
+</ul>
+<h3 id="the-fasta-format">The fasta format</h3>
+<p>The fasta format was invented in 1988 and designed to represent nucleotide or peptide sequences. It originates from the <a href="https://en.wikipedia.org/wiki/FASTA">FASTA</a> software package, but is now a standard in the world of bioinformatics. </p>
+<p>The first line in a FASTA file starts with a "&gt;" (greater-than) symbol followed by the description or identifier of the sequence. Following the initial line (used for a unique description of the sequence) is the actual sequence itself in standard one-letter code.</p>
+<p>A few sample sequences:</p>
+<pre><code>&gt;KX580312.1 Homo sapiens truncated breast cancer 1 (BRCA1) gene, exon 15 and partial cds
+GTCATCCCCTTCTAAATGCCCATCATTAGATGATAGGTGGTACATGCACAGTTGCTCTGGGAGTCTTCAG
+AATAGAAACTACCCATCTCAAGAGGAGCTCATTAAGGTTGTTGATGTGGAGGAGTAACAGCTGGAAGAGT
+CTGGGCCACACGATTTGACGGAAACATCTTACTTGCCAAGGCAAGATCTAG
+</code></pre>
+
+<pre><code>&gt;KRN06561.1 heat shock [Lactobacillus sucicola DSM 21376 = JCM 15457]
+MSLVMANELTNRFNNWMKQDDFFGNLGRSFFDLDNSVNRALKTDVKETDKAYEVRIDVPGIDKKDITVDY
+HDGVLSVNAKRDSFNDESDSEGNVIASERSYGRFARQYSLPNVDESGIKAKCEDGVLKLTLPKLAEEKIN
+GNHIEIE
+</code></pre>
+
+<p>A fasta file can contain multiple sequence. Each sequence will be separated by their "header" line, starting by "&gt;". </p>
+<p>Example:</p>
+<pre><code>&gt;KRN06561.1 heat shock [Lactobacillus sucicola DSM 21376 = JCM 15457]
+MSLVMANELTNRFNNWMKQDDFFGNLGRSFFDLDNSVNRALKTDVKETDKAYEVRIDVPGIDKKDITVDY
+HDGVLSVNAKRDSFNDESDSEGNVIASERSYGRFARQYSLPNVDESGIKAKCEDGVLKLTLPKLAEEKIN
+GNHIEIE
+&gt;3HHU_A Chain A, Human Heat-Shock Protein 90 (Hsp90)
+MPEETQTQDQPMEEEEVETFAFQAEIAQLMSLIINTFYSNKEIFLRELISNSSDALDKIRYESLTDPSKL
+DSGKELHINLIPNKQDRTLTIVDTGIGMTKADLINNLGTIAKSGTKAFMEALQAGADISMIGQFGVGFYS
+AYLVAEKVTVITKHNDDEQYAWESSAGGSFTVRTDTGEPMGRGTKVILHLKEDQTEYLEERRIKEIVKKH
+SQFIGYPITLFVEK
+</code></pre>
+
+<h3 id="the-fastq-format">The fastq format</h3>
+<p>The fastq format is also a text based format to represent nucleotide sequences, but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.</p>
+<p>A fastq file uses four lines per sequence:</p>
+<ul>
+<li>Line 1 begins with a '@' character and is followed by a sequence identifier and an optional description (like a FASTA title line).</li>
+<li>Line 2 is the raw sequence letters.</li>
+<li>Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.</li>
+<li>Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.</li>
+</ul>
+<p>An example sequence in fastq format:</p>
+<pre><code>@SEQ_ID
+GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
++
+!''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF&gt;&gt;&gt;&gt;&gt;&gt;CCCCCCC65
+</code></pre>
+
+<h4 id="quality">Quality</h4>
+<p>The quality, also called phred score, is the probability that the corresponding basecall is incorrect.</p>
+<p>Phred scores use a logarithmic scale, and are represented by ASCII characters, mapping to a quality usually going from 0 to 40.</p>
+<table>
+<thead>
+<tr>
+<th>Phred Quality Score</th>
+<th>Probability of incorrect base call</th>
+<th>Base call accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>1 in 10</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>1 in 100</td>
+<td>99%</td>
+</tr>
+<tr>
+<td>30</td>
+<td>1 in 1000</td>
+<td>99.9%</td>
+</tr>
+<tr>
+<td>40</td>
+<td>1 in 10,000</td>
+<td>99.99%</td>
+</tr>
+<tr>
+<td>50</td>
+<td>1 in 100,000</td>
+<td>99.999%</td>
+</tr>
+<tr>
+<td>60</td>
+<td>1 in 1,000,000</td>
+<td>99.9999%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-sambam-format">the sam/bam format</h3>
+<p>From <a href="https://en.wikipedia.org/wiki/SAM_(file_format)">Wikipedia</a>:</p>
+<p>SAM (file format) is a text-based format for storing biological sequences aligned to a reference sequence developed by Heng Li. The acronym SAM stands for Sequence Alignment/Map. It is widely used for storing data, such as nucleotide sequences, generated by Next generation sequencing technologies and usually mapped to a reference.</p>
+<p>The SAM format consists of a header and an alignment section. The binary representation of a SAM file is a BAM file, which is a compressed SAM file.[1] SAM files can be analysed and edited with the software SAMtools.</p>
+<p>The SAM format has a really extensive and complex specification that you can find <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">here</a>.</p>
+<p>In brief it consists of a header section and reads (with other information) in tab delimited format.</p>
+<h4 id="example-header-section">Example header section</h4>
+<pre><code>@HD VN:1.0                  SO:unsorted
+@SQ SN:O_volvulusOVOC_OM1a  LN:2816604
+@SQ SN:O_volvulusOVOC_OM1b  LN:28345163
+@SQ SN:O_volvulusOVOC_OM2   LN:25485961
+</code></pre>
+
+<h4 id="example-read">Example read</h4>
+<pre><code>M01137:130:00-A:17009:1352/14 * 0 0 * * 0 0 AGCAAAATACAACGATCTGGATGGTAGCATTAGCGATGCGACACTGCTTGAACCGTCAAAG FGGFGCFGFFGC8,,@D?E6EFCF,=AEFFGGDGGGADFGG@&gt;FFEGGG:+&lt;7D&gt;AFCFGG YT:Z:UU
+</code></pre>
+
+<h3 id="the-vcf-format">the vcf format</h3>
+<p>The vcf format is also a text-based file format. VCF stands for Variant Call Format and is used to store gene sequence variations (SNVs, indels). The format has been developped for genotyping projects, and is the standard to represent variations in the genome of a species.</p>
+<p>A vcf is a tab-delimited file, described <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">here</a>.</p>
+<h4 id="vcf-example">VCF Example</h4>
+<pre><code>##fileformat=VCFv4.0
+##fileDate=20110705
+##reference=1000GenomesPilot-NCBI37
+##phasing=partial
+##INFO=&lt;ID=NS,Number=1,Type=Integer,Description=&quot;Number of Samples With Data&quot;&gt;
+##INFO=&lt;ID=DP,Number=1,Type=Integer,Description=&quot;Total Depth&quot;&gt;
+##INFO=&lt;ID=AF,Number=.,Type=Float,Description=&quot;Allele Frequency&quot;&gt;
+##INFO=&lt;ID=AA,Number=1,Type=String,Description=&quot;Ancestral Allele&quot;&gt;
+##INFO=&lt;ID=DB,Number=0,Type=Flag,Description=&quot;dbSNP membership, build 129&quot;&gt;
+##INFO=&lt;ID=H2,Number=0,Type=Flag,Description=&quot;HapMap2 membership&quot;&gt;
+##FILTER=&lt;ID=q10,Description=&quot;Quality below 10&quot;&gt;
+##FILTER=&lt;ID=s50,Description=&quot;Less than 50% of samples have data&quot;&gt;
+##FORMAT=&lt;ID=GQ,Number=1,Type=Integer,Description=&quot;Genotype Quality&quot;&gt;
+##FORMAT=&lt;ID=GT,Number=1,Type=String,Description=&quot;Genotype&quot;&gt;
+##FORMAT=&lt;ID=DP,Number=1,Type=Integer,Description=&quot;Read Depth&quot;&gt;
+##FORMAT=&lt;ID=HQ,Number=2,Type=Integer,Description=&quot;Haplotype Quality&quot;&gt;
+#CHROM POS    ID        REF  ALT     QUAL FILTER INFO                              FORMAT      Sample1        Sample2        Sample3
+2      4370   rs6057    G    A       29   .      NS=2;DP=13;AF=0.5;DB;H2           GT:GQ:DP:HQ 0|0:48:1:52,51 1|0:48:8:51,51 1/1:43:5:.,.
+2      7330   .         T    A       3    q10    NS=5;DP=12;AF=0.017               GT:GQ:DP:HQ 0|0:46:3:58,50 0|1:3:5:65,3   0/0:41:3
+2      110696 rs6055    A    G,T     67   PASS   NS=2;DP=10;AF=0.333,0.667;AA=T;DB GT:GQ:DP:HQ 1|2:21:6:23,27 2|1:2:0:18,2   2/2:35:4
+2      130237 .         T    .       47   .      NS=2;DP=16;AA=T                   GT:GQ:DP:HQ 0|0:54:7:56,60 0|0:48:4:56,51 0/0:61:2
+2      134567 microsat1 GTCT G,GTACT 50   PASS   NS=2;DP=9;AA=G                    GT:GQ:DP    0/1:35:4       0/2:17:2       1/1:40:3
+chr1    45796269        .       G       C
+chr1    45797505        .       C       G
+chr1    45798555        .       T       C
+chr1    45798901        .       C       T
+chr1    45805566        .       G       C
+chr2    47703379        .       C       T
+chr2    48010488        .       G       A
+chr2    48030838        .       A       T
+chr2    48032875        .       CTAT    -
+chr2    48032937        .       T       C
+chr2    48033273        .       TTTTTGTTTTAATTCCT       -
+chr2    48033551        .       C       G
+chr2    48033910        .       A       T
+chr2    215632048       .       G       T
+chr2    215632125       .       TT      -
+chr2    215632155       .       T       C
+chr2    215632192       .       G       A
+chr2    215632255       .       CA      TG
+chr2    215634055       .       C       T
+</code></pre>
+
+<h3 id="the-gff-format">the gff format</h3>
+<p>The general feature format (gff) is another text file format, used for describing genes and other features of DNA, RNA and protein sequences. It is the standard for annotation of genomes.</p>
+<p>A gff file should contain 9 columns, described <a href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">here</a></p>
+<h4 id="example-gff">Example gff</h4>
+<pre><code>##description: evidence-based annotation of the human genome (GRCh38), version 25 (Ensembl 85)
+##provider: GENCODE
+##contact: gencode-help@sanger.ac.uk
+##format: gtf
+##date: 2016-07-15
+chr1    HAVANA  gene    11869   14409   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; level 2; havana_gene &quot;OTTHUMG00000000961.2&quot;;
+chr1    HAVANA  transcript  11869   14409   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; transcript_id &quot;ENST00000456328.2&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; transcript_type &quot;processed_transcript&quot;; transcript_status &quot;KNOWN&quot;; transcript_name &quot;DDX11L1-002&quot;; level 2; transcript_support_level &quot;1&quot;; tag &quot;basic&quot;; havana_gene &quot;OTTHUMG00000000961.2&quot;; havana_transcript &quot;OTTHUMT00000362751.1&quot;;
+chr1    HAVANA  exon    11869   12227   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; transcript_id &quot;ENST00000456328.2&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; transcript_type &quot;processed_transcript&quot;; transcript_status &quot;KNOWN&quot;; transcript_name &quot;DDX11L1-002&quot;; exon_number 1; exon_id &quot;ENSE00002234944.1&quot;; level 2; transcript_support_level &quot;1&quot;; tag &quot;basic&quot;; havana_gene &quot;OTTHUMG00000000961.2&quot;; havana_transcript &quot;OTTHUMT00000362751.1&quot;;
+chr1    HAVANA  exon    12613   12721   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; transcript_id &quot;ENST00000456328.2&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; transcript_type &quot;processed_transcript&quot;; transcript_status &quot;KNOWN&quot;; transcript_name &quot;DDX11L1-002&quot;; exon_number 2; exon_id &quot;ENSE00003582793.1&quot;; level 2; transcript_support_level &quot;1&quot;; tag &quot;basic&quot;; havana_gene &quot;OTTHUMG00000000961.2&quot;; havana_transcript &quot;OTTHUMT00000362751.1&quot;;
+chr1    HAVANA  exon    13221   14409   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; transcript_id &quot;ENST00000456328.2&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; transcript_type &quot;processed_transcript&quot;; transcript_status &quot;KNOWN&quot;; transcript_name &quot;DDX11L1-002&quot;; exon_number 3; exon_id &quot;ENSE00002312635.1&quot;; level 2; transcript_support_level &quot;1&quot;; tag &quot;basic&quot;; havana_gene &quot;OTTHUMG00000000961.2&quot;; havana_transcript &quot;OTTHUMT00000362751.1&quot;;
+</code></pre>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Whole-genome de-novo Assembly
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../meta_assembly/" title="Meta assembly" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Meta assembly
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-8e4952e681.js"></script>
+      
+      <script>app.initialize({version:"0.17.1",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

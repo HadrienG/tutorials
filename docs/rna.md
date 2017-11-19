@@ -1,4 +1,4 @@
-# RNA-Seq analysis
+# RNA-Seq
 
 ## Load salmon
 
@@ -66,7 +66,7 @@ After the salmon commands finish running, you should have a directory named `qua
 
 ## Import read counts using tximport
 
-Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis. 
+Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis.
 
 First, open up your favourite R IDE and install the necessary packages:
 
@@ -255,7 +255,7 @@ keggres <- gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
 lapply(keggres, head)
 ```
 
-Pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting. The `dplyr` package is required to use the pipe (`%>%`) construct. 
+Pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting. The `dplyr` package is required to use the pipe (`%>%`) construct.
 
 ```R
 library(dplyr)

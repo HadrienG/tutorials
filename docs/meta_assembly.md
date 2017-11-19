@@ -1,4 +1,4 @@
-# Metagenome Assembly
+# Metagenome assembly
 
 In this tutorial you'll learn how to inspect the quality of High-throughput sequencing and
 perform a metagenomic assembly.

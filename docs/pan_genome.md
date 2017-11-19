@@ -1,4 +1,4 @@
-# Pan-genome analysis
+# Pan-Genome Analysis
 
 In this tutorial we will learn how to determine a pan-genome from a collection of isolate genomes.
 

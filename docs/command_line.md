@@ -1,4 +1,4 @@
-# Unix
+# The command-line
 
 This tutorial is largely inspired of the [Introduction to UNIX](ftp://ftp.sanger.ac.uk/pub/project/pathogens/jm15/unix.pdf) course from the Sanger Institute.
 

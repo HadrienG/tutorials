@@ -1,13 +1,18 @@
-# Quality control
+# Quality Control and Trimming
 
-In this practical you will learn to import, view and check the quality of NGS read data in FASTQ format.
+In this practical you will learn to import, view and check the quality of raw high thoughput sequencing sequencing data.
 
-You will be working with an Illumina MiSeq read dataset from a genome sequence project. The sequenced organism is an enterohaemorrhagic E. coli (EHEC) of the serotype O157, a potentially fatal gastrointestinal pathogen. The sequenced bacterium was part of an outbreak investigation in the St. Louis area, USA in 2011.
+The first dataset you will be working with is from an Illumina MiSeq dataset.
+The sequenced organism is an enterohaemorrhagic E. coli (EHEC) of the serotype O157, a potentially fatal gastrointestinal pathogen.
+The sequenced bacterium was part of an outbreak investigation in the St. Louis area, USA in 2011.
 The sequencing was done as paired-end 2x150bp.
 
 ## Downloading the data
 
-The raw data were deposited at the European Nucleotide Archive, under the accession number SRR957824. Go to the ENA [website](http://www.ebi.ac.uk/ena) and search for the run with the accession SRR957824. Download the two fastq files associated with the run:
+The raw data were deposited at the European Nucleotide Archive, under the accession number SRR957824.
+You could go to the ENA [website](http://www.ebi.ac.uk/ena) and search for the run with the accession SRR957824.
+
+You can also download the data associated with the run directly with the following command:
 
 ```
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
@@ -23,13 +28,12 @@ FastQC has a graphical interface and can be downloaded and run on a Windows or L
 However, FastQC is also available as a command line utility on the training server you are using. You can load the module and execute the program as follows:
 
 ```
-module load FastQC
-fastqc $read1 $read2
+fastqc SRR957824_1.fastq.gz SRR957824_2.fastq.gz
 ```
 
 which will produce both a .zip archive containing all the plots, and a html document for you to look at the result in your browser.
 
-Open the html file with your favourite web browser, and try to interpret them. 
+Open the html file with your favourite web browser, and try to interpret them.
 
 Pay special attention to the per base sequence quality and sequence length distribution. Explanations for the various quality modules can be found [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/). Also, have a look at examples of a [good](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and a [bad](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) illumina read set for comparison.
 
@@ -105,4 +109,4 @@ Based on the FastQC report, there seems to be a population of shorter reads that
 
 ## Extra exercises
 
-Perform quality control on the extra datasets given by your instructors. 
+Perform quality control on the extra datasets given by your instructors.

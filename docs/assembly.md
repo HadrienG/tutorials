@@ -1,4 +1,4 @@
-# Whole-genome de-novo Assembly
+# De-novo Genome Assembly
 
 In this practical we will perform the assembly of M. genitalium, a bacterium published in 1995 by Fraser et al in Science.
 

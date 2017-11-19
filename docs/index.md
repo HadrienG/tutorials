@@ -4,17 +4,18 @@
 
 ## Table of contents
 
-* [Introduction to Unix](unix.md)
-* [File formats](file_formats.md)
-* [Quality Control](qc.md)
-* [Assembly](assembly.md)
-* [Annotation](annotation.md)
-* [Variant Calling](variant_calling.md)
-* [Pan-genome Analysis](pan_genome.md)
-* [RNA-Seq](rna_seq.md)
-* [16s Metabarcoding Analysis](metabarcoding.md)
+* [Home](index.md)
+* [The command-line](command_line.md)
+* [File Formats](file_formats.md)
+* [Quality Control and Trimming](qc.md)
+* [Mapping and Variant Calling](mapping.md)
+* [De-novo Genome Assembly](assembly.md)
+* [Genome Annotation](annotation.md)
+* [Pan-Genome Analysis](pan_genome.md)
+* [Metabarcoding](16S.md)
 * [Whole Metagenome Sequencing](wms.md)
-* [Metagenome Assembly](meta_assembly.md)
+* [Metagenome assembly](meta_assembly.md)
+* [RNA-Seq](rna.md)
 
 ## Contributing
 

@@ -11,7 +11,7 @@ This lecture is aimed at making you discover the most popular file formats used 
 
 ### The fasta format
 
-The fasta format was invented in 1988 and designed to represent nucleotide or peptide sequences. It originates from the [FASTA](https://en.wikipedia.org/wiki/FASTA) software package, but is now a standard in the world of bioinformatics. 
+The fasta format was invented in 1988 and designed to represent nucleotide or peptide sequences. It originates from the [FASTA](https://en.wikipedia.org/wiki/FASTA) software package, but is now a standard in the world of bioinformatics.
 
 The first line in a FASTA file starts with a ">" (greater-than) symbol followed by the description or identifier of the sequence. Following the initial line (used for a unique description of the sequence) is the actual sequence itself in standard one-letter code.
 
@@ -31,7 +31,7 @@ HDGVLSVNAKRDSFNDESDSEGNVIASERSYGRFARQYSLPNVDESGIKAKCEDGVLKLTLPKLAEEKIN
 GNHIEIE
 ```
 
-A fasta file can contain multiple sequence. Each sequence will be separated by their "header" line, starting by ">". 
+A fasta file can contain multiple sequence. Each sequence will be separated by their "header" line, starting by ">".
 
 Example:
 

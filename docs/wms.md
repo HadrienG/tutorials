@@ -1,4 +1,4 @@
-# Whole Metagenome Sequencing
+# Whole Metagenome Sequencin
 
 ### Table of Contents
 

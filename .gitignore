@@ -3,3 +3,6 @@
 
 # mkdocs things
 site/
+
+# mac studd
+.DS_Store

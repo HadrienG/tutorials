@@ -65,27 +65,79 @@ We fix that before going further
 chmod u-w *
 ```
 
+## Working Directory
+
+
+First we make a work directory: a directory where we can play around with a copy of the data without messing with the original
+
+```bash
+mkdir ~/work
+cd ~/work
+```
+
+Now we make a link of the data in our working directory
+
+```bash
+ln -s ~/data/* .
+```
+
+The files that we've downloaded are FASTQ files. Take a look at one of them with
+
+```bash
+zless SRR957824_500K_R1.fastq.gz
+```
+
+!!! tip
+    Use the spacebar to scroll down, and type ‘q’ to exit ‘less’
+
+You can read more on the FASTQ format in the [File Formats](file_formats.md) lesson.
+
+!!! question
+    Where does the filename come from?
+
+!!! question
+    Why are there 1 and 2 in the file names?    
+
 ## FastQC
 
-To check the quality of the sequence data we will use a tool called FastQC. With this you can check things like read length distribution, quality distribution across the read length, sequencing artifacts and much more.
+To check the quality of the sequence data we will use a tool called FastQC.
 
-FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
+FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation.
+It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
 
-However, FastQC is also available as a command line utility on the training server you are using. You can execute the program as follows:
+However, FastQC is also available as a command line utility on the training server you are using.
+To run FastQC on our two files
+
+```bash
+fastqc SRR957824_500K_R1.fastq.gz SRR957824_500K_R2.fastq.gz
+```
+
+and look what FastQC has produced
 
 ```
-fastqc SRR957824_1.fastq.gz SRR957824_2.fastq.gz
+ls *fastqc*
 ```
 
-which will produce both a .zip archive containing all the plots, and a html document for you to look at the result in your browser.
+For each file, FastQC has produced both a .zip archive containing all the plots, and a html report.
 
-Open the html file with your favourite web browser, and try to interpret them.
+Download and open the html files with your favourite web browser.
 
-Pay special attention to the per base sequence quality and sequence length distribution. Explanations for the various quality modules can be found [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/). Also, have a look at examples of a [good](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and a [bad](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) illumina read set for comparison.
+Alternatively you can look a these copies of them:
+
+* [SRR957824_500K_R1_fastqc.html](data/fastqc/SRR957824_500K_R1_fastqc.html)
+* [SRR957824_500K_R2_fastqc.html](data/fastqc/SRR957824_500K_R2_fastqc.html)
+
+!!! question
+    What should you pay attention to in the FastQC report?
+
+!!! question
+    Which file is of better quality?
+
+Pay special attention to the per base sequence quality and sequence length distribution.
+Explanations for the various quality modules can be found [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/).
+Also, have a look at examples of a [good](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and a [bad](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) illumina read set for comparison.
 
 You will note that the reads in your uploaded dataset have fairly poor quality (<20) towards the end. There are also outlier reads that have very poor quality for most of the second half of the reads.
-
-There are overrepresented sequences in the data. Where do they come from?
 
 ## Scythe
 

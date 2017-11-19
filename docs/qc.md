@@ -12,11 +12,57 @@ The sequencing was done as paired-end 2x150bp.
 The raw data were deposited at the European Nucleotide Archive, under the accession number SRR957824.
 You could go to the ENA [website](http://www.ebi.ac.uk/ena) and search for the run with the accession SRR957824.
 
-You can also download the data associated with the run directly with the following command:
+However these files contain about 3 million reads and are therefore quite big.
+We are only gonna use a subset of the original dataset for this tutorial.
+
+First create a `data/` directory in your home folder
+
+```bash
+mkdir ~/data
+```
+
+now let's download the subset
+
+```bash
+cd ~/data
+curl -O -J -L https://osf.io/shqpv/download
+curl -O -J -L https://osf.io/9m3ch/download
+```
+
+Let’s make sure we downloaded all of our data using md5sum.
+
+```bash
+md5sum SRR957824_500K_R1.fastq.gz SRR957824_500K_R2.fastq.gz
+```
+
+you should see this
 
 ```
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
+1e8cf249e3217a5a0bcc0d8a654585fb  SRR957824_500K_R1.fastq.gz
+70c726a31f05f856fe942d727613adb7  SRR957824_500K_R2.fastq.gz
+```
+
+and now look at the file names and their size
+
+```bash
+ls -l
+```
+
+```
+total 97M
+-rw-r--r-- 1 hadrien 48M Nov 19 18:44 SRR957824_500K_R1.fastq.gz
+-rw-r--r-- 1 hadrien 50M Nov 19 18:53 SRR957824_500K_R2.fastq.gz
+```
+
+There are 500 000 paired-end reads taken randomly from the original data
+
+One last thing before we get to the quality control: those files are writeable.
+By default, UNIX makes things writeable by the file owner.
+This poses an issue with creating typos or errors in raw data.
+We fix that before going further
+
+```bash
+chmod u-w *
 ```
 
 ## FastQC
@@ -25,7 +71,7 @@ To check the quality of the sequence data we will use a tool called FastQC. With
 
 FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
 
-However, FastQC is also available as a command line utility on the training server you are using. You can load the module and execute the program as follows:
+However, FastQC is also available as a command line utility on the training server you are using. You can execute the program as follows:
 
 ```
 fastqc SRR957824_1.fastq.gz SRR957824_2.fastq.gz

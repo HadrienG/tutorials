@@ -1,4 +1,4 @@
-site_name: Bioinformatics Walkthroughs
+site_name: Bioinformatics Tutorials
 theme:
     name: 'material'
     palette:
@@ -17,6 +17,7 @@ extra:
 # extensions
 markdown_extensions:
     - admonition
+    - codehilite
     - markdown.extensions.toc:
         permalink: true
 

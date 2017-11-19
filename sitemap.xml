@@ -4,23 +4,15 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/annotation/</loc>
-     <lastmod>2017-11-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/assembly/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <loc>/command_line/</loc>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -28,31 +20,7 @@
     
     <url>
      <loc>/file_formats/</loc>
-     <lastmod>2017-11-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/meta_assembly/</loc>
-     <lastmod>2017-11-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/metabarcoding/</loc>
-     <lastmod>2017-11-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/pan_genome/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -60,31 +28,47 @@
     
     <url>
      <loc>/qc/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/rna_seq/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <loc>/mapping/</loc>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/unix/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <loc>/assembly/</loc>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/variant_calling/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <loc>/annotation/</loc>
+     <lastmod>2017-11-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/pan_genome/</loc>
+     <lastmod>2017-11-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/16S/</loc>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -92,7 +76,23 @@
     
     <url>
      <loc>/wms/</loc>
-     <lastmod>2017-11-14</lastmod>
+     <lastmod>2017-11-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/meta_assembly/</loc>
+     <lastmod>2017-11-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/rna/</loc>
+     <lastmod>2017-11-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

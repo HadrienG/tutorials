@@ -32,7 +32,7 @@
     
     
       
-        <title>Mapping and variant calling - Bioinformatics Walkthroughs</title>
+        <title>Mapping and Variant Calling - Bioinformatics Walkthroughs</title>
       
     
     
@@ -92,7 +92,7 @@
             
               
             
-            Mapping and variant calling
+            Mapping and Variant Calling
           
         </span>
       </div>
@@ -214,20 +214,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
-      Genome Annotation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-nav__link">
-      Whole-genome de-novo Assembly
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
     </a>
   </li>
 
@@ -250,68 +238,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../meta_assembly/" title="Metagenome Assembly" class="md-nav__link">
-      Metagenome Assembly
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../metabarcoding/" title="Metabarcoding" class="md-nav__link">
-      Metabarcoding
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../pan_genome/" title="Pan-genome analysis" class="md-nav__link">
-      Pan-genome analysis
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../qc/" title="Quality control" class="md-nav__link">
-      Quality control
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../rna_seq/" title="RNA-Seq analysis" class="md-nav__link">
-      RNA-Seq analysis
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../unix/" title="Unix" class="md-nav__link">
-      Unix
+    <a href="../qc/" title="Quality Control and Trimming" class="md-nav__link">
+      Quality Control and Trimming
     </a>
   </li>
 
@@ -331,11 +259,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Mapping and variant calling
+        Mapping and Variant Calling
       </label>
     
-    <a href="./" title="Mapping and variant calling" class="md-nav__link md-nav__link--active">
-      Mapping and variant calling
+    <a href="./" title="Mapping and Variant Calling" class="md-nav__link md-nav__link--active">
+      Mapping and Variant Calling
     </a>
     
       
@@ -424,8 +352,80 @@
 
 
   <li class="md-nav__item">
-    <a href="../wms/" title="Wms" class="md-nav__link">
-      Wms
+    <a href="../assembly/" title="De-novo Genome Assembly" class="md-nav__link">
+      De-novo Genome Assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-nav__link">
+      Pan-Genome Analysis
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../16S/" title="Metabarcoding" class="md-nav__link">
+      Metabarcoding
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../meta_assembly/" title="Metagenome assembly" class="md-nav__link">
+      Metagenome assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../rna/" title="RNA-Seq" class="md-nav__link">
+      RNA-Seq
     </a>
   </li>
 
@@ -525,28 +525,28 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/variant_calling.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/mapping.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="mapping-and-variant-calling">Mapping and variant calling</h1>
+                <h1 id="mapping-and-variant-calling">Mapping and Variant Calling<a class="headerlink" href="#mapping-and-variant-calling" title="Permanent link">&para;</a></h1>
 <p>In this practical you will learn to map NGS reads to a reference sequence, check the output using a viewer software and investigate some aspects of the results. You will be using the read data from the <a href="../qc/">Quality Control</a> practical.</p>
 <p>EHEC O157 strains generally carry a large virulence plasmid, pO157. Plasmids are circular genetic elements that many bacteria carry in addition to their chromosomes. This particular plasmid encodes a number of proteins which are known or suspected to be involved in the ability to cause severe disease in infected humans. Your task in this practical is to map your prepared read set to a reference sequence of the virulence plasmid, to determine if the pO157 plasmid is present in the St. Louis outbreak strain.</p>
-<h2 id="read-mapping">Read mapping</h2>
-<h3 id="downloading-a-reference">downloading a reference</h3>
+<h2 id="read-mapping">Read mapping<a class="headerlink" href="#read-mapping" title="Permanent link">&para;</a></h2>
+<h3 id="downloading-a-reference">downloading a reference<a class="headerlink" href="#downloading-a-reference" title="Permanent link">&para;</a></h3>
 <p>You will need a reference sequence to map your reads to. You can download the reference from <a href="../data/pO157_Sakai.fasta">here</a></p>
 <p>or from the command-line with</p>
 <p><code>wget https://raw.githubusercontent.com/HadrienG/tutorials/master/data/pO157_Sakai.fasta</code></p>
 <p>This file contains the sequence of the pO157 plasmid from the Sakai outbreak strain of E. coli O157. In contrast to the strain we are working on, this strain is available as a finished genome, i.e. the whole sequence of both the single chromosome and the large virulence plasmid are known.</p>
-<h3 id="indexing-the-reference">indexing the reference</h3>
+<h3 id="indexing-the-reference">indexing the reference<a class="headerlink" href="#indexing-the-reference" title="Permanent link">&para;</a></h3>
 <p>Before aligning the reads against a reference, it is necessary to build an index of that reference:</p>
 <pre><code>module load bowtie2
 bowtie2-build pO157_Sakai.fasta pO157_Sakai
 </code></pre>
 
-<h3 id="aligning-reads">aligning reads</h3>
+<h3 id="aligning-reads">aligning reads<a class="headerlink" href="#aligning-reads" title="Permanent link">&para;</a></h3>
 <p><code>bowtie2 -x pO157_Sakai -1 reads_1.fastq -2 reads_2.fastq -S output.sam</code></p>
 <p>The output of the mapping will be in SAM format. you can find a brief explanation of the SAM format <a href="files_formats.md">here</a></p>
-<h3 id="visualising-the-alignment">visualising the alignment</h3>
+<h3 id="visualising-the-alignment">visualising the alignment<a class="headerlink" href="#visualising-the-alignment" title="Permanent link">&para;</a></h3>
 <p>To view the outcome of the read mapping, we will use a program called Tablet, that can be run without administrated privileges. Download it <a href="https://ics.hutton.ac.uk/tablet/">here</a>.</p>
 <p>Start the program and select Red Button – Open. Choose your SAM-file and pO157_Sakai.fasta as a reference.</p>
 <p><img alt="tablet1" src="../images/tablet1.png" /></p>
@@ -563,10 +563,10 @@ bowtie2-build pO157_Sakai.fasta pO157_Sakai
 <p><img alt="blast1" src="../images/blast1.png" /></p>
 <p>How many matches do you find on the chromosome?</p>
 <p>Why do you think the coverage is so high for this region in the mapping to the pO157 reference?</p>
-<h2 id="variant-calling">Variant Calling</h2>
+<h2 id="variant-calling">Variant Calling<a class="headerlink" href="#variant-calling" title="Permanent link">&para;</a></h2>
 <p>A frequent application for mapping reads is variant calling, i.e. finding positions where the reference and your sequences differ. Single nucleotide polymorphism (SNP)-based typing is particularly popular and used for a broad range of applications. For an EHEC O157 outbreak you could use it to identify the source, for instance. Indels are insertions and deletions in the mapped data compared to the reference.</p>
 <p>You could find SNPs by just staring at the alignment in Tablet. A variant caller is a program that automates this process, finding variable positions anywhere in the sequence and weighing the evidence for a true variant (number of reads agreeing, quality of those reads etc.) We will be using SAMtools for variant calling.</p>
-<h3 id="sorting-and-indexing-a-bam-file">Sorting and indexing a bam file</h3>
+<h3 id="sorting-and-indexing-a-bam-file">Sorting and indexing a bam file<a class="headerlink" href="#sorting-and-indexing-a-bam-file" title="Permanent link">&para;</a></h3>
 <p>First you need to sort the reads in the BAM-file so the variant caller can easily find the relevant ones for a given position in the reference sequence.</p>
 <p>You may need to convert your sam file into a bam file first:</p>
 <p><code>samtools view -bS -o $output.bam $input.sam</code></p>
@@ -601,7 +601,7 @@ Read the original paper about the St. Louis outbreak investigation, in particula
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../unix/" title="Unix" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../qc/" title="Quality Control and Trimming" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -610,19 +610,19 @@ Read the original paper about the St. Louis outbreak investigation, in particula
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Unix
+                Quality Control and Trimming
               </span>
             </div>
           </a>
         
         
-          <a href="../wms/" title="Wms" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../assembly/" title="De-novo Genome Assembly" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Wms
+                De-novo Genome Assembly
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

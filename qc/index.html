@@ -32,7 +32,7 @@
     
     
       
-        <title>Quality control - Bioinformatics Walkthroughs</title>
+        <title>Quality Control and Trimming - Bioinformatics Walkthroughs</title>
       
     
     
@@ -92,7 +92,7 @@
             
               
             
-            Quality control
+            Quality Control and Trimming
           
         </span>
       </div>
@@ -214,20 +214,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
-      Genome Annotation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-nav__link">
-      Whole-genome de-novo Assembly
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
     </a>
   </li>
 
@@ -248,42 +236,6 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../meta_assembly/" title="Metagenome Assembly" class="md-nav__link">
-      Metagenome Assembly
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../metabarcoding/" title="Metabarcoding" class="md-nav__link">
-      Metabarcoding
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../pan_genome/" title="Pan-genome analysis" class="md-nav__link">
-      Pan-genome analysis
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
@@ -295,11 +247,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Quality control
+        Quality Control and Trimming
       </label>
     
-    <a href="./" title="Quality control" class="md-nav__link md-nav__link--active">
-      Quality control
+    <a href="./" title="Quality Control and Trimming" class="md-nav__link md-nav__link--active">
+      Quality Control and Trimming
     </a>
     
       
@@ -362,8 +314,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../rna_seq/" title="Rna seq" class="md-nav__link">
-      Rna seq
+    <a href="../mapping/" title="Mapping and Variant Calling" class="md-nav__link">
+      Mapping and Variant Calling
     </a>
   </li>
 
@@ -374,8 +326,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../unix/" title="Unix" class="md-nav__link">
-      Unix
+    <a href="../assembly/" title="De-novo Genome Assembly" class="md-nav__link">
+      De-novo Genome Assembly
     </a>
   </li>
 
@@ -386,8 +338,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../variant_calling/" title="Variant calling" class="md-nav__link">
-      Variant calling
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
     </a>
   </li>
 
@@ -398,8 +350,56 @@
 
 
   <li class="md-nav__item">
-    <a href="../wms/" title="Wms" class="md-nav__link">
-      Wms
+    <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-nav__link">
+      Pan-Genome Analysis
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../16S/" title="Metabarcoding" class="md-nav__link">
+      Metabarcoding
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../meta_assembly/" title="Metagenome assembly" class="md-nav__link">
+      Metagenome assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../rna/" title="RNA-Seq" class="md-nav__link">
+      RNA-Seq
     </a>
   </li>
 
@@ -476,30 +476,33 @@
                   <a href="https://github.com/HadrienG/tutorials/edit/master/docs/qc.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="quality-control">Quality control</h1>
-<p>In this practical you will learn to import, view and check the quality of NGS read data in FASTQ format.</p>
-<p>You will be working with an Illumina MiSeq read dataset from a genome sequence project. The sequenced organism is an enterohaemorrhagic E. coli (EHEC) of the serotype O157, a potentially fatal gastrointestinal pathogen. The sequenced bacterium was part of an outbreak investigation in the St. Louis area, USA in 2011.
+                <h1 id="quality-control-and-trimming">Quality Control and Trimming<a class="headerlink" href="#quality-control-and-trimming" title="Permanent link">&para;</a></h1>
+<p>In this practical you will learn to import, view and check the quality of raw high thoughput sequencing sequencing data.</p>
+<p>The first dataset you will be working with is from an Illumina MiSeq dataset.
+The sequenced organism is an enterohaemorrhagic E. coli (EHEC) of the serotype O157, a potentially fatal gastrointestinal pathogen.
+The sequenced bacterium was part of an outbreak investigation in the St. Louis area, USA in 2011.
 The sequencing was done as paired-end 2x150bp.</p>
-<h2 id="downloading-the-data">Downloading the data</h2>
-<p>The raw data were deposited at the European Nucleotide Archive, under the accession number SRR957824. Go to the ENA <a href="http://www.ebi.ac.uk/ena">website</a> and search for the run with the accession SRR957824. Download the two fastq files associated with the run:</p>
+<h2 id="downloading-the-data">Downloading the data<a class="headerlink" href="#downloading-the-data" title="Permanent link">&para;</a></h2>
+<p>The raw data were deposited at the European Nucleotide Archive, under the accession number SRR957824.
+You could go to the ENA <a href="http://www.ebi.ac.uk/ena">website</a> and search for the run with the accession SRR957824.</p>
+<p>You can also download the data associated with the run directly with the following command:</p>
 <pre><code>wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
 </code></pre>
 
-<h2 id="fastqc">FastQC</h2>
+<h2 id="fastqc">FastQC<a class="headerlink" href="#fastqc" title="Permanent link">&para;</a></h2>
 <p>To check the quality of the sequence data we will use a tool called FastQC. With this you can check things like read length distribution, quality distribution across the read length, sequencing artifacts and much more.</p>
 <p>FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation. It is available <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">here</a>.</p>
 <p>However, FastQC is also available as a command line utility on the training server you are using. You can load the module and execute the program as follows:</p>
-<pre><code>module load FastQC
-fastqc $read1 $read2
+<pre><code>fastqc SRR957824_1.fastq.gz SRR957824_2.fastq.gz
 </code></pre>
 
 <p>which will produce both a .zip archive containing all the plots, and a html document for you to look at the result in your browser.</p>
-<p>Open the html file with your favourite web browser, and try to interpret them. </p>
+<p>Open the html file with your favourite web browser, and try to interpret them.</p>
 <p>Pay special attention to the per base sequence quality and sequence length distribution. Explanations for the various quality modules can be found <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/">here</a>. Also, have a look at examples of a <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html">good</a> and a <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html">bad</a> illumina read set for comparison.</p>
 <p>You will note that the reads in your uploaded dataset have fairly poor quality (&lt;20) towards the end. There are also outlier reads that have very poor quality for most of the second half of the reads.</p>
 <p>There are overrepresented sequences in the data. Where do they come from?</p>
-<h2 id="scythe">Scythe</h2>
+<h2 id="scythe">Scythe<a class="headerlink" href="#scythe" title="Permanent link">&para;</a></h2>
 <p>Scythe uses a Naive Bayesian approach to classify contaminant substrings in sequence reads. It considers quality information, which can make it robust in picking out 3'-end adapters, which often include poor quality bases.</p>
 <p>First, install scythe:</p>
 <pre><code>git clone https://github.com/vsbuffalo/scythe.git
@@ -512,7 +515,7 @@ make all
 <p>Scythe can be run minimally with:</p>
 <p><code>scythe -a adapter_file.fasta -o trimmed_sequences.fastq sequences.fastq</code></p>
 <p>Try to trim the adapters in both your read files!</p>
-<h2 id="sickle">Sickle</h2>
+<h2 id="sickle">Sickle<a class="headerlink" href="#sickle" title="Permanent link">&para;</a></h2>
 <p>Most modern sequencing technologies produce reads that have deteriorating quality towards the 3'-end and some towards the 5'-end as well. Incorrectly called bases in both regions negatively impact assembles, mapping, and downstream bioinformatics analyses.</p>
 <p>We will trim each read individually down to the good quality part to keep the bad part from interfering with downstream applications.</p>
 <p>To do so, we will use sickle. Sickle is a tool that uses sliding windows along with quality and length thresholds to determine when quality is sufficiently low to trim the 3'-end of reads and also determines when the quality is sufficiently high enough to trim the 5'-end of reads. It will also discard reads based upon a length threshold.</p>
@@ -538,8 +541,8 @@ make
 <p>What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution? Run FastQC again to find out.</p>
 <p>What is the sequence duplication levels graph about? Why should you care about a high level of duplication, and why is the level of duplication very low for this data?</p>
 <p>Based on the FastQC report, there seems to be a population of shorter reads that are technical artifacts. We will ignore them for now as they will not interfere with our analysis.</p>
-<h2 id="extra-exercises">Extra exercises</h2>
-<p>Perform quality control on the extra datasets given by your instructors. </p>
+<h2 id="extra-exercises">Extra exercises<a class="headerlink" href="#extra-exercises" title="Permanent link">&para;</a></h2>
+<p>Perform quality control on the extra datasets given by your instructors.</p>
                 
                   
                 
@@ -558,7 +561,7 @@ make
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../pan_genome/" title="Pan-genome analysis" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../file_formats/" title="File Formats" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -567,19 +570,19 @@ make
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Pan-genome analysis
+                File Formats
               </span>
             </div>
           </a>
         
         
-          <a href="../rna_seq/" title="Rna seq" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../mapping/" title="Mapping and Variant Calling" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Rna seq
+                Mapping and Variant Calling
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

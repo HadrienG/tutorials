@@ -32,7 +32,7 @@
     
     
       
-        <title>Metagenome Assembly - Bioinformatics Walkthroughs</title>
+        <title>Metagenome assembly - Bioinformatics Walkthroughs</title>
       
     
     
@@ -92,7 +92,7 @@
             
               
             
-            Metagenome Assembly
+            Metagenome assembly
           
         </span>
       </div>
@@ -214,20 +214,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
-      Genome Annotation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-nav__link">
-      Whole-genome de-novo Assembly
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
     </a>
   </li>
 
@@ -248,6 +236,90 @@
       
       
 
+
+  <li class="md-nav__item">
+    <a href="../qc/" title="Quality Control and Trimming" class="md-nav__link">
+      Quality Control and Trimming
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../mapping/" title="Mapping and Variant Calling" class="md-nav__link">
+      Mapping and Variant Calling
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../assembly/" title="De-novo Genome Assembly" class="md-nav__link">
+      De-novo Genome Assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-nav__link">
+      Pan-Genome Analysis
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../16S/" title="Metabarcoding" class="md-nav__link">
+      Metabarcoding
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
@@ -259,11 +331,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Metagenome Assembly
+        Metagenome assembly
       </label>
     
-    <a href="./" title="Metagenome Assembly" class="md-nav__link md-nav__link--active">
-      Metagenome Assembly
+    <a href="./" title="Metagenome assembly" class="md-nav__link md-nav__link--active">
+      Metagenome assembly
     </a>
     
       
@@ -333,80 +405,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../metabarcoding/" title="Metabarcoding" class="md-nav__link">
-      Metabarcoding
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../pan_genome/" title="Pan genome" class="md-nav__link">
-      Pan genome
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../qc/" title="Qc" class="md-nav__link">
-      Qc
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../rna_seq/" title="Rna seq" class="md-nav__link">
-      Rna seq
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../unix/" title="Unix" class="md-nav__link">
-      Unix
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../variant_calling/" title="Variant calling" class="md-nav__link">
-      Variant calling
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../wms/" title="Wms" class="md-nav__link">
-      Wms
+    <a href="../rna/" title="RNA-Seq" class="md-nav__link">
+      RNA-Seq
     </a>
   </li>
 
@@ -490,13 +490,13 @@
                   <a href="https://github.com/HadrienG/tutorials/edit/master/docs/meta_assembly.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="metagenome-assembly">Metagenome Assembly</h1>
+                <h1 id="metagenome-assembly">Metagenome assembly<a class="headerlink" href="#metagenome-assembly" title="Permanent link">&para;</a></h1>
 <p>In this tutorial you'll learn how to inspect the quality of High-throughput sequencing and
 perform a metagenomic assembly.</p>
 <p>We will use data under the accession SRS018585 in the Sequence Read Archive. this sample is
 "a Human Metagenome sample from G_DNA_Anterior nares of a male participant in the dbGaP study
 HMP Core Microbiome Sampling Protocol A (HMP-A)"</p>
-<h3 id="table-of-contents">Table of Contents</h3>
+<h3 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="#softwares-required-for-this-tutorial">Softwares Required for this Tutorial</a></li>
 <li><a href="#getting-the-data">Getting the Data</a></li>
@@ -504,7 +504,7 @@ HMP Core Microbiome Sampling Protocol A (HMP-A)"</p>
 <li><a href="#assembly">Assembly</a></li>
 <li><a href="#taxonomic-classification-and-visualization">Taxonomic Classification and Visualization</a></li>
 </ul>
-<h3 id="softwares-required-for-this-tutorial">Softwares Required for this Tutorial</h3>
+<h3 id="softwares-required-for-this-tutorial">Softwares Required for this Tutorial<a class="headerlink" href="#softwares-required-for-this-tutorial" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a></li>
 <li><a href="https://github.com/najoshi/sickle">sickle</a></li>
@@ -512,13 +512,13 @@ HMP Core Microbiome Sampling Protocol A (HMP-A)"</p>
 <li><a href="https://blast.ncbi.nlm.nih.gov">Blast</a></li>
 <li><a href="https://drl.github.io/blobtools/">blobtools</a></li>
 </ul>
-<h3 id="getting-the-data">Getting the Data</h3>
+<h3 id="getting-the-data">Getting the Data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h3>
 <pre><code>wget http://downloads.hmpdacc.org/data/Illumina/anterior_nares/SRS018585.tar.bz2
 tar xjf SRS018585.tar.bz2
 cd SRS018585
 </code></pre>
 
-<h3 id="quality-control">Quality Control</h3>
+<h3 id="quality-control">Quality Control<a class="headerlink" href="#quality-control" title="Permanent link">&para;</a></h3>
 <p>we'll use FastQC to check the quality of our data. FastQC can be downloaded and
 ran on a Windows or LINUX computer without installation. It is available <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">here</a></p>
 <p>Start FastQC and select the fastq files you just downloaded with <code>file -&gt; open</code></p>
@@ -530,7 +530,7 @@ ran on a Windows or LINUX computer without installation. It is available <a href
 </code></pre>
 
 <p>sickle normally gives you a summary of how many reads were trimmed.</p>
-<h3 id="assembly">Assembly</h3>
+<h3 id="assembly">Assembly<a class="headerlink" href="#assembly" title="Permanent link">&para;</a></h3>
 <p>SPAdes will be used for the assembly. Since version 3.7, SPAdes includes a metagenomic version of its algorithm, callable
 with the option --meta</p>
 <pre><code>spades.py --meta -1 SRS018585_trimmed_1.fastq -2 SRS018585_trimmed_2.fastq -t 8 -o assembly
@@ -538,7 +538,7 @@ with the option --meta</p>
 
 <p>the resulting assenmbly can be found under assembly/scaffolds.fasta. How many contigs does this assembly contain?
 How long is the longest contig and to what organism does it belong to?</p>
-<h3 id="taxonomic-classification-and-visualization">Taxonomic Classification and Visualization</h3>
+<h3 id="taxonomic-classification-and-visualization">Taxonomic Classification and Visualization<a class="headerlink" href="#taxonomic-classification-and-visualization" title="Permanent link">&para;</a></h3>
 <p>For the vizualisation of the assembly we will use a tool called blobtools.
 Blobtools produces "Taxon annotated GC-coverage plots" (TAGC) and was orignially made for
 the visualisation of (draft) genome assemblies.  </p>
@@ -575,7 +575,7 @@ blobtools plot -i scaffolds.blob.BlobDB.json -o scaffolds --title -r family
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../file_formats/" title="File Formats" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../wms/" title="Whole Metagenome Sequencing" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -584,19 +584,19 @@ blobtools plot -i scaffolds.blob.BlobDB.json -o scaffolds --title -r family
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                File Formats
+                Whole Metagenome Sequencing
               </span>
             </div>
           </a>
         
         
-          <a href="../metabarcoding/" title="Metabarcoding" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../rna/" title="RNA-Seq" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Metabarcoding
+                RNA-Seq
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -32,7 +32,7 @@
     
     
       
-        <title>RNA-Seq analysis - Bioinformatics Walkthroughs</title>
+        <title>RNA-Seq - Bioinformatics Walkthroughs</title>
       
     
     
@@ -92,7 +92,7 @@
             
               
             
-            RNA-Seq analysis
+            RNA-Seq
           
         </span>
       </div>
@@ -214,20 +214,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
-      Genome Annotation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-nav__link">
-      Whole-genome de-novo Assembly
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
     </a>
   </li>
 
@@ -250,8 +238,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../meta_assembly/" title="Metagenome Assembly" class="md-nav__link">
-      Metagenome Assembly
+    <a href="../qc/" title="Quality Control and Trimming" class="md-nav__link">
+      Quality Control and Trimming
     </a>
   </li>
 
@@ -262,7 +250,55 @@
 
 
   <li class="md-nav__item">
-    <a href="../metabarcoding/" title="Metabarcoding" class="md-nav__link">
+    <a href="../mapping/" title="Mapping and Variant Calling" class="md-nav__link">
+      Mapping and Variant Calling
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../assembly/" title="De-novo Genome Assembly" class="md-nav__link">
+      De-novo Genome Assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-nav__link">
+      Pan-Genome Analysis
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../16S/" title="Metabarcoding" class="md-nav__link">
       Metabarcoding
     </a>
   </li>
@@ -274,8 +310,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../pan_genome/" title="Pan-genome analysis" class="md-nav__link">
-      Pan-genome analysis
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
     </a>
   </li>
 
@@ -286,8 +322,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../qc/" title="Quality control" class="md-nav__link">
-      Quality control
+    <a href="../meta_assembly/" title="Metagenome assembly" class="md-nav__link">
+      Metagenome assembly
     </a>
   </li>
 
@@ -307,11 +343,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        RNA-Seq analysis
+        RNA-Seq
       </label>
     
-    <a href="./" title="RNA-Seq analysis" class="md-nav__link md-nav__link--active">
-      RNA-Seq analysis
+    <a href="./" title="RNA-Seq" class="md-nav__link md-nav__link--active">
+      RNA-Seq
     </a>
     
       
@@ -392,42 +428,6 @@
   
 </nav>
     
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../unix/" title="Unix" class="md-nav__link">
-      Unix
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../variant_calling/" title="Variant calling" class="md-nav__link">
-      Variant calling
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../wms/" title="Wms" class="md-nav__link">
-      Wms
-    </a>
   </li>
 
     
@@ -527,15 +527,15 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/rna_seq.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/rna.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="rna-seq-analysis">RNA-Seq analysis</h1>
-<h2 id="load-salmon">Load salmon</h2>
+                <h1 id="rna-seq">RNA-Seq<a class="headerlink" href="#rna-seq" title="Permanent link">&para;</a></h1>
+<h2 id="load-salmon">Load salmon<a class="headerlink" href="#load-salmon" title="Permanent link">&para;</a></h2>
 <pre><code>module load Salmon
 </code></pre>
 
-<h2 id="downloading-the-data">Downloading the data</h2>
+<h2 id="downloading-the-data">Downloading the data<a class="headerlink" href="#downloading-the-data" title="Permanent link">&para;</a></h2>
 <p>For this tutorial we will use the test data from <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004393">this</a> paper:</p>
 <blockquote>
 <p>Malachi Griffith<em>, Jason R. Walker, Nicholas C. Spies, Benjamin J. Ainscough, Obi L. Griffith</em>. 2015. Informatics for RNA-seq: A web resource for analysis on the cloud. PLoS Comp Biol. 11(8):e1004393.</p>
@@ -558,11 +558,11 @@
 cd toy_rna
 </code></pre>
 
-<h2 id="indexing-transcriptome">Indexing transcriptome</h2>
+<h2 id="indexing-transcriptome">Indexing transcriptome<a class="headerlink" href="#indexing-transcriptome" title="Permanent link">&para;</a></h2>
 <pre><code>salmon index -t chr22_transcripts.fa -i chr22_index
 </code></pre>
 
-<h2 id="quantify-reads-using-salmon">Quantify reads using salmon</h2>
+<h2 id="quantify-reads-using-salmon">Quantify reads using salmon<a class="headerlink" href="#quantify-reads-using-salmon" title="Permanent link">&para;</a></h2>
 <pre><code class="bash">for i in *_R1.fastq.gz
 do
    prefix=$(basename $i _R1.fastq.gz)
@@ -580,8 +580,8 @@ done
 </ul>
 <p>Salmon exposes many different options to the user that enable extra features or modify default behavior. However, the purpose and behavior of all of those options is beyond the scope of this introductory tutorial. You can read about salmon’s many options in the <a href="http://salmon.readthedocs.io/en/latest/">documentation</a>.</p>
 <p>After the salmon commands finish running, you should have a directory named <code>quant</code>, which will have a sub-directory for each sample. These sub-directories contain the quantification results of salmon, as well as a lot of other information salmon records about the sample and the run. The main output file (called quant.sf) is rather self-explanatory. For example, take a peek at the quantification file for sample <code>HBR_Rep1</code> in <code>quant/HBR_Rep1/quant.sf</code> and you’ll see a simple TSV format file listing the name (Name) of each transcript, its length (Length), effective length (EffectiveLength) (more details on this in the documentation), and its abundance in terms of Transcripts Per Million (TPM) and estimated number of reads (NumReads) originating from this transcript.</p>
-<h2 id="import-read-counts-using-tximport">Import read counts using tximport</h2>
-<p>Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis. </p>
+<h2 id="import-read-counts-using-tximport">Import read counts using tximport<a class="headerlink" href="#import-read-counts-using-tximport" title="Permanent link">&para;</a></h2>
+<p>Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis.</p>
 <p>First, open up your favourite R IDE and install the necessary packages:</p>
 <pre><code class="R">source(&quot;https://bioconductor.org/biocLite.R&quot;)
 biocLite(&quot;tximport&quot;)
@@ -614,7 +614,7 @@ txi.salmon &lt;- tximport(files, type = &quot;salmon&quot;, tx2gene = tx2gene, r
 <pre><code class="R">head(txi.salmon$counts)
 </code></pre>
 
-<h2 id="differential-expression-using-deseq2">Differential expression using DESeq2</h2>
+<h2 id="differential-expression-using-deseq2">Differential expression using DESeq2<a class="headerlink" href="#differential-expression-using-deseq2" title="Permanent link">&para;</a></h2>
 <p>Install the necessary package:</p>
 <pre><code class="R">biocLite('DESeq2')
 </code></pre>
@@ -676,7 +676,7 @@ with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main=&quot;Volcano plot&q
 with(subset(res, padj&lt;.05 ), points(log2FoldChange, -log10(pvalue), pch=20, col=&quot;red&quot;))
 </code></pre>
 
-<h2 id="kegg-pathway-analysis">KEGG pathway analysis</h2>
+<h2 id="kegg-pathway-analysis">KEGG pathway analysis<a class="headerlink" href="#kegg-pathway-analysis" title="Permanent link">&para;</a></h2>
 <p>As always, install and load the necessary packages:</p>
 <pre><code class="R">biocLite(&quot;AnnotationDbi&quot;)
 biocLite(&quot;org.Hs.eg.db&quot;)
@@ -726,7 +726,7 @@ keggres &lt;- gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
 lapply(keggres, head)
 </code></pre>
 
-<p>Pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting. The <code>dplyr</code> package is required to use the pipe (<code>%&gt;%</code>) construct. </p>
+<p>Pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting. The <code>dplyr</code> package is required to use the pipe (<code>%&gt;%</code>) construct.</p>
 <pre><code class="R">library(dplyr)
 
 # Get the pathways
@@ -753,7 +753,7 @@ detach(&quot;package:dplyr&quot;, unload=T)
 tmp &lt;- sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species=&quot;hsa&quot;))
 </code></pre>
 
-<h4 id="thanks">Thanks</h4>
+<h4 id="thanks">Thanks<a class="headerlink" href="#thanks" title="Permanent link">&para;</a></h4>
 <p>This material was inspired by Stephen Turner's blog post:</p>
 <blockquote>
 <p>Tutorial: RNA-seq differential expression &amp; pathway analysis with Sailfish, DESeq2, GAGE, and Pathview: http://www.gettinggeneticsdone.com/2015/12/tutorial-rna-seq-differential.html</p>
@@ -776,7 +776,7 @@ tmp &lt;- sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathw
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../qc/" title="Quality control" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../meta_assembly/" title="Metagenome assembly" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -785,25 +785,11 @@ tmp &lt;- sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathw
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Quality control
+                Metagenome assembly
               </span>
             </div>
           </a>
         
-        
-          <a href="../unix/" title="Unix" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Unix
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
         
       </nav>
     </div>

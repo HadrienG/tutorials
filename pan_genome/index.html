@@ -32,7 +32,7 @@
     
     
       
-        <title>Pan-genome analysis - Bioinformatics Walkthroughs</title>
+        <title>Pan-Genome Analysis - Bioinformatics Walkthroughs</title>
       
     
     
@@ -92,7 +92,7 @@
             
               
             
-            Pan-genome analysis
+            Pan-Genome Analysis
           
         </span>
       </div>
@@ -214,20 +214,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
-      Genome Annotation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-nav__link">
-      Whole-genome de-novo Assembly
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
     </a>
   </li>
 
@@ -250,8 +238,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../meta_assembly/" title="Metagenome Assembly" class="md-nav__link">
-      Metagenome Assembly
+    <a href="../qc/" title="Quality Control and Trimming" class="md-nav__link">
+      Quality Control and Trimming
     </a>
   </li>
 
@@ -262,8 +250,32 @@
 
 
   <li class="md-nav__item">
-    <a href="../metabarcoding/" title="Metabarcoding" class="md-nav__link">
-      Metabarcoding
+    <a href="../mapping/" title="Mapping and Variant Calling" class="md-nav__link">
+      Mapping and Variant Calling
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../assembly/" title="De-novo Genome Assembly" class="md-nav__link">
+      De-novo Genome Assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
     </a>
   </li>
 
@@ -283,11 +295,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Pan-genome analysis
+        Pan-Genome Analysis
       </label>
     
-    <a href="./" title="Pan-genome analysis" class="md-nav__link md-nav__link--active">
-      Pan-genome analysis
+    <a href="./" title="Pan-Genome Analysis" class="md-nav__link md-nav__link--active">
+      Pan-Genome Analysis
     </a>
     
       
@@ -343,8 +355,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../qc/" title="Qc" class="md-nav__link">
-      Qc
+    <a href="../16S/" title="Metabarcoding" class="md-nav__link">
+      Metabarcoding
     </a>
   </li>
 
@@ -355,8 +367,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../rna_seq/" title="Rna seq" class="md-nav__link">
-      Rna seq
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
     </a>
   </li>
 
@@ -367,8 +379,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../unix/" title="Unix" class="md-nav__link">
-      Unix
+    <a href="../meta_assembly/" title="Metagenome assembly" class="md-nav__link">
+      Metagenome assembly
     </a>
   </li>
 
@@ -379,20 +391,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../variant_calling/" title="Variant calling" class="md-nav__link">
-      Variant calling
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../wms/" title="Wms" class="md-nav__link">
-      Wms
+    <a href="../rna/" title="RNA-Seq" class="md-nav__link">
+      RNA-Seq
     </a>
   </li>
 
@@ -462,10 +462,10 @@
                   <a href="https://github.com/HadrienG/tutorials/edit/master/docs/pan_genome.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="pan-genome-analysis">Pan-genome analysis</h1>
+                <h1 id="pan-genome-analysis">Pan-Genome Analysis<a class="headerlink" href="#pan-genome-analysis" title="Permanent link">&para;</a></h1>
 <p>In this tutorial we will learn how to determine a pan-genome from a collection of isolate genomes.</p>
 <p>This tutorial is inspired from <a href="https://github.com/microgenomics/tutorials/blob/master/pangenome.md">Genome annotation and Pangenome Analysis</a> from the CBIB in Santiago, Chile</p>
-<h2 id="getting-the-data">Getting the data</h2>
+<h2 id="getting-the-data">Getting the data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
 <p>We'll use six <em>Listeria monocytogenes</em> genomes in this tutorial.</p>
 <pre><code class="bash">wget https://github.com/HadrienG/tutorials/blob/master/data/pangenome.tar.gz
 tar xzf pangenome.tar.gz
@@ -532,18 +532,18 @@ cd pangenome
 </tr>
 </tbody>
 </table>
-<h2 id="annotation-of-the-genomes">Annotation of the genomes</h2>
+<h2 id="annotation-of-the-genomes">Annotation of the genomes<a class="headerlink" href="#annotation-of-the-genomes" title="Permanent link">&para;</a></h2>
 <p>By annotating the genomes we mean to add information regarding genes, their location, strandedness, and features and attributes. Now that you have the genomes, we need to annotate them to determine the location and attributes of the genes contained in them. We will use Prokka for the annotation.</p>
 <pre><code>prokka --kingdom Bacteria --outdir prokka_GCA_000008285 --genus Listeria --locustag GCA_000008285 GCA_000008285.1_ASM828v1_genomic.fna
 </code></pre>
 
 <p>Annotate the 6 genomes, by replacing the <code>-outdir</code> and <code>-locustag</code> and <code>fasta file</code> accordingly.</p>
-<h2 id="pan-genome-analysis_1">Pan-genome analysis</h2>
+<h2 id="pan-genome-analysis_1">Pan-genome analysis<a class="headerlink" href="#pan-genome-analysis_1" title="Permanent link">&para;</a></h2>
 <p>put all the .gff files in the same folder (e.g., ./gff) and run Roary</p>
 <p><code>roary -f results -e -n -v gff/*.gff</code></p>
 <p>Roary will get all the coding sequences, convert them into protein, and create pre-clusters. Then, using BLASTP and MCL, Roary will create clusters, and check for paralogs. Finally, Roary will take every isolate and order them by presence/absence of orthologs. The summary output is present in the <code>summary_statistics.txt</code> file.</p>
 <p>Additionally, Roary produces a <code>gene_presence_absence.csv</code> file that can be opened in any spreadsheet software to manually explore the results. In this file, you will find information such as gene name and gene annotation, and, of course, whether a gene is present in a genome or not.</p>
-<h2 id="plotting-the-result">Plotting the result</h2>
+<h2 id="plotting-the-result">Plotting the result<a class="headerlink" href="#plotting-the-result" title="Permanent link">&para;</a></h2>
 <p>Roary comes with a python script that allows you to generate a few plots to graphically assess your analysis output.</p>
 <p>First, we need to generate a tree file from the alignment generated by Roary:</p>
 <pre><code>FastTree –nt –gtr core_gene_alignment.aln &gt; my_tree.newick
@@ -570,7 +570,7 @@ cd pangenome
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../metabarcoding/" title="Metabarcoding" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../annotation/" title="Genome Annotation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -579,19 +579,19 @@ cd pangenome
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Metabarcoding
+                Genome Annotation
               </span>
             </div>
           </a>
         
         
-          <a href="../qc/" title="Qc" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../16S/" title="Metabarcoding" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Qc
+                Metabarcoding
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

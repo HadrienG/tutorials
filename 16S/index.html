@@ -214,20 +214,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
-      Genome Annotation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../assembly/" title="Whole-genome de-novo Assembly" class="md-nav__link">
-      Whole-genome de-novo Assembly
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
     </a>
   </li>
 
@@ -250,8 +238,56 @@
 
 
   <li class="md-nav__item">
-    <a href="../meta_assembly/" title="Metagenome Assembly" class="md-nav__link">
-      Metagenome Assembly
+    <a href="../qc/" title="Quality Control and Trimming" class="md-nav__link">
+      Quality Control and Trimming
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../mapping/" title="Mapping and Variant Calling" class="md-nav__link">
+      Mapping and Variant Calling
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../assembly/" title="De-novo Genome Assembly" class="md-nav__link">
+      De-novo Genome Assembly
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-nav__link">
+      Pan-Genome Analysis
     </a>
   </li>
 
@@ -427,8 +463,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../pan_genome/" title="Pan genome" class="md-nav__link">
-      Pan genome
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
     </a>
   </li>
 
@@ -439,8 +475,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../qc/" title="Qc" class="md-nav__link">
-      Qc
+    <a href="../meta_assembly/" title="Metagenome assembly" class="md-nav__link">
+      Metagenome assembly
     </a>
   </li>
 
@@ -451,44 +487,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../rna_seq/" title="Rna seq" class="md-nav__link">
-      Rna seq
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../unix/" title="Unix" class="md-nav__link">
-      Unix
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../variant_calling/" title="Variant calling" class="md-nav__link">
-      Variant calling
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../wms/" title="Wms" class="md-nav__link">
-      Wms
+    <a href="../rna/" title="RNA-Seq" class="md-nav__link">
+      RNA-Seq
     </a>
   </li>
 
@@ -651,15 +651,15 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/metabarcoding.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/16S.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="metabarcoding">Metabarcoding</h1>
+                <h1 id="metabarcoding">Metabarcoding<a class="headerlink" href="#metabarcoding" title="Permanent link">&para;</a></h1>
 <p>This tutorial is largely inspired of the <a href="http://www.mothur.org/wiki/MiSeq_SOP">MiSeq SOP</a> from the Schloss Lab.</p>
 <blockquote>
 <p>Kozich JJ, Westcott SL, Baxter NT, Highlander SK, Schloss PD. (2013): Development of a dual-index sequencing strategy and curation pipeline for analyzing amplicon sequence data on the MiSeq Illumina sequencing platform. Applied and Environmental Microbiology. 79(17):5112-20.</p>
 </blockquote>
-<h3 id="table-of-contents">Table of Contents</h3>
+<h3 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#softwares-required-for-this-tutorial">Softwares Required for this Tutorial</a></li>
@@ -672,16 +672,16 @@
 </li>
 <li><a href="#batch-mode">Batch Mode</a></li>
 </ul>
-<h3 id="introduction">Introduction</h3>
+<h3 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h3>
 <p>The 16S rRNA gene is a section of prokaryotic DNA found in all bacteria and archaea. This gene codes for an rRNA, and this rRNA in turn makes up part of the ribosome. The first 'r' in rRNA stands for ribosomal. The ribosome is composed of two subunits, the large subunit (LSU) and the small subunit (SSU).</p>
 <p>The 16S rRNA gene is a commonly used tool for identifying bacteria for several reasons.  First, traditional characterization depended upon phenotypic traits like gram positive or gram negative, bacillus or coccus, etc. Taxonomists today consider analysis of an organism's DNA more reliable than classification based solely on phenotypes. Secondly, researchers may, for a number of reasons, want to identify or classify only the bacteria within a given environmental or medical sample.  While there is a homologous gene in eukaryotes, the 18S rRNA gene, it is distinct, thereby rendering the 16S rRNA gene a useful tool for extracting and identifying bacteria as separate from plant, animal, fungal, and protist DNA within the same sample.  Thirdly, the 16S rRNA gene is relatively short at 1.5 kb, making it faster and cheaper to sequence than many other unique bacterial genes.</p>
 <p>Mothur is a command-line computer program for analyzing sequence data from microbial communities and namely 16s data. mothur is licensed under the GPL and is free to use.</p>
-<h3 id="softwares-required-for-this-tutorial">Softwares Required for this Tutorial</h3>
+<h3 id="softwares-required-for-this-tutorial">Softwares Required for this Tutorial<a class="headerlink" href="#softwares-required-for-this-tutorial" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="http://www.mothur.org">mothur</a></li>
 <li><a href="https://github.com/accaldwell/mothur_krona">mothur_krona</a></li>
 </ul>
-<h3 id="downloading-the-data-and-start-mothur">Downloading the Data and Start Mothur</h3>
+<h3 id="downloading-the-data-and-start-mothur">Downloading the Data and Start Mothur<a class="headerlink" href="#downloading-the-data-and-start-mothur" title="Permanent link">&para;</a></h3>
 <p>Firstly, download and unzip the sample dataset:</p>
 <pre><code>wget http://www.mothur.org/w/images/d/d6/MiSeqSOPData.zip
 unzip MiSeqSOPData.zip
@@ -700,7 +700,7 @@ F3D143  F3D143_S209_L001_R1_001.fastq   F3D143_S209_L001_R2_001.fastq</p>
 <blockquote>
 <p>mothur &gt;</p>
 </blockquote>
-<h3 id="reducing-sequencing-and-pcr-errors">Reducing Sequencing and PCR Errors</h3>
+<h3 id="reducing-sequencing-and-pcr-errors">Reducing Sequencing and PCR Errors<a class="headerlink" href="#reducing-sequencing-and-pcr-errors" title="Permanent link">&para;</a></h3>
 <p>The first thing we want to do is combine our two sets of reads for each sample and then to combine the data from all of the samples. This is done using the <code>make.contigs</code> command, which requires <code>stability.files</code> as input. This command will extract the sequence and quality score data from your fastq files, create the reverse complement of the reverse read and then join the reads into contigs.</p>
 <pre><code>make.contigs(file=stability.files, processors=8)  
 
@@ -775,7 +775,7 @@ mothur &gt; summary.seqs()
 
 <p>and get the same output for each command.</p>
 <p>But, now that we have filtered the sequencing errors, let's move to the next step.</p>
-<h3 id="processing-improved-sequences">Processing Improved Sequences</h3>
+<h3 id="processing-improved-sequences">Processing Improved Sequences<a class="headerlink" href="#processing-improved-sequences" title="Permanent link">&para;</a></h3>
 <p>We anticipate that many of our sequences are duplicates of each other. Because it's computationally wasteful to align the same sequences several times, we'll make our sequences unique:</p>
 <pre><code>unique.seqs(fasta=stability.trim.contigs.good.fasta)
 </code></pre>
@@ -855,8 +855,8 @@ summary.seqs(fasta=current, count=current)
 <pre><code>remove.lineage(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table, taxonomy=stability.trim.contigs.good.unique.good.filter.unique.precluster.pick.rdp.wang.taxonomy, taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota)
 </code></pre>
 
-<h3 id="analysis">Analysis</h3>
-<h4 id="otus">OTUs</h4>
+<h3 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h3>
+<h4 id="otus">OTUs<a class="headerlink" href="#otus" title="Permanent link">&para;</a></h4>
 <p>We will use <code>cluster.split</code> for clustering sequences into OTUs</p>
 <pre><code>cluster.split(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table, taxonomy=stability.trim.contigs.good.unique.good.filter.unique.precluster.pick.rdp.wang.pick.taxonomy, splitmethod=classify, taxlevel=4, cutoff=0.15)
 </code></pre>
@@ -897,13 +897,13 @@ Now open `xml.krona.html` in your browser! -->
 clearcut(phylip=stability.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.phylip.dist)
 </code></pre>
 
-<h3 id="batch-mode">Batch Mode</h3>
+<h3 id="batch-mode">Batch Mode<a class="headerlink" href="#batch-mode" title="Permanent link">&para;</a></h3>
 <p>It is perfectly acceptable to enter the commands for your analysis from within mothur. We call this the interactive mode. If you are doing a lot these types of analysis or you want to use this SOP on your own data without thinking too much, you can run mothur in <code>batch mode</code> using</p>
 <p><code>./mothur script.batch</code></p>
 <p>where script.batch (or whatever name you want, really) is a text file containing all the
 commands that you previously entered in interactive mode.</p>
 <p>If you have time, copy all the commands from this tutorial in a file, a try to make mothur work in batch mode!</p>
-<h3 id="phyloseq-analysis">PhyloSeq Analysis</h3>
+<h3 id="phyloseq-analysis">PhyloSeq Analysis<a class="headerlink" href="#phyloseq-analysis" title="Permanent link">&para;</a></h3>
 <p>First, install and load the phyloseq package:</p>
 <pre><code class="R">source('http://bioconductor.org/biocLite.R')
 biocLite('phyloseq')
@@ -935,7 +935,7 @@ x
 data(&quot;GlobalPatterns&quot;)
 </code></pre>
 
-<h4 id="ordination-and-distance-based-analysis">Ordination and distance-based analysis</h4>
+<h4 id="ordination-and-distance-based-analysis">Ordination and distance-based analysis<a class="headerlink" href="#ordination-and-distance-based-analysis" title="Permanent link">&para;</a></h4>
 <p>Let's do some preliminary filtering. Remove the OTUs that included all unassigned sequences ("-1")</p>
 <pre><code class="R">enterotype &lt;- subset_species(enterotype, Genus != &quot;-1&quot;)
 </code></pre>
@@ -1016,7 +1016,7 @@ print(plist[[&quot;bray&quot;]])
 print(plist[[&quot;euclidean&quot;]])
 </code></pre>
 
-<h4 id="alpha-diversity-graphics">Alpha diversity graphics</h4>
+<h4 id="alpha-diversity-graphics">Alpha diversity graphics<a class="headerlink" href="#alpha-diversity-graphics" title="Permanent link">&para;</a></h4>
 <p>Here is the default graphic produced by the plot_richness function on the GP example dataset:</p>
 <pre><code class="R">GP &lt;- prune_species(speciesSums(GlobalPatterns) &gt; 0, GlobalPatterns)
 plot_richness(GP)
@@ -1048,7 +1048,7 @@ p = plot_richness(GPst, x=&quot;human&quot;, color=&quot;SampleType&quot;, measu
 p + geom_point(size=5, alpha=0.7)
 </code></pre>
 
-<h4 id="trees">Trees</h4>
+<h4 id="trees">Trees<a class="headerlink" href="#trees" title="Permanent link">&para;</a></h4>
 <pre><code class="R">head(phy_tree(GlobalPatterns)$node.label, 10)
 </code></pre>
 
@@ -1077,7 +1077,7 @@ plot_tree(physeq)
 <pre><code class="R">plot_tree(physeq, nodelabf=nodeplotboot(60,60,3), color=&quot;SampleType&quot;, shape=&quot;Class&quot;, ladderize=&quot;left&quot;) + coord_polar(theta=&quot;y&quot;)
 </code></pre>
 
-<h4 id="bar-plots">Bar plots</h4>
+<h4 id="bar-plots">Bar plots<a class="headerlink" href="#bar-plots" title="Permanent link">&para;</a></h4>
 <p>Bar plots are one of the easiest way to vizualize your data. But be careful, they can be misleading if grouping sample!</p>
 <p>Let's take a subset of the GlobalPatterns dataset, and produce a basic bar plot:</p>
 <pre><code class="R">gp.ch = subset_taxa(GlobalPatterns, Phylum == &quot;Chlamydiae&quot;)
@@ -1097,7 +1097,7 @@ plot_bar(gp.ch)
 <pre><code class="R">plot_bar(gp.ch, &quot;Family&quot;, fill=&quot;Genus&quot;, facet_grid=~SampleType)
 </code></pre>
 
-<h4 id="heatmaps">Heatmaps</h4>
+<h4 id="heatmaps">Heatmaps<a class="headerlink" href="#heatmaps" title="Permanent link">&para;</a></h4>
 <p>The following two lines subset the dataset to just the top 300 most abundant Bacteria taxa across all samples (in this case, with no prior preprocessing. Not recommended, but quick).</p>
 <pre><code class="R">data(&quot;GlobalPatterns&quot;)
 gpt &lt;- subset_taxa(GlobalPatterns, Kingdom==&quot;Bacteria&quot;)
@@ -1110,7 +1110,7 @@ plot_heatmap(gpt, sample.label=&quot;SampleType&quot;)
 plot_heatmap(gpac)
 </code></pre>
 
-<h4 id="plot-microbiome-network">Plot microbiome network</h4>
+<h4 id="plot-microbiome-network">Plot microbiome network<a class="headerlink" href="#plot-microbiome-network" title="Permanent link">&para;</a></h4>
 <p>There is a random aspect to some of the network layout methods. For complete reproducibility of the images produced later in this tutorial, it is possible to set the random number generator seed explicitly:</p>
 <p><code>set.seed(711L)</code></p>
 <p>Because we want to use the enterotype designations as a plot feature in these plots, we need to remove the 9 samples for which no enterotype designation was assigned (this will save us the hassle of some pesky warning messages, but everything still works; the offending samples are anyway omitted).</p>
@@ -1153,7 +1153,7 @@ plot_network(ig, enterotype, color=&quot;SeqTech&quot;, shape=&quot;Enterotype&q
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../meta_assembly/" title="Metagenome Assembly" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1162,19 +1162,19 @@ plot_network(ig, enterotype, color=&quot;SeqTech&quot;, shape=&quot;Enterotype&q
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Metagenome Assembly
+                Pan-Genome Analysis
               </span>
             </div>
           </a>
         
         
-          <a href="../pan_genome/" title="Pan genome" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../wms/" title="Whole Metagenome Sequencing" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Pan genome
+                Whole Metagenome Sequencing
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

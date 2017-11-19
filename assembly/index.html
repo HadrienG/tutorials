@@ -32,7 +32,7 @@
     
     
       
-        <title>Whole-genome de-novo Assembly - Bioinformatics Walkthroughs</title>
+        <title>De-novo Genome Assembly - Bioinformatics Walkthroughs</title>
       
     
     
@@ -92,7 +92,7 @@
             
               
             
-            Whole-genome de-novo Assembly
+            De-novo Genome Assembly
           
         </span>
       </div>
@@ -214,8 +214,44 @@
 
 
   <li class="md-nav__item">
-    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
-      Genome Annotation
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../file_formats/" title="File Formats" class="md-nav__link">
+      File Formats
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../qc/" title="Quality Control and Trimming" class="md-nav__link">
+      Quality Control and Trimming
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../mapping/" title="Mapping and Variant Calling" class="md-nav__link">
+      Mapping and Variant Calling
     </a>
   </li>
 
@@ -235,11 +271,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Whole-genome de-novo Assembly
+        De-novo Genome Assembly
       </label>
     
-    <a href="./" title="Whole-genome de-novo Assembly" class="md-nav__link md-nav__link--active">
-      Whole-genome de-novo Assembly
+    <a href="./" title="De-novo Genome Assembly" class="md-nav__link md-nav__link--active">
+      De-novo Genome Assembly
     </a>
     
       
@@ -302,8 +338,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../file_formats/" title="File formats" class="md-nav__link">
-      File formats
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
     </a>
   </li>
 
@@ -314,8 +350,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../meta_assembly/" title="Meta assembly" class="md-nav__link">
-      Meta assembly
+    <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-nav__link">
+      Pan-Genome Analysis
     </a>
   </li>
 
@@ -326,7 +362,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../metabarcoding/" title="Metabarcoding" class="md-nav__link">
+    <a href="../16S/" title="Metabarcoding" class="md-nav__link">
       Metabarcoding
     </a>
   </li>
@@ -338,8 +374,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../pan_genome/" title="Pan genome" class="md-nav__link">
-      Pan genome
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
     </a>
   </li>
 
@@ -350,8 +386,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../qc/" title="Qc" class="md-nav__link">
-      Qc
+    <a href="../meta_assembly/" title="Metagenome assembly" class="md-nav__link">
+      Metagenome assembly
     </a>
   </li>
 
@@ -362,44 +398,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../rna_seq/" title="Rna seq" class="md-nav__link">
-      Rna seq
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../unix/" title="Unix" class="md-nav__link">
-      Unix
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../variant_calling/" title="Variant calling" class="md-nav__link">
-      Variant calling
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../wms/" title="Wms" class="md-nav__link">
-      Wms
+    <a href="../rna/" title="RNA-Seq" class="md-nav__link">
+      RNA-Seq
     </a>
   </li>
 
@@ -476,18 +476,18 @@
                   <a href="https://github.com/HadrienG/tutorials/edit/master/docs/assembly.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="whole-genome-de-novo-assembly">Whole-genome de-novo Assembly</h1>
+                <h1 id="de-novo-genome-assembly">De-novo Genome Assembly<a class="headerlink" href="#de-novo-genome-assembly" title="Permanent link">&para;</a></h1>
 <p>In this practical we will perform the assembly of M. genitalium, a bacterium published in 1995 by Fraser et al in Science.</p>
-<h2 id="getting-the-data">Getting the data</h2>
+<h2 id="getting-the-data">Getting the data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
 <p>Go to ENA, and search for the run ERR486840.</p>
 <p>Download the 2 fastq files associated with the run.</p>
-<h2 id="quality-control">Quality control</h2>
+<h2 id="quality-control">Quality control<a class="headerlink" href="#quality-control" title="Permanent link">&para;</a></h2>
 <p>Perform quality control of the data as you did in the <a href="../qc/">QC tutorial</a></p>
 <p>How many reads are in the fastq file? What is the read length?
 Does the data need trimming or other filtering? If so, do it.</p>
 <p>Find the genome size of M. genitalium in the Fraser paper abstract.
 Based on the expected genome size, the read length and the number of reads – what average coverage do you expect to get from this fastq read files?</p>
-<h2 id="de-novo-assembly">De-novo assembly</h2>
+<h2 id="de-novo-assembly">De-novo assembly<a class="headerlink" href="#de-novo-assembly" title="Permanent link">&para;</a></h2>
 <p>We will be using the SPAdes assembler to assemble our bacterium.</p>
 <pre><code>module load spades
 spades.py -k 21,33,55,77,99 --careful --only-assembler -1 read_1.fastq -2 read_2.fastq -o output
@@ -506,7 +506,7 @@ How many contigs longer than 500bp? What is the N50 of those contigs only?</p>
 <li>Ray</li>
 <li>Velvet</li>
 </ul>
-<h2 id="comparing-assemblies">Comparing assemblies</h2>
+<h2 id="comparing-assemblies">Comparing assemblies<a class="headerlink" href="#comparing-assemblies" title="Permanent link">&para;</a></h2>
 <p>QUAST is a software evaluating the quality of genome assemblies by computing various metrics, including</p>
 <ul>
 <li>N50, length for which the collection of all contigs of that length or longer covers at least 50% of assembly length</li>
@@ -521,7 +521,7 @@ quast.py assembly1.fasta assembly2.fasta ... -R reference.fasta -G reference.gff
 </code></pre>
 
 <p>Quast will produce a pdf in the <code>quast_results</code> directory. Download it on your computer and take a look. Which assembly is better?</p>
-<h2 id="fixing-misassemblies">Fixing misassemblies</h2>
+<h2 id="fixing-misassemblies">Fixing misassemblies<a class="headerlink" href="#fixing-misassemblies" title="Permanent link">&para;</a></h2>
 <p>Pilon is a software tool which can be used to automatically improve draft assemblies. It attempts to make improvements to the input genome, including:</p>
 <ul>
 <li>Single base differences</li>
@@ -563,7 +563,7 @@ pilon --genome assembly.fasta --frags alignment.bam --output pilon_output
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../annotation/" title="Genome Annotation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../mapping/" title="Mapping and Variant Calling" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -572,19 +572,19 @@ pilon --genome assembly.fasta --frags alignment.bam --output pilon_output
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Genome Annotation
+                Mapping and Variant Calling
               </span>
             </div>
           </a>
         
         
-          <a href="../file_formats/" title="File formats" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../annotation/" title="Genome Annotation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                File formats
+                Genome Annotation
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

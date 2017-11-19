@@ -141,25 +141,26 @@ You will note that the reads in your uploaded dataset have fairly poor quality (
 
 ## Scythe
 
-Scythe uses a Naive Bayesian approach to classify contaminant substrings in sequence reads. It considers quality information, which can make it robust in picking out 3'-end adapters, which often include poor quality bases.
+Now we'll do some trimming!
 
-First, install scythe:
+Scythe uses a Naive Bayesian approach to classify contaminant substrings in sequence reads.
+It considers quality information, which can make it robust in picking out 3'-end adapters, which often include poor quality bases.
 
+The first thing we need is the adapters to trim off
+
+```bash
+curl -O -J -L https://osf.io/v24pt/download
 ```
-git clone https://github.com/vsbuffalo/scythe.git
-cd scythe
-make all
+
+Now we run scythe on both our read files
+
+```bash
+scythe -a adapters.fasta -o SRR957824_trimmed_R1.fastq SRR957824_500K_R1.fastq.gz
+scythe -a adapters.fasta -o SRR957824_trimmed_R2.fastq SRR957824_500K_R2.fastq.gz
 ```
 
-Then, copy or move "scythe" to a directory in your $PATH, for example like this:
-
-`cp scythe $HOME/bin/`
-
-Scythe can be run minimally with:
-
-`scythe -a adapter_file.fasta -o trimmed_sequences.fastq sequences.fastq`
-
-Try to trim the adapters in both your read files!
+!!! question
+    What adapters do you use?
 
 ## Sickle
 

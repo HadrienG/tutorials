@@ -45,6 +45,9 @@ bowtie2 -x pO157_Sakai -1 SRR957824_trimmed_R1.fastq.gz \
 The output of the mapping will be in the SAM format.
 You can find a brief explanation of the SAM format [here](file_formats.md)
 
+!!! note
+    In this tutorial as well as many other places, you'll often see the terms *mapping* and *alignment* being used interchangeably. If you want to read more about the difference between the two, I invite you to read this excellent [Biostars discussion](https://www.biostars.org/p/180986/)
+
 ### Visualising with tview
 
 ```bash

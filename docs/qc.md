@@ -155,8 +155,8 @@ curl -O -J -L https://osf.io/v24pt/download
 Now we run scythe on both our read files
 
 ```bash
-scythe -a adapters.fasta -o SRR957824_trimmed_R1.fastq SRR957824_500K_R1.fastq.gz
-scythe -a adapters.fasta -o SRR957824_trimmed_R2.fastq SRR957824_500K_R2.fastq.gz
+scythe -a adapters.fasta -o SRR957824_adapt_R1.fastq SRR957824_500K_R1.fastq.gz
+scythe -a adapters.fasta -o SRR957824_adapt_R2.fastq SRR957824_500K_R2.fastq.gz
 ```
 
 !!! question
@@ -164,48 +164,63 @@ scythe -a adapters.fasta -o SRR957824_trimmed_R2.fastq SRR957824_500K_R2.fastq.g
 
 ## Sickle
 
-Most modern sequencing technologies produce reads that have deteriorating quality towards the 3'-end and some towards the 5'-end as well. Incorrectly called bases in both regions negatively impact assembles, mapping, and downstream bioinformatics analyses.
+Most modern sequencing technologies produce reads that have deteriorating quality towards the 3'-end and some towards the 5'-end as well.
+Incorrectly called bases in both regions negatively impact assembles, mapping, and downstream bioinformatics analyses.
 
 We will trim each read individually down to the good quality part to keep the bad part from interfering with downstream applications.
 
 To do so, we will use sickle. Sickle is a tool that uses sliding windows along with quality and length thresholds to determine when quality is sufficiently low to trim the 3'-end of reads and also determines when the quality is sufficiently high enough to trim the 5'-end of reads. It will also discard reads based upon a length threshold.
 
-First, install sickle:
+To run sickle
 
-```
-git clone https://github.com/najoshi/sickle.git
-cd sickle
-make
-```
-
-Copy sickle to a directory in your $PATH:
-
-`cp sickle $HOME/bin/`
-
-Sickle has two modes to work with both paired-end and single-end reads: sickle se and sickle pe.
-
-Running sickle by itself will print the help:
-
-`sickle`
-
-Running sickle with either the "se" or "pe" commands will give help specific to those commands. Since we have paired end reads:
-
-`sickle pe`
-
-Set the quality score to 25. This means the trimmer will work its way from both ends of each read, cutting away any bases with a quality score < 25.
-
-```
-sickle pe -f input_file1.fastq -r input_file2.fastq -t sanger \
--o trimmed_output_file1.fastq -p trimmed_output_file2.fastq \
--s trimmed_singles_file.fastq -q 25
+```bash
+sickle pe -f SRR957824_adapt_R1.fastq -r SRR957824_adapt_R2.fastq \
+    -t sanger -o SRR957824_trimmed_R1.fastq -p SRR957824_trimmed_R2.fastq \
+    -s /dev/null -q 25
 ```
 
-What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution? Run FastQC again to find out.
+which should output something like
 
-What is the sequence duplication levels graph about? Why should you care about a high level of duplication, and why is the level of duplication very low for this data?
+```
+PE forward file: SRR957824_trimmed_R1.fastq
+PE reverse file: SRR957824_trimmed_R2.fastq
 
-Based on the FastQC report, there seems to be a population of shorter reads that are technical artifacts. We will ignore them for now as they will not interfere with our analysis.
+Total input FastQ records: 1000000 (500000 pairs)
 
-## Extra exercises
+FastQ paired records kept: 834570 (417285 pairs)
+FastQ single records kept: 13263 (from PE1: 11094, from PE2: 2169)
+FastQ paired records discarded: 138904 (69452 pairs)
+FastQ single records discarded: 13263 (from PE1: 2169, from PE2: 11094)
+```
 
-Perform quality control on the extra datasets given by your instructors.
+## FastQC again
+
+Run fastqc again on the filtered reads
+
+```bash
+fastqc SRR957824_trimmed_R1.fastq SRR957824_trimmed_R2.fastq
+```
+
+and look at the reports
+
+* [SRR957824_trimmed_R1_fastqc.html](data/fastqc/SRR957824_trimmed_R1_fastqc.html)
+* [SRR957824_trimmed_R2_fastqc.html](data/fastqc/SRR957824_trimmed_R2_fastqc.html)
+
+
+## MultiQC
+
+[MultiQC](http://multiqc.info) is a tool that aggreagtes results from several popular QC bioinformatics software into one html report.
+
+Let's run MultiQC in our current directory
+
+```bash
+multiqc .
+```
+
+You can download the report or view it by clickinh on the link below
+
+* [multiqc_report.html](data/fastqc/multiqc_report.html)
+
+
+!!! question
+    What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution?

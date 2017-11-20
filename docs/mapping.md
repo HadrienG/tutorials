@@ -1,102 +1,137 @@
 # Mapping and Variant Calling
 
-In this practical you will learn to map NGS reads to a reference sequence, check the output using a viewer software and investigate some aspects of the results. You will be using the read data from the [Quality Control](qc.md) practical.
+In this practical you will learn to map NGS reads to a reference sequence, check the output using a viewer software and investigate some aspects of the results.
+You will be using the read data from the [Quality Control](qc.md) practical.
 
-EHEC O157 strains generally carry a large virulence plasmid, pO157. Plasmids are circular genetic elements that many bacteria carry in addition to their chromosomes. This particular plasmid encodes a number of proteins which are known or suspected to be involved in the ability to cause severe disease in infected humans. Your task in this practical is to map your prepared read set to a reference sequence of the virulence plasmid, to determine if the pO157 plasmid is present in the St. Louis outbreak strain.
+EHEC O157 strains generally carry a large virulence plasmid, pO157.
+Plasmids are circular genetic elements that many bacteria carry in addition to their chromosomes.
+This particular plasmid encodes a number of proteins which are known or suspected to be involved in the ability to cause severe disease in infected humans.
+Your task in this practical is to map your prepared read set to a reference sequence of the virulence plasmid, to determine if the pO157 plasmid is present in the St. Louis outbreak strain.
 
-## Read mapping
+---
+![plasmid](img/plasmid.png)
+*Illustration of plasmid integration into a host bacteria*
+---
 
-### downloading a reference
+## Downloading a Reference
 
-You will need a reference sequence to map your reads to. You can download the reference from [here](data/pO157_Sakai.fasta)
+You will need a reference sequence to map your reads to.
 
-or from the command-line with
-
-`wget https://raw.githubusercontent.com/HadrienG/tutorials/master/data/pO157_Sakai.fasta`
-
-This file contains the sequence of the pO157 plasmid from the Sakai outbreak strain of E. coli O157. In contrast to the strain we are working on, this strain is available as a finished genome, i.e. the whole sequence of both the single chromosome and the large virulence plasmid are known.
-
-### indexing the reference
-
-Before aligning the reads against a reference, it is necessary to build an index of that reference:
-
-```
-module load bowtie2
-bowtie2-build pO157_Sakai.fasta pO157_Sakai
+```bash
+cd ~/work
+curl -O -J -L https://osf.io/rnzbe/download
 ```
 
-### aligning reads
+This file contains the sequence of the pO157 plasmid from the Sakai outbreak strain of E. coli O157.
+In contrast to the strain we are working on, this strain is available as a finished genome, i.e. the whole sequence of both the single chromosome and the large virulence plasmid are known.
 
-`bowtie2 -x pO157_Sakai -1 reads_1.fastq -2 reads_2.fastq -S output.sam`
+### Indexing the reference
 
-The output of the mapping will be in SAM format. you can find a brief explanation of the SAM format [here](files_formats.md)
+Before aligning the reads against a reference, it is necessary to build an index of that reference
 
-### visualising the alignment
-
-To view the outcome of the read mapping, we will use a program called Tablet, that can be run without administrated privileges. Download it [here](https://ics.hutton.ac.uk/tablet/).
-
-Start the program and select Red Button – Open. Choose your SAM-file and pO157_Sakai.fasta as a reference.
-
-![tablet1](images/tablet1.png)
-
-Select the only contig to the left.
-
-![tablet2](images/tablet2.png)
-
-Next, download pO157_Sakai.gff from [here](data/pO157_Sakai.gff). Select import features in Tablet and import pO157_Sakai.gff. This file contains annotations, i.e. what is encoded in each part of the DNA sequence. Two tracks (CDS + GENE) will be added.
-
-Navigate the mapping using the zoom and pan left/right etc. Under Colour schemes you can highlight bases that do not match the reference. Holding your pointer over a CDS will show you a description of the genetic region.
-
-![tablet3](images/tablet3.png)
-
-Does the mapping data confirm the presence of an intact pO157 plasmid in the St. Louis outbreak strain?
-
-You will note that one region has extremely high coverage. This region corresponds to two adjacent CDSs
-
-Check their identity, what do they have in common?
-
-Extract the sequence of the biggest of these two by right-clicking on it and selecting copy reference subsequence to clipboard
-
-Your read data was from the whole genome, but you are only mapping to a reference for the pO157 plasmid. Go to BLAST and use nucleotide BLAST to check if the problematic region is present on the chromosome of the reference strain Sakai (BA000007.2) using the Align two sequences option with your subsequence copied from Tablet and BA000007.2. You don’t have to enter the whole genome sequence, just the code.
-
-![blast1](images/blast1.png)
-
-How many matches do you find on the chromosome?
-
-Why do you think the coverage is so high for this region in the mapping to the pO157 reference?
-
-## Variant Calling
-
-A frequent application for mapping reads is variant calling, i.e. finding positions where the reference and your sequences differ. Single nucleotide polymorphism (SNP)-based typing is particularly popular and used for a broad range of applications. For an EHEC O157 outbreak you could use it to identify the source, for instance. Indels are insertions and deletions in the mapped data compared to the reference.
-
-You could find SNPs by just staring at the alignment in Tablet. A variant caller is a program that automates this process, finding variable positions anywhere in the sequence and weighing the evidence for a true variant (number of reads agreeing, quality of those reads etc.) We will be using SAMtools for variant calling.
-
-### Sorting and indexing a bam file
-
-First you need to sort the reads in the BAM-file so the variant caller can easily find the relevant ones for a given position in the reference sequence.
-
-You may need to convert your sam file into a bam file first:
-
-`samtools view -bS -o $output.bam $input.sam`
-
-then sort and index the bam file:
-
-```
-samtools sort $output.bam > $output_sorted.bam
-samtools index $output_sorted.bam
+```bash
+bowtie2-build pO157_Sakai.fasta.gz pO157_Sakai
 ```
 
-Now we can perform the SNP and Indel calling:
+!!! note
+    Indexing the reference is a necessary pre-processing step that makes searching for patterns much much faster. Many popular aligners such as Bowtie and BWA use an algorithm called the [Burrows–Wheeler transform](https://en.wikipedia.org/wiki/Burrows–Wheeler_transform) to build the index.
 
-`samtools mpileup -uv -o output.vcf -f pO157_Sakai.fasta test_sorted.bam`
+### Aligning reads
 
-You can read about the structure of vcf files here
+Now we are ready to map our reads
 
-How many SNPs did the variant caller find? Did you find any indels?
+```bash
+bowtie2 -x pO157_Sakai -1 SRR957824_trimmed_R1.fastq.gz \
+    -2 SRR957824_trimmed_R2.fastq.gz -S SRR957824.sam
+```
 
-Each variant in the vcf comes with a lot of different quality metrics from the variant calling process. The “QUAL” column tells you how confident the variant caller is feeling about that variant.
+The output of the mapping will be in the SAM format.
+You can find a brief explanation of the SAM format [here](file_formats.md)
 
-Use the coordinates from the vcf-file and manually check a high quality SNP and a low quality SNP in your Tablet view of the sam file. (Hint: there is a “Jump to base” button that can make it easier for you.)
+!!! note
+    In this tutorial as well as many other places, you'll often see the terms *mapping* and *alignment* being used interchangeably. If you want to read more about the difference between the two, I invite you to read this excellent [Biostars discussion](https://www.biostars.org/p/180986/)
 
-If you have time:
-Read the original paper about the St. Louis outbreak investigation, in particular check the supplemental material and methods to see how the authors performed read mapping and variant calling.
+### Visualising with tview
+
+```bash
+head SRR957824.sam
+```
+
+But it is not very informative.
+We'll use samtools to visualise our data
+
+Before downloading the data in tablet, we have to convert our SAM file into BAM, a compressed version of SAM that can be indexed.
+
+```bash
+samtools view -hSbo SRR957824.bam SRR957824.sam
+```
+
+Sort the bam file per position in the genome and index it
+
+```bash
+samtools sort SRR957824.bam SRR2584857.sorted.bam
+samtools index SRR2584857.sorted.bam
+```
+
+Finally we can visualise with `samtools tview`
+
+```bash
+samtools tview SRR2584857.sorted.bam pO157_Sakai.fasta.gz
+```
+
+!!! tip
+    navigate in tview:  
+        - left and right arrows scroll    
+        - `q` to quit   
+        - `CTRL-h` and `CTRL-l` scrolls more  
+        - `g gi|10955266|ref|NC_002128.1|:8000` will take you to a specific location.   
+
+### Variant Calling
+
+A frequent application for mapping reads is variant calling, i.e. finding positions where the reads are systematically different from the reference genome.
+Single nucleotide polymorphism (SNP)-based typing is particularly popular and used for a broad range of applications.
+For an EHEC O157 outbreak you could use it to identify the source, for instance.
+
+We can call the variants using `samtools mpileup`
+
+```bash
+samtools mpileup -uD -f pO157_Sakai.fasta.gz SRR2584857.sorted.bam | \
+    bcftools view - > variants.vcf
+```
+
+You can read about the structure of vcf files [here](file_formats.md).
+The documentation is quite painful to read and take a look at the file
+
+Look at the non-commented lines
+
+```bash
+grep -v ^## variants.vcf
+```
+The first five columns are *CHROM POS ID REF ALT*.
+
+Use
+
+```bash
+grep -v ^## variants.vcf | less -S
+```
+
+for a better view.
+
+!!! tip
+    Use your left and right arrows to scroll horizontally, and `q` to quit.
+
+
+!!! question
+    How many SNPs did the variant caller find? Did you find any indels?
+
+Examine one of the variants with tview
+
+```bash
+samtools tview SRR2584857.sorted.bam pO157_Sakai.fasta.gz \
+    -p 'gi|10955266|ref|NC_002128.1|:43071'
+```
+
+That seems very real!
+
+!!! question
+    Where do reference genomes come from?

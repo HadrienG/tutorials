@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/",
-            "text": "Home\n\u00b6\n\n\nTODO\n introduction, info about the group and SLU\n\n\nTable of contents\n\u00b6\n\n\n\n\nHome\n\n\nThe command-line\n\n\nFile Formats\n\n\nQuality Control and Trimming\n\n\nMapping and Variant Calling\n\n\nDe-novo Genome Assembly\n\n\nGenome Annotation\n\n\nPan-Genome Analysis\n\n\nMetabarcoding\n\n\nWhole Metagenome Sequencing\n\n\nMetagenome assembly\n\n\nRNA-Seq\n\n\n\n\nContributing\n\u00b6\n\n\nA typo? Something that irks you? Submit an \nissue\n\nor a pull request.\n\n\nLicense\n\u00b6\n\n\nThis work is licensed under the Creative Commons Attribution 4.0 International License.\nTo view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.",
+            "text": "Home\n\u00b6\n\n\nWelcome!\n\n\nThis website is a collection of Bioinformatics tutorials that I've accumulated over the years, while teaching a bioinformatics course at the \nSwedish University of Agricultural Sciences\n and during various bioinformatics workshops around the globe.\n\n\nFeel free to follow them online, or to use and modify them for your own teaching.\n\n\nTable of contents\n\u00b6\n\n\n\n\nHome\n\n\nThe command-line\n\n\nFile Formats\n\n\nQuality Control and Trimming\n\n\nMapping and Variant Calling\n\n\nDe-novo Genome Assembly\n\n\nGenome Annotation\n\n\nPan-Genome Analysis\n\n\nMetabarcoding\n\n\nWhole Metagenome Sequencing\n\n\nMetagenome assembly\n\n\nRNA-Seq\n\n\n\n\nContributing\n\u00b6\n\n\nA typo? Something that irks you? Submit an \nissue\n\nor a pull request.\n\n\nLicense\n\u00b6\n\n\nThis work is licensed under the Creative Commons Attribution 4.0 International License.\nTo view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.",
             "title": "Home"
         },
         {
             "location": "/#home",
-            "text": "TODO  introduction, info about the group and SLU",
+            "text": "Welcome!  This website is a collection of Bioinformatics tutorials that I've accumulated over the years, while teaching a bioinformatics course at the  Swedish University of Agricultural Sciences  and during various bioinformatics workshops around the globe.  Feel free to follow them online, or to use and modify them for your own teaching.",
             "title": "Home"
         },
         {

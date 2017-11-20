@@ -8,6 +8,11 @@ Plasmids are circular genetic elements that many bacteria carry in addition to t
 This particular plasmid encodes a number of proteins which are known or suspected to be involved in the ability to cause severe disease in infected humans.
 Your task in this practical is to map your prepared read set to a reference sequence of the virulence plasmid, to determine if the pO157 plasmid is present in the St. Louis outbreak strain.
 
+---
+![plasmid](img/plasmid.png)
+*Illustration of plasmid integration into a host bacteria*
+---
+
 ## Downloading a Reference
 
 You will need a reference sequence to map your reads to.

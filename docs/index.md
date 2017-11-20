@@ -1,6 +1,10 @@
 # Home
 
-*TODO* introduction, info about the group and SLU
+Welcome!
+
+This website is a collection of Bioinformatics tutorials that I've accumulated over the years, while teaching a bioinformatics course at the [Swedish University of Agricultural Sciences](https://www.slu.se) and during various bioinformatics workshops around the globe.
+
+Feel free to follow them online, or to use and modify them for your own teaching.
 
 ## Table of contents
 

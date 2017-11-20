@@ -32,7 +32,7 @@
     
     
       
-        <title>Genome Annotation - Bioinformatics Walkthroughs</title>
+        <title>Genome Annotation - Bioinformatics Tutorials</title>
       
     
     
@@ -77,7 +77,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Bioinformatics Walkthroughs" class="md-header-nav__button md-logo">
+        <a href=".." title="Bioinformatics Tutorials" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -169,7 +169,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Bioinformatics Walkthroughs
+    Bioinformatics Tutorials
   </label>
   
     <div class="md-nav__source">
@@ -456,11 +456,12 @@
 <p>Prokka requires assembled contigs. You will need your best assembly from the assembly tutorial.</p>
 <p>Alternatively, you can download an assembly <a href="https://raw.githubusercontent.com/HadrienG/tutorials/master/data/assembly.fasta">here</a></p>
 <h2 id="running-prokka">Running prokka<a class="headerlink" href="#running-prokka" title="Permanent link">&para;</a></h2>
-<pre><code>module load prokka
-awk '/^&gt;/{print &quot;&gt;ctg&quot; ++i; next}{print}' &lt; assembly.fasta &gt; good_contigs.fasta
-prokka --outdir annotation --kingdom Bacteria \
---proteins m_genitalium.faa good_contigs.fasta
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">load</span> <span class="n">prokka</span>
+<span class="n">awk</span> <span class="s">&#39;/^&gt;/{print &quot;&gt;ctg&quot; ++i; next}{print}&#39;</span> &lt; <span class="n">assembly</span>.<span class="n">fasta</span> &gt; <span class="n">good_contigs</span>.<span class="n">fasta</span>
+<span class="n">prokka</span> --<span class="n">outdir</span> <span class="n">annotation</span> --<span class="n">kingdom</span> <span class="n">Bacteria</span> \
+--<span class="n">proteins</span> <span class="n">m_genitalium</span>.<span class="n">faa</span> <span class="n">good_contigs</span>.<span class="n">fasta</span>
+</pre></div>
+
 
 <p>Once Prokka has finished, examine each of its output files.</p>
 <ul>

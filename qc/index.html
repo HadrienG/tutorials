@@ -32,7 +32,7 @@
     
     
       
-        <title>Quality Control and Trimming - Bioinformatics Walkthroughs</title>
+        <title>Quality Control and Trimming - Bioinformatics Tutorials</title>
       
     
     
@@ -77,7 +77,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Bioinformatics Walkthroughs" class="md-header-nav__button md-logo">
+        <a href=".." title="Bioinformatics Tutorials" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -169,7 +169,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Bioinformatics Walkthroughs
+    Bioinformatics Tutorials
   </label>
   
     <div class="md-nav__source">
@@ -272,6 +272,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#working-directory" title="Working Directory" class="md-nav__link">
+    Working Directory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fastqc" title="FastQC" class="md-nav__link">
     FastQC
   </a>
@@ -293,8 +300,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#extra-exercises" title="Extra exercises" class="md-nav__link">
-    Extra exercises
+  <a href="#fastqc-again" title="FastQC again" class="md-nav__link">
+    FastQC again
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiqc" title="MultiQC" class="md-nav__link">
+    MultiQC
   </a>
   
 </li>
@@ -432,6 +446,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#working-directory" title="Working Directory" class="md-nav__link">
+    Working Directory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fastqc" title="FastQC" class="md-nav__link">
     FastQC
   </a>
@@ -453,8 +474,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#extra-exercises" title="Extra exercises" class="md-nav__link">
-    Extra exercises
+  <a href="#fastqc-again" title="FastQC again" class="md-nav__link">
+    FastQC again
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiqc" title="MultiQC" class="md-nav__link">
+    MultiQC
   </a>
   
 </li>
@@ -485,64 +513,185 @@ The sequencing was done as paired-end 2x150bp.</p>
 <h2 id="downloading-the-data">Downloading the data<a class="headerlink" href="#downloading-the-data" title="Permanent link">&para;</a></h2>
 <p>The raw data were deposited at the European Nucleotide Archive, under the accession number SRR957824.
 You could go to the ENA <a href="http://www.ebi.ac.uk/ena">website</a> and search for the run with the accession SRR957824.</p>
-<p>You can also download the data associated with the run directly with the following command:</p>
-<pre><code>wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
-</code></pre>
+<p>However these files contain about 3 million reads and are therefore quite big.
+We are only gonna use a subset of the original dataset for this tutorial.</p>
+<p>First create a <code>data/</code> directory in your home folder</p>
+<div class="codehilite"><pre><span></span>mkdir ~/data
+</pre></div>
 
+
+<p>now let's download the subset</p>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> ~/data
+curl -O -J -L https://osf.io/shqpv/download
+curl -O -J -L https://osf.io/9m3ch/download
+</pre></div>
+
+
+<p>Let’s make sure we downloaded all of our data using md5sum.</p>
+<div class="codehilite"><pre><span></span>md5sum SRR957824_500K_R1.fastq.gz SRR957824_500K_R2.fastq.gz
+</pre></div>
+
+
+<p>you should see this</p>
+<div class="codehilite"><pre><span></span>1e8cf249e3217a5a0bcc0d8a654585fb  SRR957824_500K_R1.fastq.gz
+70c726a31f05f856fe942d727613adb7  SRR957824_500K_R2.fastq.gz
+</pre></div>
+
+
+<p>and now look at the file names and their size</p>
+<div class="codehilite"><pre><span></span>ls -l
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>total 97M
+-rw-r--r-- 1 hadrien 48M Nov 19 18:44 SRR957824_500K_R1.fastq.gz
+-rw-r--r-- 1 hadrien 50M Nov 19 18:53 SRR957824_500K_R2.fastq.gz
+</pre></div>
+
+
+<p>There are 500 000 paired-end reads taken randomly from the original data</p>
+<p>One last thing before we get to the quality control: those files are writeable.
+By default, UNIX makes things writeable by the file owner.
+This poses an issue with creating typos or errors in raw data.
+We fix that before going further</p>
+<div class="codehilite"><pre><span></span>chmod u-w *
+</pre></div>
+
+
+<h2 id="working-directory">Working Directory<a class="headerlink" href="#working-directory" title="Permanent link">&para;</a></h2>
+<p>First we make a work directory: a directory where we can play around with a copy of the data without messing with the original</p>
+<div class="codehilite"><pre><span></span>mkdir ~/work
+<span class="nb">cd</span> ~/work
+</pre></div>
+
+
+<p>Now we make a link of the data in our working directory</p>
+<div class="codehilite"><pre><span></span>ln -s ~/data/* .
+</pre></div>
+
+
+<p>The files that we've downloaded are FASTQ files. Take a look at one of them with</p>
+<div class="codehilite"><pre><span></span>zless SRR957824_500K_R1.fastq.gz
+</pre></div>
+
+
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use the spacebar to scroll down, and type ‘q’ to exit ‘less’</p>
+</div>
+<p>You can read more on the FASTQ format in the <a href="../file_formats/">File Formats</a> lesson.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Where does the filename come from?</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Why are there 1 and 2 in the file names?    </p>
+</div>
 <h2 id="fastqc">FastQC<a class="headerlink" href="#fastqc" title="Permanent link">&para;</a></h2>
-<p>To check the quality of the sequence data we will use a tool called FastQC. With this you can check things like read length distribution, quality distribution across the read length, sequencing artifacts and much more.</p>
-<p>FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation. It is available <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">here</a>.</p>
-<p>However, FastQC is also available as a command line utility on the training server you are using. You can load the module and execute the program as follows:</p>
-<pre><code>fastqc SRR957824_1.fastq.gz SRR957824_2.fastq.gz
-</code></pre>
+<p>To check the quality of the sequence data we will use a tool called FastQC.</p>
+<p>FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation.
+It is available <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">here</a>.</p>
+<p>However, FastQC is also available as a command line utility on the training server you are using.
+To run FastQC on our two files</p>
+<div class="codehilite"><pre><span></span>fastqc SRR957824_500K_R1.fastq.gz SRR957824_500K_R2.fastq.gz
+</pre></div>
 
-<p>which will produce both a .zip archive containing all the plots, and a html document for you to look at the result in your browser.</p>
-<p>Open the html file with your favourite web browser, and try to interpret them.</p>
-<p>Pay special attention to the per base sequence quality and sequence length distribution. Explanations for the various quality modules can be found <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/">here</a>. Also, have a look at examples of a <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html">good</a> and a <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html">bad</a> illumina read set for comparison.</p>
+
+<p>and look what FastQC has produced</p>
+<div class="codehilite"><pre><span></span>ls *fastqc*
+</pre></div>
+
+
+<p>For each file, FastQC has produced both a .zip archive containing all the plots, and a html report.</p>
+<p>Download and open the html files with your favourite web browser.</p>
+<p>Alternatively you can look a these copies of them:</p>
+<ul>
+<li><a href="../data/fastqc/SRR957824_500K_R1_fastqc.html">SRR957824_500K_R1_fastqc.html</a></li>
+<li><a href="../data/fastqc/SRR957824_500K_R2_fastqc.html">SRR957824_500K_R2_fastqc.html</a></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What should you pay attention to in the FastQC report?</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Which file is of better quality?</p>
+</div>
+<p>Pay special attention to the per base sequence quality and sequence length distribution.
+Explanations for the various quality modules can be found <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/">here</a>.
+Also, have a look at examples of a <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html">good</a> and a <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html">bad</a> illumina read set for comparison.</p>
 <p>You will note that the reads in your uploaded dataset have fairly poor quality (&lt;20) towards the end. There are also outlier reads that have very poor quality for most of the second half of the reads.</p>
-<p>There are overrepresented sequences in the data. Where do they come from?</p>
 <h2 id="scythe">Scythe<a class="headerlink" href="#scythe" title="Permanent link">&para;</a></h2>
-<p>Scythe uses a Naive Bayesian approach to classify contaminant substrings in sequence reads. It considers quality information, which can make it robust in picking out 3'-end adapters, which often include poor quality bases.</p>
-<p>First, install scythe:</p>
-<pre><code>git clone https://github.com/vsbuffalo/scythe.git
-cd scythe
-make all
-</code></pre>
+<p>Now we'll do some trimming!</p>
+<p>Scythe uses a Naive Bayesian approach to classify contaminant substrings in sequence reads.
+It considers quality information, which can make it robust in picking out 3'-end adapters, which often include poor quality bases.</p>
+<p>The first thing we need is the adapters to trim off</p>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/v24pt/download
+</pre></div>
 
-<p>Then, copy or move "scythe" to a directory in your $PATH, for example like this:</p>
-<p><code>cp scythe $HOME/bin/</code></p>
-<p>Scythe can be run minimally with:</p>
-<p><code>scythe -a adapter_file.fasta -o trimmed_sequences.fastq sequences.fastq</code></p>
-<p>Try to trim the adapters in both your read files!</p>
+
+<p>Now we run scythe on both our read files</p>
+<div class="codehilite"><pre><span></span>scythe -a adapters.fasta -o SRR957824_adapt_R1.fastq SRR957824_500K_R1.fastq.gz
+scythe -a adapters.fasta -o SRR957824_adapt_R2.fastq SRR957824_500K_R2.fastq.gz
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What adapters do you use?</p>
+</div>
 <h2 id="sickle">Sickle<a class="headerlink" href="#sickle" title="Permanent link">&para;</a></h2>
-<p>Most modern sequencing technologies produce reads that have deteriorating quality towards the 3'-end and some towards the 5'-end as well. Incorrectly called bases in both regions negatively impact assembles, mapping, and downstream bioinformatics analyses.</p>
+<p>Most modern sequencing technologies produce reads that have deteriorating quality towards the 3'-end and some towards the 5'-end as well.
+Incorrectly called bases in both regions negatively impact assembles, mapping, and downstream bioinformatics analyses.</p>
 <p>We will trim each read individually down to the good quality part to keep the bad part from interfering with downstream applications.</p>
 <p>To do so, we will use sickle. Sickle is a tool that uses sliding windows along with quality and length thresholds to determine when quality is sufficiently low to trim the 3'-end of reads and also determines when the quality is sufficiently high enough to trim the 5'-end of reads. It will also discard reads based upon a length threshold.</p>
-<p>First, install sickle:</p>
-<pre><code>git clone https://github.com/najoshi/sickle.git
-cd sickle
-make
-</code></pre>
+<p>To run sickle</p>
+<div class="codehilite"><pre><span></span>sickle pe -f SRR957824_adapt_R1.fastq -r SRR957824_adapt_R2.fastq <span class="se">\</span>
+    -t sanger -o SRR957824_trimmed_R1.fastq -p SRR957824_trimmed_R2.fastq <span class="se">\</span>
+    -s /dev/null -q <span class="m">25</span>
+</pre></div>
 
-<p>Copy sickle to a directory in your $PATH:</p>
-<p><code>cp sickle $HOME/bin/</code></p>
-<p>Sickle has two modes to work with both paired-end and single-end reads: sickle se and sickle pe.</p>
-<p>Running sickle by itself will print the help:</p>
-<p><code>sickle</code></p>
-<p>Running sickle with either the "se" or "pe" commands will give help specific to those commands. Since we have paired end reads:</p>
-<p><code>sickle pe</code></p>
-<p>Set the quality score to 25. This means the trimmer will work its way from both ends of each read, cutting away any bases with a quality score &lt; 25.</p>
-<pre><code>sickle pe -f input_file1.fastq -r input_file2.fastq -t sanger \
--o trimmed_output_file1.fastq -p trimmed_output_file2.fastq \
--s trimmed_singles_file.fastq -q 25
-</code></pre>
 
-<p>What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution? Run FastQC again to find out.</p>
-<p>What is the sequence duplication levels graph about? Why should you care about a high level of duplication, and why is the level of duplication very low for this data?</p>
-<p>Based on the FastQC report, there seems to be a population of shorter reads that are technical artifacts. We will ignore them for now as they will not interfere with our analysis.</p>
-<h2 id="extra-exercises">Extra exercises<a class="headerlink" href="#extra-exercises" title="Permanent link">&para;</a></h2>
-<p>Perform quality control on the extra datasets given by your instructors.</p>
+<p>which should output something like</p>
+<div class="codehilite"><pre><span></span>PE forward file: SRR957824_trimmed_R1.fastq
+PE reverse file: SRR957824_trimmed_R2.fastq
+
+Total input FastQ records: 1000000 (500000 pairs)
+
+FastQ paired records kept: 834570 (417285 pairs)
+FastQ single records kept: 13263 (from PE1: 11094, from PE2: 2169)
+FastQ paired records discarded: 138904 (69452 pairs)
+FastQ single records discarded: 13263 (from PE1: 2169, from PE2: 11094)
+</pre></div>
+
+
+<h2 id="fastqc-again">FastQC again<a class="headerlink" href="#fastqc-again" title="Permanent link">&para;</a></h2>
+<p>Run fastqc again on the filtered reads</p>
+<div class="codehilite"><pre><span></span>fastqc SRR957824_trimmed_R1.fastq SRR957824_trimmed_R2.fastq
+</pre></div>
+
+
+<p>and look at the reports</p>
+<ul>
+<li><a href="../data/fastqc/SRR957824_trimmed_R1_fastqc.html">SRR957824_trimmed_R1_fastqc.html</a></li>
+<li><a href="../data/fastqc/SRR957824_trimmed_R2_fastqc.html">SRR957824_trimmed_R2_fastqc.html</a></li>
+</ul>
+<h2 id="multiqc">MultiQC<a class="headerlink" href="#multiqc" title="Permanent link">&para;</a></h2>
+<p><a href="http://multiqc.info">MultiQC</a> is a tool that aggreagtes results from several popular QC bioinformatics software into one html report.</p>
+<p>Let's run MultiQC in our current directory</p>
+<div class="codehilite"><pre><span></span>multiqc .
+</pre></div>
+
+
+<p>You can download the report or view it by clickinh on the link below</p>
+<ul>
+<li><a href="../data/fastqc/multiqc_report.html">multiqc_report.html</a></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution?</p>
+</div>
                 
                   
                 

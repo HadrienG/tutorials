@@ -32,7 +32,7 @@
     
     
       
-        <title>File Formats - Bioinformatics Walkthroughs</title>
+        <title>File Formats - Bioinformatics Tutorials</title>
       
     
     
@@ -77,7 +77,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Bioinformatics Walkthroughs" class="md-header-nav__button md-logo">
+        <a href=".." title="Bioinformatics Tutorials" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -169,7 +169,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Bioinformatics Walkthroughs
+    Bioinformatics Tutorials
   </label>
   
     <div class="md-nav__source">
@@ -634,21 +634,23 @@
 <p>The fasta format was invented in 1988 and designed to represent nucleotide or peptide sequences. It originates from the <a href="https://en.wikipedia.org/wiki/FASTA">FASTA</a> software package, but is now a standard in the world of bioinformatics.</p>
 <p>The first line in a FASTA file starts with a "&gt;" (greater-than) symbol followed by the description or identifier of the sequence. Following the initial line (used for a unique description of the sequence) is the actual sequence itself in standard one-letter code.</p>
 <p>A few sample sequences:</p>
-<pre><code>&gt;KX580312.1 Homo sapiens truncated breast cancer 1 (BRCA1) gene, exon 15 and partial cds
+<div class="codehilite"><pre><span></span>&gt;KX580312.1 Homo sapiens truncated breast cancer 1 (BRCA1) gene, exon 15 and partial cds
 GTCATCCCCTTCTAAATGCCCATCATTAGATGATAGGTGGTACATGCACAGTTGCTCTGGGAGTCTTCAG
 AATAGAAACTACCCATCTCAAGAGGAGCTCATTAAGGTTGTTGATGTGGAGGAGTAACAGCTGGAAGAGT
 CTGGGCCACACGATTTGACGGAAACATCTTACTTGCCAAGGCAAGATCTAG
-</code></pre>
+</pre></div>
 
-<pre><code>&gt;KRN06561.1 heat shock [Lactobacillus sucicola DSM 21376 = JCM 15457]
+
+<div class="codehilite"><pre><span></span>&gt;KRN06561.1 heat shock [Lactobacillus sucicola DSM 21376 = JCM 15457]
 MSLVMANELTNRFNNWMKQDDFFGNLGRSFFDLDNSVNRALKTDVKETDKAYEVRIDVPGIDKKDITVDY
 HDGVLSVNAKRDSFNDESDSEGNVIASERSYGRFARQYSLPNVDESGIKAKCEDGVLKLTLPKLAEEKIN
 GNHIEIE
-</code></pre>
+</pre></div>
+
 
 <p>A fasta file can contain multiple sequence. Each sequence will be separated by their "header" line, starting by "&gt;".</p>
 <p>Example:</p>
-<pre><code>&gt;KRN06561.1 heat shock [Lactobacillus sucicola DSM 21376 = JCM 15457]
+<div class="codehilite"><pre><span></span>&gt;KRN06561.1 heat shock [Lactobacillus sucicola DSM 21376 = JCM 15457]
 MSLVMANELTNRFNNWMKQDDFFGNLGRSFFDLDNSVNRALKTDVKETDKAYEVRIDVPGIDKKDITVDY
 HDGVLSVNAKRDSFNDESDSEGNVIASERSYGRFARQYSLPNVDESGIKAKCEDGVLKLTLPKLAEEKIN
 GNHIEIE
@@ -657,7 +659,8 @@ MPEETQTQDQPMEEEEVETFAFQAEIAQLMSLIINTFYSNKEIFLRELISNSSDALDKIRYESLTDPSKL
 DSGKELHINLIPNKQDRTLTIVDTGIGMTKADLINNLGTIAKSGTKAFMEALQAGADISMIGQFGVGFYS
 AYLVAEKVTVITKHNDDEQYAWESSAGGSFTVRTDTGEPMGRGTKVILHLKEDQTEYLEERRIKEIVKKH
 SQFIGYPITLFVEK
-</code></pre>
+</pre></div>
+
 
 <h3 id="the-fastq-format">The fastq format<a class="headerlink" href="#the-fastq-format" title="Permanent link">&para;</a></h3>
 <p>The fastq format is also a text based format to represent nucleotide sequences, but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.</p>
@@ -669,11 +672,12 @@ SQFIGYPITLFVEK
 <li>Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.</li>
 </ul>
 <p>An example sequence in fastq format:</p>
-<pre><code>@SEQ_ID
+<div class="codehilite"><pre><span></span>@SEQ_ID
 GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
 +
-!''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF&gt;&gt;&gt;&gt;&gt;&gt;CCCCCCC65
-</code></pre>
+!&#39;&#39;*((((***+))%%%++)(%%%%).1***-+*&#39;&#39;))**55CCF&gt;&gt;&gt;&gt;&gt;&gt;CCCCCCC65
+</pre></div>
+
 
 <h4 id="quality">Quality<a class="headerlink" href="#quality" title="Permanent link">&para;</a></h4>
 <p>The quality, also called phred score, is the probability that the corresponding basecall is incorrect.</p>
@@ -726,21 +730,23 @@ GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
 <p>The SAM format has a really extensive and complex specification that you can find <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">here</a>.</p>
 <p>In brief it consists of a header section and reads (with other information) in tab delimited format.</p>
 <h4 id="example-header-section">Example header section<a class="headerlink" href="#example-header-section" title="Permanent link">&para;</a></h4>
-<pre><code>@HD VN:1.0                  SO:unsorted
+<div class="codehilite"><pre><span></span>@HD VN:1.0                  SO:unsorted
 @SQ SN:O_volvulusOVOC_OM1a  LN:2816604
 @SQ SN:O_volvulusOVOC_OM1b  LN:28345163
 @SQ SN:O_volvulusOVOC_OM2   LN:25485961
-</code></pre>
+</pre></div>
+
 
 <h4 id="example-read">Example read<a class="headerlink" href="#example-read" title="Permanent link">&para;</a></h4>
-<pre><code>M01137:130:00-A:17009:1352/14 * 0 0 * * 0 0 AGCAAAATACAACGATCTGGATGGTAGCATTAGCGATGCGACACTGCTTGAACCGTCAAAG FGGFGCFGFFGC8,,@D?E6EFCF,=AEFFGGDGGGADFGG@&gt;FFEGGG:+&lt;7D&gt;AFCFGG YT:Z:UU
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">M01137</span><span class="o">:</span><span class="mi">130</span><span class="o">:</span><span class="mi">00</span><span class="o">-</span><span class="n">A</span><span class="o">:</span><span class="mi">17009</span><span class="o">:</span><span class="mi">1352</span><span class="o">/</span><span class="mi">14</span> <span class="o">*</span> <span class="mi">0</span> <span class="mi">0</span> <span class="o">*</span> <span class="o">*</span> <span class="mi">0</span> <span class="mi">0</span> <span class="n">AGCAAAATACAACGATCTGGATGGTAGCATTAGCGATGCGACACTGCTTGAACCGTCAAAG</span> <span class="n">FGGFGCFGFFGC8</span><span class="o">,,</span><span class="err">@</span><span class="n">D</span><span class="o">?</span><span class="n">E6EFCF</span><span class="o">,=</span><span class="n">AEFFGGDGGGADFGG</span><span class="err">@</span><span class="o">&gt;</span><span class="n">FFEGGG</span><span class="o">:+&lt;</span><span class="mi">7</span><span class="n">D</span><span class="o">&gt;</span><span class="n">AFCFGG</span> <span class="n">YT</span><span class="o">:</span><span class="n">Z</span><span class="o">:</span><span class="n">UU</span>
+</pre></div>
+
 
 <h3 id="the-vcf-format">the vcf format<a class="headerlink" href="#the-vcf-format" title="Permanent link">&para;</a></h3>
 <p>The vcf format is also a text-based file format. VCF stands for Variant Call Format and is used to store gene sequence variations (SNVs, indels). The format has been developped for genotyping projects, and is the standard to represent variations in the genome of a species.</p>
 <p>A vcf is a tab-delimited file, described <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">here</a>.</p>
 <h4 id="vcf-example">VCF Example<a class="headerlink" href="#vcf-example" title="Permanent link">&para;</a></h4>
-<pre><code>##fileformat=VCFv4.0
+<div class="codehilite"><pre><span></span>##fileformat=VCFv4.0
 ##fileDate=20110705
 ##reference=1000GenomesPilot-NCBI37
 ##phasing=partial
@@ -781,13 +787,14 @@ chr2    215632155       .       T       C
 chr2    215632192       .       G       A
 chr2    215632255       .       CA      TG
 chr2    215634055       .       C       T
-</code></pre>
+</pre></div>
+
 
 <h3 id="the-gff-format">the gff format<a class="headerlink" href="#the-gff-format" title="Permanent link">&para;</a></h3>
 <p>The general feature format (gff) is another text file format, used for describing genes and other features of DNA, RNA and protein sequences. It is the standard for annotation of genomes.</p>
 <p>A gff file should contain 9 columns, described <a href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">here</a></p>
 <h4 id="example-gff">Example gff<a class="headerlink" href="#example-gff" title="Permanent link">&para;</a></h4>
-<pre><code>##description: evidence-based annotation of the human genome (GRCh38), version 25 (Ensembl 85)
+<div class="codehilite"><pre><span></span>##description: evidence-based annotation of the human genome (GRCh38), version 25 (Ensembl 85)
 ##provider: GENCODE
 ##contact: gencode-help@sanger.ac.uk
 ##format: gtf
@@ -797,7 +804,7 @@ chr1    HAVANA  transcript  11869   14409   .   +   .   gene_id &quot;ENSG000002
 chr1    HAVANA  exon    11869   12227   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; transcript_id &quot;ENST00000456328.2&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; transcript_type &quot;processed_transcript&quot;; transcript_status &quot;KNOWN&quot;; transcript_name &quot;DDX11L1-002&quot;; exon_number 1; exon_id &quot;ENSE00002234944.1&quot;; level 2; transcript_support_level &quot;1&quot;; tag &quot;basic&quot;; havana_gene &quot;OTTHUMG00000000961.2&quot;; havana_transcript &quot;OTTHUMT00000362751.1&quot;;
 chr1    HAVANA  exon    12613   12721   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; transcript_id &quot;ENST00000456328.2&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; transcript_type &quot;processed_transcript&quot;; transcript_status &quot;KNOWN&quot;; transcript_name &quot;DDX11L1-002&quot;; exon_number 2; exon_id &quot;ENSE00003582793.1&quot;; level 2; transcript_support_level &quot;1&quot;; tag &quot;basic&quot;; havana_gene &quot;OTTHUMG00000000961.2&quot;; havana_transcript &quot;OTTHUMT00000362751.1&quot;;
 chr1    HAVANA  exon    13221   14409   .   +   .   gene_id &quot;ENSG00000223972.5&quot;; transcript_id &quot;ENST00000456328.2&quot;; gene_type &quot;transcribed_unprocessed_pseudogene&quot;; gene_status &quot;KNOWN&quot;; gene_name &quot;DDX11L1&quot;; transcript_type &quot;processed_transcript&quot;; transcript_status &quot;KNOWN&quot;; transcript_name &quot;DDX11L1-002&quot;; exon_number 3; exon_id &quot;ENSE00002312635.1&quot;; level 2; transcript_support_level &quot;1&quot;; tag &quot;basic&quot;; havana_gene &quot;OTTHUMG00000000961.2&quot;; havana_transcript &quot;OTTHUMT00000362751.1&quot;;
-</code></pre>
+</pre></div>
                 
                   
                 

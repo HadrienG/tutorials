@@ -32,7 +32,7 @@
     
     
       
-        <title>Whole Metagenome Sequencing - Bioinformatics Walkthroughs</title>
+        <title>Whole Metagenome Sequencing - Bioinformatics Tutorials</title>
       
     
     
@@ -77,7 +77,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Bioinformatics Walkthroughs" class="md-header-nav__button md-logo">
+        <a href=".." title="Bioinformatics Tutorials" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -169,7 +169,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Bioinformatics Walkthroughs
+    Bioinformatics Tutorials
   </label>
   
     <div class="md-nav__source">
@@ -607,10 +607,11 @@
 </ul>
 <h3 id="getting-the-data-and-checking-their-quality">Getting the Data and Checking their Quality<a class="headerlink" href="#getting-the-data-and-checking-their-quality" title="Permanent link">&para;</a></h3>
 <p>If you are reading this tutorial online and haven't cloned the directory, first download and unpack the data:</p>
-<pre><code>wget http://77.235.253.14/metlab/wms.tar
+<div class="codehilite"><pre><span></span>wget http://77.235.253.14/metlab/wms.tar
 tar xvf wms.tar
 cd wms
-</code></pre>
+</pre></div>
+
 
 <p>We'll use FastQC to check the quality of our data. FastQC can be downloaded and
 run on a Windows or Linux computer without installation. It is available <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">here</a></p>
@@ -628,44 +629,48 @@ Kraken aims to achieve high sensitivity and high speed by utilizing exact alignm
 approaches (i.e. BLAST).</p>
 <p>By default, the authors of kraken built their database based on RefSeq Bacteria, Archea and Viruses. We'll use it for the purpose of this tutorial.</p>
 <p><strong>NOTE: The database may have been installed already! Ask your instructor!</strong></p>
-<pre><code class="bash"># You might not need this step (for example if you're working on Uppmax!)
+<div class="codehilite"><pre><span></span><span class="c1"># You might not need this step (for example if you&#39;re working on Uppmax!)</span>
 wget https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz
 tar xzf minikraken.tgz
-$KRAKEN_DB=minikraken_20141208
-</code></pre>
+<span class="nv">$KRAKEN_DB</span><span class="o">=</span>minikraken_20141208
+</pre></div>
+
 
 <p>Now run kraken on the reads</p>
-<pre><code class="bash">mkdir kraken_results
-for i in *_1.fastq.gz
-do
-    prefix=$(basename $i _1.fastq.gz)
-    # set number of threads to number of cores if running under SLURM, otherwise use 2 threads
-    nthreads=${SLURM_NPROCS:=2}
-    kraken --db $KRAKEN_DB --threads ${nthreads} --fastq-input --gzip-compressed \
-        ${prefix}_1.fastq.gz ${prefix}_2.fastq.gz &gt; kraken_results/${prefix}.tab
-    kraken-report --db $KRAKEN_DB \
-        kraken_results/${prefix}.tab &gt; kraken_results/${prefix}_tax.txt
-done
-</code></pre>
+<div class="codehilite"><pre><span></span>mkdir kraken_results
+<span class="k">for</span> i in *_1.fastq.gz
+<span class="k">do</span>
+    <span class="nv">prefix</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$i</span> _1.fastq.gz<span class="k">)</span>
+    <span class="c1"># set number of threads to number of cores if running under SLURM, otherwise use 2 threads</span>
+    <span class="nv">nthreads</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_NPROCS</span><span class="p">:=2</span><span class="si">}</span>
+    kraken --db <span class="nv">$KRAKEN_DB</span> --threads <span class="si">${</span><span class="nv">nthreads</span><span class="si">}</span> --fastq-input --gzip-compressed <span class="se">\</span>
+        <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>_1.fastq.gz <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>_2.fastq.gz &gt; kraken_results/<span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>.tab
+    kraken-report --db <span class="nv">$KRAKEN_DB</span> <span class="se">\</span>
+        kraken_results/<span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>.tab &gt; kraken_results/<span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>_tax.txt
+<span class="k">done</span>
+</pre></div>
+
 
 <p>which produces a tab-delimited file with an assigned TaxID for each read.</p>
 <p>Kraken includes a script called <code>kraken-report</code> to transform this file into a "tree" view with the percentage of reads assigned to each taxa. We've run this script at each step in the loop. Take a look at the <code>_tax.txt</code> files!</p>
 <h3 id="abundance-estimation-using-bracken">Abundance estimation using Bracken<a class="headerlink" href="#abundance-estimation-using-bracken" title="Permanent link">&para;</a></h3>
 <p>Bracken (Bayesian Reestimation of Abundance with KrakEN) is a highly accurate statistical method that computes the abundance of species in DNA sequences from a metagenomics sample</p>
 <p>Before starting, you need to install Bracken:</p>
-<pre><code class="bash">cd
+<div class="codehilite"><pre><span></span><span class="nb">cd</span>
 git clone https://github.com/jenniferlu717/Bracken.git
-chmod 755 Bracken/*.py
-chmod 755 Bracken/*.pl
-export PATH=$PATH:$HOME/Bracken
-</code></pre>
+chmod <span class="m">755</span> Bracken/*.py
+chmod <span class="m">755</span> Bracken/*.pl
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/Bracken
+</pre></div>
+
 
 <p>Unfortunately, Uppmax lacks some perl packages necessary for Bracken to work:</p>
 <p>Follow the tutorial <a href="http://www.uppmax.uu.se/support/faq/software-faq/installing-local-perl-packages/">here</a> to install <code>cpanm</code></p>
 <p>then install the two perl libraries that are missing:</p>
-<pre><code class="bash">cpanm Parallel::ForkManager
+<div class="codehilite"><pre><span></span>cpanm Parallel::ForkManager
 cpanm List::MoreUtils
-</code></pre>
+</pre></div>
+
 
 <p>Three steps are necessary to set up Kraken abundance estimation.</p>
 <ol>
@@ -676,17 +681,19 @@ cpanm List::MoreUtils
 <p>Search all library input sequences against the database and compute the classifications for each perfect read of ${READ_LENGTH} base pairs from one of the input sequences.</p>
 </li>
 </ol>
-<pre><code class="bash">find -L $KRAKEN_DB/library -name &quot;*.fna&quot; -o -name &quot;*.fa&quot; -o -name &quot;*.fasta&quot; &gt; genomes.list
-cat $(grep -v '^#' genomes.list) &gt; genomes.fasta
-kraken --db=${KRAKEN_DB} --fasta-input --threads=${SLURM_NPROCS:=10} kraken.fasta &gt; database.kraken
-count-kmer-abundances.pl --db=${KRAKEN_DB} --read-length=100 database.kraken &gt; database100mers.kraken_cnts
-</code></pre>
+<div class="codehilite"><pre><span></span>find -L <span class="nv">$KRAKEN_DB</span>/library -name <span class="s2">&quot;*.fna&quot;</span> -o -name <span class="s2">&quot;*.fa&quot;</span> -o -name <span class="s2">&quot;*.fasta&quot;</span> &gt; genomes.list
+cat <span class="k">$(</span>grep -v <span class="s1">&#39;^#&#39;</span> genomes.list<span class="k">)</span> &gt; genomes.fasta
+kraken --db<span class="o">=</span><span class="si">${</span><span class="nv">KRAKEN_DB</span><span class="si">}</span> --fasta-input --threads<span class="o">=</span><span class="si">${</span><span class="nv">SLURM_NPROCS</span><span class="p">:=10</span><span class="si">}</span> kraken.fasta &gt; database.kraken
+count-kmer-abundances.pl --db<span class="o">=</span><span class="si">${</span><span class="nv">KRAKEN_DB</span><span class="si">}</span> --read-length<span class="o">=</span><span class="m">100</span> database.kraken &gt; database100mers.kraken_cnts
+</pre></div>
+
 
 <ol>
 <li>Generate the kmer distribution file</li>
 </ol>
-<pre><code class="bash">python generate_kmer_distribution.py -i database100mers.kraken_cnts -o KMER_DISTR.TXT
-</code></pre>
+<div class="codehilite"><pre><span></span>python generate_kmer_distribution.py -i database100mers.kraken_cnts -o KMER_DISTR.TXT
+</pre></div>
+
 
 <p>Now, given the expected kmer distribution for genomes in a kraken database along
 with a kraken report file, the number of reads belonging to each species (or
@@ -703,10 +710,11 @@ following command line:</p>
 <p>Pavian is a web application for exploring metagenomics classification results.</p>
 <p>Install and run Pavian:</p>
 <p>(In R or Rstudio)</p>
-<pre><code class="R">## Installs required packages from CRAN and Bioconductor
-source(&quot;https://raw.githubusercontent.com/fbreitwieser/pavian/master/inst/shinyapp/install-pavian.R&quot;)
-pavian::runApp(port=5000)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="c1">## Installs required packages from CRAN and Bioconductor</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&quot;https://raw.githubusercontent.com/fbreitwieser/pavian/master/inst/shinyapp/install-pavian.R&quot;</span><span class="p">)</span>
+pavian<span class="o">::</span>runApp<span class="p">(</span>port<span class="o">=</span><span class="m">5000</span><span class="p">)</span>
+</pre></div>
+
 
 <p>Pavian will be available at http://127.0.0.1:5000</p>
                 

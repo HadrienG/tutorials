@@ -32,7 +32,7 @@
     
     
       
-        <title>RNA-Seq - Bioinformatics Walkthroughs</title>
+        <title>RNA-Seq - Bioinformatics Tutorials</title>
       
     
     
@@ -77,7 +77,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Bioinformatics Walkthroughs" class="md-header-nav__button md-logo">
+        <a href=".." title="Bioinformatics Tutorials" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -169,7 +169,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Bioinformatics Walkthroughs
+    Bioinformatics Tutorials
   </label>
   
     <div class="md-nav__source">
@@ -532,8 +532,9 @@
                 
                 <h1 id="rna-seq">RNA-Seq<a class="headerlink" href="#rna-seq" title="Permanent link">&para;</a></h1>
 <h2 id="load-salmon">Load salmon<a class="headerlink" href="#load-salmon" title="Permanent link">&para;</a></h2>
-<pre><code>module load Salmon
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">load</span> <span class="n">Salmon</span>
+</pre></div>
+
 
 <h2 id="downloading-the-data">Downloading the data<a class="headerlink" href="#downloading-the-data" title="Permanent link">&para;</a></h2>
 <p>For this tutorial we will use the test data from <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004393">this</a> paper:</p>
@@ -554,22 +555,25 @@
 </ul>
 <p>You can download the data from <a href="http://139.162.178.46/files/tutorials/toy_rna.tar.gz">here</a>.</p>
 <p>Unpack the data and go into the toy_rna directory</p>
-<pre><code>tar xzf toy_rna.tar.gz
+<div class="codehilite"><pre><span></span>tar xzf toy_rna.tar.gz
 cd toy_rna
-</code></pre>
+</pre></div>
+
 
 <h2 id="indexing-transcriptome">Indexing transcriptome<a class="headerlink" href="#indexing-transcriptome" title="Permanent link">&para;</a></h2>
-<pre><code>salmon index -t chr22_transcripts.fa -i chr22_index
-</code></pre>
+<div class="codehilite"><pre><span></span>salmon index -t chr22_transcripts.fa -i chr22_index
+</pre></div>
+
 
 <h2 id="quantify-reads-using-salmon">Quantify reads using salmon<a class="headerlink" href="#quantify-reads-using-salmon" title="Permanent link">&para;</a></h2>
-<pre><code class="bash">for i in *_R1.fastq.gz
-do
-   prefix=$(basename $i _R1.fastq.gz)
-   salmon quant -i chr22_index --libType A \
-          -1 ${prefix}_R1.fastq.gz -2 ${prefix}_R2.fastq.gz -o quant/${prefix};
-done
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="k">for</span> i in *_R1.fastq.gz
+<span class="k">do</span>
+   <span class="nv">prefix</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$i</span> _R1.fastq.gz<span class="k">)</span>
+   salmon quant -i chr22_index --libType A <span class="se">\</span>
+          -1 <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>_R1.fastq.gz -2 <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>_R2.fastq.gz -o quant/<span class="si">${</span><span class="nv">prefix</span><span class="si">}</span><span class="p">;</span>
+<span class="k">done</span>
+</pre></div>
+
 
 <p>This loop simply goes through each sample and invokes salmon using fairly basic options:</p>
 <ul>
@@ -583,175 +587,195 @@ done
 <h2 id="import-read-counts-using-tximport">Import read counts using tximport<a class="headerlink" href="#import-read-counts-using-tximport" title="Permanent link">&para;</a></h2>
 <p>Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis.</p>
 <p>First, open up your favourite R IDE and install the necessary packages:</p>
-<pre><code class="R">source(&quot;https://bioconductor.org/biocLite.R&quot;)
-biocLite(&quot;tximport&quot;)
-biocLite(&quot;GenomicFeatures&quot;)
+<div class="codehilite"><pre><span></span><span class="kn">source</span><span class="p">(</span><span class="s">&quot;https://bioconductor.org/biocLite.R&quot;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&quot;tximport&quot;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&quot;GenomicFeatures&quot;</span><span class="p">)</span>
 
-install.packages(&quot;readr&quot;)
-</code></pre>
+install.packages<span class="p">(</span><span class="s">&quot;readr&quot;</span><span class="p">)</span>
+</pre></div>
+
 
 <p>Then load the modules:</p>
-<pre><code class="R">library(tximport)
-library(GenomicFeatures)
-library(readr)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>tximport<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>GenomicFeatures<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>readr<span class="p">)</span>
+</pre></div>
+
 
 <p>Salmon did the quantifiation of the transcript level. We want to see which genes are differentially expressed, so we need to link the transcript names to the gene names. We can use our .gtf annotation for that, and the GenomicFeatures package:</p>
-<pre><code class="R">txdb &lt;- makeTxDbFromGFF(&quot;chr22_genes.gtf&quot;)
-k &lt;- keys(txdb, keytype = &quot;GENEID&quot;)
-tx2gene &lt;- select(txdb, keys = k, keytype = &quot;GENEID&quot;, columns = &quot;TXNAME&quot;)
-head(tx2gene)
-</code></pre>
+<div class="codehilite"><pre><span></span>txdb <span class="o">&lt;-</span> makeTxDbFromGFF<span class="p">(</span><span class="s">&quot;chr22_genes.gtf&quot;</span><span class="p">)</span>
+k <span class="o">&lt;-</span> keys<span class="p">(</span>txdb<span class="p">,</span> keytype <span class="o">=</span> <span class="s">&quot;GENEID&quot;</span><span class="p">)</span>
+tx2gene <span class="o">&lt;-</span> select<span class="p">(</span>txdb<span class="p">,</span> keys <span class="o">=</span> k<span class="p">,</span> keytype <span class="o">=</span> <span class="s">&quot;GENEID&quot;</span><span class="p">,</span> columns <span class="o">=</span> <span class="s">&quot;TXNAME&quot;</span><span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>tx2gene<span class="p">)</span>
+</pre></div>
+
 
 <p>Now we can import the salmon quantification. First, download the file with sample descriptions from <a href="https://raw.githubusercontent.com/HadrienG/tutorials/master/data/samples.txt">here</a> and put it in the toy_rna directory. Then, use that file to load the corresponding quantification data.</p>
-<pre><code class="R">samples &lt;- read.table(&quot;samples.txt&quot;, header = TRUE)
-files &lt;- file.path(&quot;quant&quot;, samples$sample, &quot;quant.sf&quot;)
-names(files) &lt;- paste0(samples$sample)
-txi.salmon &lt;- tximport(files, type = &quot;salmon&quot;, tx2gene = tx2gene, reader = read_tsv)
-</code></pre>
+<div class="codehilite"><pre><span></span>samples <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;samples.txt&quot;</span><span class="p">,</span> header <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+files <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span><span class="s">&quot;quant&quot;</span><span class="p">,</span> samples<span class="o">$</span><span class="kp">sample</span><span class="p">,</span> <span class="s">&quot;quant.sf&quot;</span><span class="p">)</span>
+<span class="kp">names</span><span class="p">(</span>files<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">paste0</span><span class="p">(</span>samples<span class="o">$</span><span class="kp">sample</span><span class="p">)</span>
+txi.salmon <span class="o">&lt;-</span> tximport<span class="p">(</span>files<span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;salmon&quot;</span><span class="p">,</span> tx2gene <span class="o">=</span> tx2gene<span class="p">,</span> reader <span class="o">=</span> read_tsv<span class="p">)</span>
+</pre></div>
+
 
 <p>Take a look at the data:</p>
-<pre><code class="R">head(txi.salmon$counts)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="kp">head</span><span class="p">(</span>txi.salmon<span class="o">$</span>counts<span class="p">)</span>
+</pre></div>
+
 
 <h2 id="differential-expression-using-deseq2">Differential expression using DESeq2<a class="headerlink" href="#differential-expression-using-deseq2" title="Permanent link">&para;</a></h2>
 <p>Install the necessary package:</p>
-<pre><code class="R">biocLite('DESeq2')
-</code></pre>
+<div class="codehilite"><pre><span></span>biocLite<span class="p">(</span><span class="s">&#39;DESeq2&#39;</span><span class="p">)</span>
+</pre></div>
+
 
 <p>Then load it:</p>
-<pre><code class="R">library(DESeq2)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>DESeq2<span class="p">)</span>
+</pre></div>
+
 
 <p>Instantiate the DESeqDataSet and generate result table. See <code>?DESeqDataSetFromTximport</code> and <code>?DESeq</code> for more information about the steps performed by the program.</p>
-<pre><code class="R">dds &lt;- DESeqDataSetFromTximport(txi.salmon, samples, ~condition)
-dds &lt;- DESeq(dds)
-res &lt;- results(dds)
-</code></pre>
+<div class="codehilite"><pre><span></span>dds <span class="o">&lt;-</span> DESeqDataSetFromTximport<span class="p">(</span>txi.salmon<span class="p">,</span> samples<span class="p">,</span> <span class="o">~</span>condition<span class="p">)</span>
+dds <span class="o">&lt;-</span> DESeq<span class="p">(</span>dds<span class="p">)</span>
+res <span class="o">&lt;-</span> results<span class="p">(</span>dds<span class="p">)</span>
+</pre></div>
+
 
 <p>Run the <code>summary</code> command to get an idea of how many genes are up- and downregulated between the two conditions:</p>
 <p><code>summary(res)</code></p>
 <p>DESeq uses a negative binomial distribution. Such distributions have two parameters: mean and dispersion. The dispersion is a parameter describing how much the variance deviates from the mean.</p>
 <p>You can read more about the methods used by DESeq2 in the <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8">paper</a> or the <a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq/inst/doc/DESeq.pdf">vignette</a></p>
 <p>Plot dispersions:</p>
-<pre><code class="R">plotDispEsts(dds, main=&quot;Dispersion plot&quot;)
-</code></pre>
+<div class="codehilite"><pre><span></span>plotDispEsts<span class="p">(</span>dds<span class="p">,</span> main<span class="o">=</span><span class="s">&quot;Dispersion plot&quot;</span><span class="p">)</span>
+</pre></div>
+
 
 <p>For clustering and heatmaps, we need to log transform our data:</p>
-<pre><code class="R">rld &lt;- rlogTransformation(dds)
-head(assay(rld))
-</code></pre>
+<div class="codehilite"><pre><span></span>rld <span class="o">&lt;-</span> rlogTransformation<span class="p">(</span>dds<span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>assay<span class="p">(</span>rld<span class="p">))</span>
+</pre></div>
+
 
 <p>Then, we create a sample distance heatmap:</p>
-<pre><code class="R">library(RColorBrewer)
-library(gplots) # you may need to install this package
+<div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>RColorBrewer<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>gplots<span class="p">)</span> <span class="c1"># you may need to install this package</span>
 
-(mycols &lt;- brewer.pal(8, &quot;Dark2&quot;)[1:length(unique(samples$condition))])
-sampleDists &lt;- as.matrix(dist(t(assay(rld))))
-heatmap.2(as.matrix(sampleDists), key=F, trace=&quot;none&quot;,
-          col=colorpanel(100, &quot;black&quot;, &quot;white&quot;),
-          ColSideColors=mycols[samples$condition],
-          RowSideColors=mycols[samples$condition],
-          margin=c(10, 10), main=&quot;Sample Distance Matrix&quot;)
-</code></pre>
+<span class="p">(</span>mycols <span class="o">&lt;-</span> brewer.pal<span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="kp">length</span><span class="p">(</span><span class="kp">unique</span><span class="p">(</span>samples<span class="o">$</span>condition<span class="p">))])</span>
+sampleDists <span class="o">&lt;-</span> <span class="kp">as.matrix</span><span class="p">(</span>dist<span class="p">(</span><span class="kp">t</span><span class="p">(</span>assay<span class="p">(</span>rld<span class="p">))))</span>
+heatmap.2<span class="p">(</span><span class="kp">as.matrix</span><span class="p">(</span>sampleDists<span class="p">),</span> key<span class="o">=</span><span class="bp">F</span><span class="p">,</span> trace<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">,</span>
+          col<span class="o">=</span>colorpanel<span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="s">&quot;black&quot;</span><span class="p">,</span> <span class="s">&quot;white&quot;</span><span class="p">),</span>
+          ColSideColors<span class="o">=</span>mycols<span class="p">[</span>samples<span class="o">$</span>condition<span class="p">],</span>
+          RowSideColors<span class="o">=</span>mycols<span class="p">[</span>samples<span class="o">$</span>condition<span class="p">],</span>
+          margin<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">10</span><span class="p">),</span> main<span class="o">=</span><span class="s">&quot;Sample Distance Matrix&quot;</span><span class="p">)</span>
+</pre></div>
+
 
 <p>We can also plot a PCA:</p>
-<pre><code class="R">DESeq2::plotPCA(rld, intgroup=&quot;condition&quot;)
-</code></pre>
+<div class="codehilite"><pre><span></span>DESeq2<span class="o">::</span>plotPCA<span class="p">(</span>rld<span class="p">,</span> intgroup<span class="o">=</span><span class="s">&quot;condition&quot;</span><span class="p">)</span>
+</pre></div>
+
 
 <p>It is time to look at some p-values:</p>
-<pre><code class="R">table(res$padj&lt;0.05)
-res &lt;- res[order(res$padj), ]
-resdata &lt;- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE)), by=&quot;row.names&quot;, sort=FALSE)
-names(resdata)[1] &lt;- &quot;Gene&quot;
-head(resdata)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="kp">table</span><span class="p">(</span>res<span class="o">$</span>padj<span class="o">&lt;</span><span class="m">0.05</span><span class="p">)</span>
+res <span class="o">&lt;-</span> res<span class="p">[</span><span class="kp">order</span><span class="p">(</span>res<span class="o">$</span>padj<span class="p">),</span> <span class="p">]</span>
+resdata <span class="o">&lt;-</span> <span class="kp">merge</span><span class="p">(</span><span class="kp">as.data.frame</span><span class="p">(</span>res<span class="p">),</span> <span class="kp">as.data.frame</span><span class="p">(</span>counts<span class="p">(</span>dds<span class="p">,</span> normalized<span class="o">=</span><span class="kc">TRUE</span><span class="p">)),</span> by<span class="o">=</span><span class="s">&quot;row.names&quot;</span><span class="p">,</span> sort<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="kp">names</span><span class="p">(</span>resdata<span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s">&quot;Gene&quot;</span>
+<span class="kp">head</span><span class="p">(</span>resdata<span class="p">)</span>
+</pre></div>
+
 
 <p>Examine plot of p-values, the MA plot and the Volcano Plot:</p>
-<pre><code class="R">hist(res$pvalue, breaks=50, col=&quot;grey&quot;)
-DESeq2::plotMA(dds, ylim=c(-1,1), cex=1)
+<div class="codehilite"><pre><span></span>hist<span class="p">(</span>res<span class="o">$</span>pvalue<span class="p">,</span> breaks<span class="o">=</span><span class="m">50</span><span class="p">,</span> col<span class="o">=</span><span class="s">&quot;grey&quot;</span><span class="p">)</span>
+DESeq2<span class="o">::</span>plotMA<span class="p">(</span>dds<span class="p">,</span> ylim<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">1</span><span class="p">),</span> cex<span class="o">=</span><span class="m">1</span><span class="p">)</span>
 
-# Volcano plot
-with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main=&quot;Volcano plot&quot;, xlim=c(-2.5,2)))
-with(subset(res, padj&lt;.05 ), points(log2FoldChange, -log10(pvalue), pch=20, col=&quot;red&quot;))
-</code></pre>
+<span class="c1"># Volcano plot</span>
+<span class="kp">with</span><span class="p">(</span>res<span class="p">,</span> plot<span class="p">(</span>log2FoldChange<span class="p">,</span> <span class="o">-</span><span class="kp">log10</span><span class="p">(</span>pvalue<span class="p">),</span> pch<span class="o">=</span><span class="m">20</span><span class="p">,</span> main<span class="o">=</span><span class="s">&quot;Volcano plot&quot;</span><span class="p">,</span> xlim<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">-2.5</span><span class="p">,</span><span class="m">2</span><span class="p">)))</span>
+<span class="kp">with</span><span class="p">(</span><span class="kp">subset</span><span class="p">(</span>res<span class="p">,</span> padj<span class="o">&lt;</span><span class="m">.05</span> <span class="p">),</span> points<span class="p">(</span>log2FoldChange<span class="p">,</span> <span class="o">-</span><span class="kp">log10</span><span class="p">(</span>pvalue<span class="p">),</span> pch<span class="o">=</span><span class="m">20</span><span class="p">,</span> col<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">))</span>
+</pre></div>
+
 
 <h2 id="kegg-pathway-analysis">KEGG pathway analysis<a class="headerlink" href="#kegg-pathway-analysis" title="Permanent link">&para;</a></h2>
 <p>As always, install and load the necessary packages:</p>
-<pre><code class="R">biocLite(&quot;AnnotationDbi&quot;)
-biocLite(&quot;org.Hs.eg.db&quot;)
-biocLite(&quot;pathview&quot;)
-biocLite(&quot;gage&quot;)
-biocLite(&quot;gageData&quot;)
+<div class="codehilite"><pre><span></span>biocLite<span class="p">(</span><span class="s">&quot;AnnotationDbi&quot;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&quot;org.Hs.eg.db&quot;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&quot;pathview&quot;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&quot;gage&quot;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&quot;gageData&quot;</span><span class="p">)</span>
 
-library(AnnotationDbi)
-library(org.Hs.eg.db)
-library(pathview)
-library(gage)
-library(gageData)
-</code></pre>
+<span class="kn">library</span><span class="p">(</span>AnnotationDbi<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>org.Hs.eg.db<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>pathview<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>gage<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>gageData<span class="p">)</span>
+</pre></div>
+
 
 <p>Let’s use the <code>mapIds</code> function to add more columns to the results. The row.names of our results table has the Ensembl gene ID (our key), so we need to specify  <code>keytype=ENSEMBL</code>. The column argument tells the <code>mapIds</code> function which information we want, and the <code>multiVals</code> argument tells the function what to do if there are multiple possible values for a single input value. Here we ask to just give us back the first one that occurs in the database. Let’s get the Entrez IDs, gene symbols, and full gene names.</p>
-<pre><code class="R">res$symbol &lt;- mapIds(org.Hs.eg.db,
-                     keys=row.names(res),
-                     column=&quot;SYMBOL&quot;,
-                     keytype=&quot;ENSEMBL&quot;,
-                     multiVals=&quot;first&quot;)
-res$entrez &lt;- mapIds(org.Hs.eg.db,
-                     keys=row.names(res),
-                     column=&quot;ENTREZID&quot;,
-                     keytype=&quot;ENSEMBL&quot;,
-                     multiVals=&quot;first&quot;)
-res$name &lt;- mapIds(org.Hs.eg.db,
-                     keys=row.names(res),
-                     column=&quot;GENENAME&quot;,
-                     keytype=&quot;ENSEMBL&quot;,
-                     multiVals=&quot;first&quot;)
+<div class="codehilite"><pre><span></span>res<span class="o">$</span>symbol <span class="o">&lt;-</span> mapIds<span class="p">(</span>org.Hs.eg.db<span class="p">,</span>
+                     keys<span class="o">=</span><span class="kp">row.names</span><span class="p">(</span>res<span class="p">),</span>
+                     column<span class="o">=</span><span class="s">&quot;SYMBOL&quot;</span><span class="p">,</span>
+                     keytype<span class="o">=</span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
+                     multiVals<span class="o">=</span><span class="s">&quot;first&quot;</span><span class="p">)</span>
+res<span class="o">$</span>entrez <span class="o">&lt;-</span> mapIds<span class="p">(</span>org.Hs.eg.db<span class="p">,</span>
+                     keys<span class="o">=</span><span class="kp">row.names</span><span class="p">(</span>res<span class="p">),</span>
+                     column<span class="o">=</span><span class="s">&quot;ENTREZID&quot;</span><span class="p">,</span>
+                     keytype<span class="o">=</span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
+                     multiVals<span class="o">=</span><span class="s">&quot;first&quot;</span><span class="p">)</span>
+res<span class="o">$</span>name <span class="o">&lt;-</span> mapIds<span class="p">(</span>org.Hs.eg.db<span class="p">,</span>
+                     keys<span class="o">=</span><span class="kp">row.names</span><span class="p">(</span>res<span class="p">),</span>
+                     column<span class="o">=</span><span class="s">&quot;GENENAME&quot;</span><span class="p">,</span>
+                     keytype<span class="o">=</span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
+                     multiVals<span class="o">=</span><span class="s">&quot;first&quot;</span><span class="p">)</span>
 
-head(res)
-</code></pre>
+<span class="kp">head</span><span class="p">(</span>res<span class="p">)</span>
+</pre></div>
+
 
 <p>We’re going to use the <a href="https://bioconductor.org/packages/release/bioc/html/gage.html">gage</a> package for pathway analysis, and the <a href="https://bioconductor.org/packages/release/bioc/html/pathview.html">pathview</a> package to draw a pathway diagram.</p>
 <p>The gageData package has pre-compiled databases mapping genes to KEGG pathways and GO terms for common organisms:</p>
-<pre><code class="R">data(kegg.sets.hs)
-data(sigmet.idx.hs)
-kegg.sets.hs &lt;- kegg.sets.hs[sigmet.idx.hs]
-head(kegg.sets.hs, 3)
-</code></pre>
+<div class="codehilite"><pre><span></span>data<span class="p">(</span>kegg.sets.hs<span class="p">)</span>
+data<span class="p">(</span>sigmet.idx.hs<span class="p">)</span>
+kegg.sets.hs <span class="o">&lt;-</span> kegg.sets.hs<span class="p">[</span>sigmet.idx.hs<span class="p">]</span>
+<span class="kp">head</span><span class="p">(</span>kegg.sets.hs<span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</pre></div>
+
 
 <p>Run the pathway analysis. See help on the gage function with <code>?gage</code>. Specifically, you might want to try changing the value of same.dir.</p>
-<pre><code class="R">foldchanges &lt;- res$log2FoldChange
-names(foldchanges) &lt;- res$entrez
-keggres &lt;- gage(foldchanges, gsets=kegg.sets.hs, same.dir=TRUE)
-lapply(keggres, head)
-</code></pre>
+<div class="codehilite"><pre><span></span>foldchanges <span class="o">&lt;-</span> res<span class="o">$</span>log2FoldChange
+<span class="kp">names</span><span class="p">(</span>foldchanges<span class="p">)</span> <span class="o">&lt;-</span> res<span class="o">$</span>entrez
+keggres <span class="o">&lt;-</span> gage<span class="p">(</span>foldchanges<span class="p">,</span> gsets<span class="o">=</span>kegg.sets.hs<span class="p">,</span> same.dir<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kp">lapply</span><span class="p">(</span>keggres<span class="p">,</span> <span class="kp">head</span><span class="p">)</span>
+</pre></div>
+
 
 <p>Pull out the top 5 upregulated pathways, then further process that just to get the IDs. We’ll use these KEGG pathway IDs downstream for plotting. The <code>dplyr</code> package is required to use the pipe (<code>%&gt;%</code>) construct.</p>
-<pre><code class="R">library(dplyr)
+<div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>dplyr<span class="p">)</span>
 
-# Get the pathways
-keggrespathways &lt;- data.frame(id=rownames(keggres$greater), keggres$greater) %&gt;%
-  tbl_df() %&gt;%
-  filter(row_number()&lt;=5) %&gt;%
-  .$id %&gt;%
-  as.character()
+<span class="c1"># Get the pathways</span>
+keggrespathways <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>id<span class="o">=</span><span class="kp">rownames</span><span class="p">(</span>keggres<span class="o">$</span>greater<span class="p">),</span> keggres<span class="o">$</span>greater<span class="p">)</span> <span class="o">%&gt;%</span>
+  tbl_df<span class="p">()</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span>row_number<span class="p">()</span><span class="o">&lt;=</span><span class="m">5</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="m">.</span><span class="o">$</span>id <span class="o">%&gt;%</span>
+  <span class="kp">as.character</span><span class="p">()</span>
 keggrespathways
 
-# Get the IDs.
-keggresids &lt;- substr(keggrespathways, start=1, stop=8)
+<span class="c1"># Get the IDs.</span>
+keggresids <span class="o">&lt;-</span> <span class="kp">substr</span><span class="p">(</span>keggrespathways<span class="p">,</span> start<span class="o">=</span><span class="m">1</span><span class="p">,</span> stop<span class="o">=</span><span class="m">8</span><span class="p">)</span>
 keggresids
-</code></pre>
+</pre></div>
+
 
 <p>Finally, the <code>pathview()</code> function in the pathview package makes the plots. Let’s write a function so we can loop through and draw plots for the top 5 pathways we created above.</p>
-<pre><code class="R"># Define plotting function for applying later
-plot_pathway &lt;- function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species=&quot;hsa&quot;, new.signature=FALSE)
+<div class="codehilite"><pre><span></span><span class="c1"># Define plotting function for applying later</span>
+plot_pathway <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>pid<span class="p">)</span> pathview<span class="p">(</span>gene.data<span class="o">=</span>foldchanges<span class="p">,</span> pathway.id<span class="o">=</span>pid<span class="p">,</span> species<span class="o">=</span><span class="s">&quot;hsa&quot;</span><span class="p">,</span> new.signature<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 
-# Unload dplyr since it conflicts with the next line
-detach(&quot;package:dplyr&quot;, unload=T)
+<span class="c1"># Unload dplyr since it conflicts with the next line</span>
+<span class="kn">detach</span><span class="p">(</span><span class="s">&quot;package:dplyr&quot;</span><span class="p">,</span> unload<span class="o">=</span><span class="bp">T</span><span class="p">)</span>
 
-# plot multiple pathways (plots saved to disk and returns a throwaway list object)
-tmp &lt;- sapply(keggresids, function(pid) pathview(gene.data=foldchanges, pathway.id=pid, species=&quot;hsa&quot;))
-</code></pre>
+<span class="c1"># plot multiple pathways (plots saved to disk and returns a throwaway list object)</span>
+tmp <span class="o">&lt;-</span> <span class="kp">sapply</span><span class="p">(</span>keggresids<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>pid<span class="p">)</span> pathview<span class="p">(</span>gene.data<span class="o">=</span>foldchanges<span class="p">,</span> pathway.id<span class="o">=</span>pid<span class="p">,</span> species<span class="o">=</span><span class="s">&quot;hsa&quot;</span><span class="p">))</span>
+</pre></div>
+
 
 <h4 id="thanks">Thanks<a class="headerlink" href="#thanks" title="Permanent link">&para;</a></h4>
 <p>This material was inspired by Stephen Turner's blog post:</p>

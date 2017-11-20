@@ -33,6 +33,9 @@ Before aligning the reads against a reference, it is necessary to build an index
 bowtie2-build pO157_Sakai.fasta.gz pO157_Sakai
 ```
 
+!!! note
+    Indexing the reference is a necessary pre-processing step that makes searching for patterns much much faster. Many popular aligners such as Bowtie and BWA use an algorithm called the [Burrows–Wheeler transform](https://en.wikipedia.org/wiki/Burrows–Wheeler_transform) to build the index.
+
 ### Aligning reads
 
 Now we are ready to map our reads

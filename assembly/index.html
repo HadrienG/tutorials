@@ -296,13 +296,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quality-control" title="Quality control" class="md-nav__link">
-    Quality control
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#de-novo-assembly" title="De-novo assembly" class="md-nav__link">
     De-novo assembly
   </a>
@@ -310,8 +303,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#comparing-assemblies" title="Comparing assemblies" class="md-nav__link">
-    Comparing assemblies
+  <a href="#quality-of-the-assembly" title="Quality of the Assembly" class="md-nav__link">
+    Quality of the Assembly
   </a>
   
 </li>
@@ -432,13 +425,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quality-control" title="Quality control" class="md-nav__link">
-    Quality control
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#de-novo-assembly" title="De-novo assembly" class="md-nav__link">
     De-novo assembly
   </a>
@@ -446,8 +432,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#comparing-assemblies" title="Comparing assemblies" class="md-nav__link">
-    Comparing assemblies
+  <a href="#quality-of-the-assembly" title="Quality of the Assembly" class="md-nav__link">
+    Quality of the Assembly
   </a>
   
 </li>
@@ -477,54 +463,104 @@
                 
                 
                 <h1 id="de-novo-genome-assembly">De-novo Genome Assembly<a class="headerlink" href="#de-novo-genome-assembly" title="Permanent link">&para;</a></h1>
-<p>In this practical we will perform the assembly of M. genitalium, a bacterium published in 1995 by Fraser et al in Science.</p>
+<p>In this practical we will perform the assembly of <em>M. genitalium</em>, a bacterium published in 1995 by Fraser et al in Science (<a href="https://www.ncbi.nlm.nih.gov/pubmed/7569993">abstract link</a>).</p>
 <h2 id="getting-the-data">Getting the data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
-<p>Go to ENA, and search for the run ERR486840.</p>
+<p><em>M. genitalium</em> was sequenced using the MiSeq platform (2 * 150bp).
+The reads were deposited in the ENA Short Read Archive under the accession <a href="https://www.ebi.ac.uk/ena/data/view/ERR486840">ERR486840</a></p>
 <p>Download the 2 fastq files associated with the run.</p>
-<h2 id="quality-control">Quality control<a class="headerlink" href="#quality-control" title="Permanent link">&para;</a></h2>
-<p>Perform quality control of the data as you did in the <a href="../qc/">QC tutorial</a></p>
-<p>How many reads are in the fastq file? What is the read length?
-Does the data need trimming or other filtering? If so, do it.</p>
-<p>Find the genome size of M. genitalium in the Fraser paper abstract.
-Based on the expected genome size, the read length and the number of reads – what average coverage do you expect to get from this fastq read files?</p>
+<div class="codehilite"><pre><span></span>wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR486/ERR486840/ERR486840_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR486/ERR486840/ERR486840_2.fastq.gz
+</pre></div>
+
+
+<p>The files that were deposited in ENA were already trimmed, so we do not have to trim ourselves!</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many reads are in the files?</p>
+</div>
 <h2 id="de-novo-assembly">De-novo assembly<a class="headerlink" href="#de-novo-assembly" title="Permanent link">&para;</a></h2>
-<p>We will be using the SPAdes assembler to assemble our bacterium.</p>
-<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">load</span> <span class="n">spades</span>
-<span class="n">spades</span>.<span class="n">py</span> -<span class="n">k</span> <span class="mi">21</span>,<span class="mi">33</span>,<span class="mi">55</span>,<span class="mi">77</span>,<span class="mi">99</span> --<span class="n">careful</span> --<span class="n">only-assembler</span> -<span class="mi">1</span> <span class="n">read_1</span>.<span class="n">fastq</span> -<span class="mi">2</span> <span class="n">read_2</span>.<span class="n">fastq</span> -<span class="n">o</span> <span class="n">output</span>
+<p>We will be using the MEGAHIT assembler to assemble our bacterium</p>
+<div class="codehilite"><pre><span></span>megahit -1 ERR486840_1.fastq.gz -2 ERR486840_2.fastq.gz -o m_genitalium
 </pre></div>
 
 
-<p>This will produce a series of outputs. The scaffolds will be in fasta format.</p>
-<p>How well does the assembly total consensus size and coverage correspond to your earlier estimation?
-What is the N50 of the assembly? What does this mean?
-How many contigs in total did the assembly produce?
-How many contigs longer than 500bp? What is the N50 of those contigs only?</p>
-<p>Perform another assembly with the following options:</p>
-<p>Use the raw reads (no trimming, but with adapters removed), wthout the --only-assembler option.</p>
-<p>If you have time, try out the following genome assemblers:</p>
-<ul>
-<li>MaSurCa</li>
-<li>Ray</li>
-<li>Velvet</li>
-</ul>
-<h2 id="comparing-assemblies">Comparing assemblies<a class="headerlink" href="#comparing-assemblies" title="Permanent link">&para;</a></h2>
+<p>This will take a few minutes.</p>
+<p>The result of the assembly is in the directory m_genitalium under the name <code>final.contigs.fa</code></p>
+<p>Let's make a copy of it</p>
+<div class="codehilite"><pre><span></span>cp m_genitalium/final.contigs.fa m_genitalium.fasta
+</pre></div>
+
+
+<p>and look at it</p>
+<div class="codehilite"><pre><span></span>head m_genitalium.fasta
+</pre></div>
+
+
+<h2 id="quality-of-the-assembly">Quality of the Assembly<a class="headerlink" href="#quality-of-the-assembly" title="Permanent link">&para;</a></h2>
 <p>QUAST is a software evaluating the quality of genome assemblies by computing various metrics, including</p>
-<ul>
-<li>N50, length for which the collection of all contigs of that length or longer covers at least 50% of assembly length</li>
-<li>NG50, where length of the reference genome is being covered</li>
-<li>NA50 and NGA50, where aligned blocks instead of contigs are taken</li>
-<li>misassemblies, misassembled and unaligned contigs or contigs bases</li>
-<li>genes and operons covered</li>
-</ul>
-<p>To run Quast:</p>
-<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">load</span> <span class="n">quast</span>
-<span class="n">quast</span>.<span class="n">py</span> <span class="n">assembly1</span>.<span class="n">fasta</span> <span class="n">assembly2</span>.<span class="n">fasta</span> ... -<span class="n">R</span> <span class="n">reference</span>.<span class="n">fasta</span> -<span class="n">G</span> <span class="n">reference</span>.<span class="n">gff</span>
+<p>Run Quast on your assembly</p>
+<div class="codehilite"><pre><span></span>quast.py m_genitalium.fasta -o m_genitalium_report
 </pre></div>
 
 
-<p>Quast will produce a pdf in the <code>quast_results</code> directory. Download it on your computer and take a look. Which assembly is better?</p>
+<p>and take a look at the text report</p>
+<div class="codehilite"><pre><span></span>cat m_genitalium_report/report.txt
+</pre></div>
+
+
+<p>You should see something like</p>
+<div class="codehilite"><pre><span></span>All statistics are based on contigs of size &gt;= 500 bp, unless otherwise noted (e.g., &quot;# contigs (&gt;= 0 bp)&quot; and &quot;Total length (&gt;= 0 bp)&quot; include all contigs).
+
+Assembly                    m_genitalium
+# contigs (&gt;= 0 bp)         17          
+# contigs (&gt;= 1000 bp)      8           
+# contigs (&gt;= 5000 bp)      7           
+# contigs (&gt;= 10000 bp)     6           
+# contigs (&gt;= 25000 bp)     5           
+# contigs (&gt;= 50000 bp)     2           
+Total length (&gt;= 0 bp)      584267      
+Total length (&gt;= 1000 bp)   580160      
+Total length (&gt;= 5000 bp)   577000      
+Total length (&gt;= 10000 bp)  570240      
+Total length (&gt;= 25000 bp)  554043      
+Total length (&gt;= 50000 bp)  446481      
+# contigs                   11          
+Largest contig              368542      
+Total length                582257      
+GC (%)                      31.71       
+N50                         368542      
+N75                         77939       
+L50                         1           
+L75                         2           
+# N&#39;s per 100 kbp           0.00    
+</pre></div>
+
+
+<p>which is a summary stats about our assembly.
+Additionally, the file <code>m_genitalium_report/report.html</code></p>
+<p>You can either download it and open it in your own web browser, or we make it available for your convenience:</p>
+<ul>
+<li><a href="../data/fastqc/report.html">m_genitalium_report/report.html</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>N50: length for which the collection of all contigs of that length or longer covers at least 50% of assembly length</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How well does the assembly total consensus size and coverage correspond to your earlier estimation?</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many contigs in total did the assembly produce?</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What is the N50 of the assembly? What does this mean?</p>
+</div>
 <h2 id="fixing-misassemblies">Fixing misassemblies<a class="headerlink" href="#fixing-misassemblies" title="Permanent link">&para;</a></h2>
-<p>Pilon is a software tool which can be used to automatically improve draft assemblies. It attempts to make improvements to the input genome, including:</p>
+<p>Pilon is a software tool which can be used to automatically improve draft assemblies.
+It attempts to make improvements to the input genome, including:</p>
 <ul>
 <li>Single base differences</li>
 <li>Small Indels</li>
@@ -533,22 +569,21 @@ How many contigs longer than 500bp? What is the N50 of those contigs only?</p>
 <li>Identification of local misassemblies, including optional opening of new gaps</li>
 </ul>
 <p>Pilon then outputs a FASTA file containing an improved representation of the genome from the read data and an optional VCF file detailing variation seen between the read data and the input genome.</p>
-<p>You can read how Pilon works in detail <a href="https://github.com/broadinstitute/pilon/wiki/Methods-of-Operation">here</a></p>
-<p>Before running Pilon itself, you have to map your reads back to the assembly!</p>
-<div class="codehilite"><pre><span></span>bowtie2-build assembly.fasta index_prefix
-(bowtie2 -x index_prefix -1 read_1.fastq -2 read_2.fastq | samtools view -bS -o output_to_sort.bam - ) 2&gt; bowtie.err
-samtools sort output_to_sort.bam alignment.bam
-samtools index alignment.bam
+<p>Before running Pilon itself, we have to align our reads against the assembly</p>
+<div class="codehilite"><pre><span></span>bowtie2-build m_genitalium.fasta m_genitalium
+bowtie2 -x m_genitalium -1 ERR486840_1.fastq.gz -2 ERR486840_2.fastq.gz | \
+    samtools view -bS -o m_genitalium.bam
+samtools sort m_genitalium.bam -o m_genitalium.sorted.bam
+samtools index m_genitalium.sorted.bam
 </pre></div>
 
 
-<p>Run Pilon with the following command:</p>
-<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">load</span> <span class="n">pilon</span>
-<span class="n">pilon</span> --<span class="n">genome</span> <span class="n">assembly</span>.<span class="n">fasta</span> --<span class="n">frags</span> <span class="n">alignment</span>.<span class="n">bam</span> --<span class="n">output</span> <span class="n">pilon_output</span>
+<p>then we run Pilon</p>
+<div class="codehilite"><pre><span></span>pilon --genome m_genitalium.fasta --frags m_genitalium.sorted.bam --output m_genitalium_improved
 </pre></div>
 
 
-<p>Once Pilon is finished running, compare the new assembly with the old one using Quast!</p>
+<p>which will correct eventual misamatches in our assembly and write the new improved assembly to <code>m_genitalium_improved.fasta</code></p>
                 
                   
                 

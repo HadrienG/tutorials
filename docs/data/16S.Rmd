@@ -1,0 +1,336 @@
+---
+title: "DADA2 pipeline"
+author: "Hadrien Gourlé"
+output: html_document
+---
+
+This tutorial is aimed at being a walkthrough of the DADA2 pipeline.
+It uses the data of the now famous [MiSeq SOP](http://www.mothur.org/wiki/MiSeq_SOP) by the Mothur authors but analyses the data using DADA2.
+
+This document is a work in progress.
+Whenever the pipeline will be complete and the authors statisfied with all the individual steps of the pipeline, it will be transformed into an automated workflow for routine metabarcoding for the SLUBI platform at [SLU](https://www.slu.se).
+
+The Dada2 tutorial can be found [here](http://benjjneb.github.io/dada2/tutorial.html).
+
+## Before Starting
+
+It is assumed that you have Dada2 installed on your machine.
+If you don't, please follow the [installation instructions](http://benjjneb.github.io/dada2/dada-installation.html)
+
+You will also need to download the data, as well as the SILVA database
+Uncomment the following cell if you haven't
+
+```{bash download, results='hide'}
+# wget http://www.mothur.org/w/images/d/d6/MiSeqSOPData.zip
+# unzip MiSeqSOPData.zip
+# rm -r __MACOSX/
+# cd MiSeq_SOP
+# wget https://zenodo.org/record/824551/files/silva_nr_v128_train_set.fa.gz
+# wget https://zenodo.org/record/824551/files/silva_species_assignment_v128.fa.gz
+# cd ..
+```
+
+## Getting Started
+
+Check that you have Dada2 installed:
+
+```{r check_install}
+library(dada2)
+library(phyloseq)
+library(ggsci)
+library(ggplot2)
+library(phangorn)
+library(DECIPHER)
+packageVersion("dada2")
+```
+
+Check that you have downloaded the data:
+
+```{r check_data}
+path <- "MiSeq_SOP"
+list.files(path)
+```
+
+## Filtering and Trimming
+
+First we create two lists with the sorted name of the reads: one for the forward reads, one for the reverse reads
+
+```{r names}
+raw_forward <- sort(list.files(path, pattern = "_R1_001.fastq",
+                               full.names = TRUE))
+
+raw_reverse <- sort(list.files(path, pattern = "_R2_001.fastq",
+                               full.names = TRUE))
+
+# we also need the sample names
+sample_names <- sapply(strsplit(basename(raw_forward), "_"),
+                       `[`,  # extracts the first element of a subset
+                       1)
+```
+
+then we visualise the quality of our reads
+
+```{r base_quality}
+plotQualityProfile(raw_forward[1:2])
+plotQualityProfile(raw_reverse[1:2])
+```
+
+The forward reads are good quality (although dropping a bit at the end as usual) while the reverse are way worse.
+
+Based on these profiles, we will truncate the forward reads at position 240 and the reverse reads at position 160 where the quality distribution crashes.
+
+---
+
+*Note: in this tutorial we perform the trimming using Dada2's own functions.*
+*There is a big likelihood we'll do do that outside of R using [sickle](https://github.com/najoshi/sickle)*
+
+---
+
+Dada2 requires us to define the name of our output files:
+
+```{r trimming_1}
+# place filtered files in filtered/ subdirectory
+filtered_path <- file.path(path, "filtered") 
+
+filtered_forward <- file.path(filtered_path,
+                              paste0(sample_names, "_F_filt.fastq.gz"))
+
+filtered_reverse <- file.path(filtered_path,
+                              paste0(sample_names, "_R_filt.fastq.gz"))
+```
+
+We’ll use standard filtering parameters: maxN=0 (Dada2 requires no Ns), truncQ=2, rm.phix=TRUE and maxEE=2.
+The maxEE parameter sets the maximum number of “expected errors” allowed in a read, which [according to the USEARCH authors](http://www.drive5.com/usearch/manual/expected_errors.html) is a better filter than simply averaging quality scores.
+
+```{r trimming_2}
+out <- filterAndTrim(raw_forward, filtered_forward, raw_reverse,
+                     filtered_reverse, truncLen=c(240,160), maxN=0,
+                     maxEE=c(2,2), truncQ=2, rm.phix=TRUE, compress=TRUE,
+                     multithread=TRUE)
+head(out)
+```
+
+## Learn the Error Rates
+
+The Dada2 algorithm depends on a parametric error model and every amplicon dataset has a slightly different error rate.
+The `learnErrors` of Dada2 learns the error model from the data and will help Dada2 to fits its method to your data
+
+```{r learn_error, results='hide'}
+errors_forward <- learnErrors(filtered_forward, multithread=TRUE)
+errors_reverse <- learnErrors(filtered_reverse, multithread=TRUE)
+```
+
+then we visualise the estimated error rates
+
+```{r vis_error}
+plotErrors(errors_forward, nominalQ=TRUE) +
+    theme_minimal()
+```
+
+## Dereplication
+
+From the Dada2 documentation, *Dereplication combines all identical sequencing reads into into “unique sequences” with a corresponding “abundance”: the number of reads with that unique sequence. Dereplication substantially reduces computation time by eliminating redundant comparisons.*
+
+Dada2 also keeps the quality information of each reads even after dereplication, which will greatly help with later.
+
+```{r derep}
+derep_forward <- derepFastq(filtered_forward, verbose=TRUE)
+derep_reverse <- derepFastq(filtered_reverse, verbose=TRUE)
+# Name the derep-class objects by the sample names
+names(derep_forward) <- sample_names
+names(derep_reverse) <- sample_names
+```
+
+## Sample inference
+
+We are now ready to apply the core sequence-variant inference algorithm to the dereplicated data.
+
+```{r infer}
+dada_forward <- dada(derep_forward, err=errors_forward, multithread=TRUE)
+dada_reverse <- dada(derep_reverse, err=errors_reverse, multithread=TRUE)
+
+# inspecting the dada-class object
+dada_forward[[1]]
+```
+
+The DADA2 algorithm inferred 128 real sequence variants from the 1979 unique sequences in the first sample.
+There is much more to the dada-class return object than this (see help("dada-class") for some info), including multiple diagnostics about the quality of each inferred sequence variant, but that is beyond the scope of an introductory tutorial.
+
+## Merge Paired-end Reads
+
+Now that the reads are denoised we can merge them together
+
+```{r merge_reads}
+merged_reads <- mergePairs(dada_forward, derep_forward, dada_reverse,
+                           derep_reverse, verbose=TRUE)
+
+# Inspect the merger data.frame from the first sample
+head(merged_reads[[1]])
+```
+
+## Construct Sequence Table
+
+We can now construct a sequence table of our mouse samples, a higher-resolution version of the OTU table produced by traditional methods.
+
+```{r seq_table}
+seq_table <- makeSequenceTable(merged_reads)
+dim(seq_table)
+
+# Inspect distribution of sequence lengths
+table(nchar(getSequences(seq_table)))
+```
+
+## Remove Chimeras
+
+The Dada method used earlier removes substitutions and indel errors but chimeras remain.
+We remove the chimeras with
+
+```{r}
+seq_table_nochim <- removeBimeraDenovo(seq_table, method="consensus",
+                                       multithread=TRUE, verbose=TRUE)
+dim(seq_table_nochim)
+
+# which percentage of our reads did we keep?
+sum(seq_table_nochim) / sum(seq_table)
+```
+
+As a final check of our progress, we’ll look at the number of reads that made it through each step in the pipeline
+
+```{r}
+get_n <- function(x) sum(getUniques(x))
+
+track <- cbind(out, sapply(dada_forward, get_n), sapply(merged_reads, get_n),
+               rowSums(seq_table), rowSums(seq_table_nochim))
+
+colnames(track) <- c("input", "filtered", "denoised", "merged", "tabled", "nonchim")
+rownames(track) <- sample_names
+head(track)
+```
+
+We kept the majority of our reads!
+
+## Assign taxonomy
+
+```{r}
+taxa <- assignTaxonomy(seq_table_nochim,
+                       "MiSeq_SOP/silva_nr_v128_train_set.fa.gz",
+                       multithread=TRUE)
+taxa <- addSpecies(taxa, "MiSeq_SOP/silva_species_assignment_v128.fa.gz")
+```
+
+Note that the `addSpecies` step is optional.
+
+for inspecting the classification
+
+```{r}
+taxa_print <- taxa # Removing sequence rownames for display only
+rownames(taxa_print) <- NULL
+head(taxa_print)
+```
+### Phylogenetic tree
+
+Dadad2 is reference free so we have to build the tree ourselves
+
+```{r align}
+sequences <- getSequences(seq_table)
+names(sequences) <- sequences # This propagates to the tip labels of the tree
+alignment <- AlignSeqs(DNAStringSet(sequences), anchor=NA)
+```
+
+*TODO* tree
+
+```{r}
+phang_align <- phyDat(as(alignment, "matrix"), type="DNA")
+dm <- dist.ml(phang_align)
+treeNJ <- NJ(dm) # Note, tip order != sequence order
+fit = pml(treeNJ, data=phang_align)
+
+## negative edges length changed to 0!
+
+fitGTR <- update(fit, k=4, inv=0.2)
+fitGTR <- optim.pml(fitGTR, model="GTR", optInv=TRUE, optGamma=TRUE,
+                    rearrangement = "stochastic",
+                    control = pml.control(trace = 0))
+detach("package:phangorn", unload=TRUE)
+```
+
+
+## Phyloseq
+
+In the case of the MiSeq SOP the metadat are stored in the sample names.
+Therefore we have a bit of parsin to do. Normally we'd read those from a file
+
+```{r prep_phyloseq}
+sample_names <- rownames(seq_table_nochim)
+subject <- sapply(strsplit(sample_names, "D"), `[`, 1)
+
+sex <- substr(subject,1,1)
+subject <- substr(subject,2,999)
+day <- as.integer(sapply(strsplit(sample_names, "D"), `[`, 2))
+
+sample_data <- data.frame(Subject = subject, Sex = sex, Day = day)
+sample_data$When <- "Early"
+sample_data$When[sample_data$Day>100] <- "Late"
+rownames(sample_data) <- sample_names
+```
+
+
+we can now construct a phyloseq object from our output and newly created metadata
+
+```{r load_phyloseq_data}
+ps <- phyloseq(otu_table(seq_table_nochim, taxa_are_rows=FALSE), 
+               sample_data(sample_data), 
+               tax_table(taxa),
+               phy_tree(fitGTR$tree))
+ps <- prune_samples(sample_names(ps) != "Mock", ps)  # remove mock sample
+ps
+```
+
+A reminder of the metadata
+
+```{r metadata}
+sample_data
+```
+
+Let's look at the alpha diversity of our samples
+
+```{r alpha}
+plot_richness(ps, x="Day", measures=c("Shannon", "Fisher"), color="When") + theme_minimal()
+```
+
+No obvious differences. Let's look at ordination
+
+We can perform an MDS with eucliean distance (mathematically equivalent to a PCA)
+
+```{r pca}
+ord <- ordinate(ps, "MDS", "euclidean")
+plot_ordination(ps, ord, type="samples", color="When",
+                title="PCA of the samples from the MiSeq SOP") +
+    theme_minimal()
+```
+
+```{r bray}
+ord <- ordinate(ps, "NMDS", "bray")
+plot_ordination(ps, ord, type="samples", color="When",
+                title="PCA of the samples from the MiSeq SOP") +
+    theme_minimal()
+```
+
+There we can see a clear difference between our samples.
+
+```{r bar}
+top20 <- names(sort(taxa_sums(ps), decreasing=TRUE))[1:20]
+ps_top20 <- transform_sample_counts(ps, function(OTU) OTU/sum(OTU))
+ps_top20 <- prune_taxa(top20, ps_top20)
+plot_bar(ps_top20, x="Day", fill="Family") +
+    facet_wrap(~When, scales="free_x") +
+    scale_fill_lancet(alpha = 0.6) +
+    theme_minimal()
+```
+
+```{r}
+p1 = subset_taxa(ps, Phylum %in% c("Bacteroidetes"))
+plot_tree(p1, ladderize="left", size="abundance",
+          color="When", label.tips="Family")
+```
+

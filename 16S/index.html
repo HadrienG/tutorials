@@ -831,7 +831,7 @@ fitGTR <span class="o">&lt;-</span> optim.pml<span class="p">(</span>fitGTR<span
 <p>First load the metadata</p>
 <div class="codehilite"><pre><span></span>sample_data <span class="o">&lt;-</span> read.table<span class="p">(</span>
     <span class="s">&#39;https://hadrieng.github.io/tutorials/data/16S_metadata.txt&#39;</span><span class="p">,</span>
-    sep<span class="o">=</span><span class="s">&#39;\t&#39;</span><span class="p">,</span> header<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+    header<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> row.names<span class="o">=</span><span class="s">&quot;sample_name&quot;</span><span class="p">)</span>
 </pre></div>
 
 

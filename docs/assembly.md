@@ -1,72 +1,116 @@
 # De-novo Genome Assembly
 
-In this practical we will perform the assembly of M. genitalium, a bacterium published in 1995 by Fraser et al in Science.
+In this practical we will perform the assembly of *M. genitalium*, a bacterium published in 1995 by Fraser et al in Science ([abstract link](https://www.ncbi.nlm.nih.gov/pubmed/7569993)).
 
 ## Getting the data
 
-Go to ENA, and search for the run ERR486840.
+*M. genitalium* was sequenced using the MiSeq platform (2 * 150bp).
+The reads were deposited in the ENA Short Read Archive under the accession [ERR486840](https://www.ebi.ac.uk/ena/data/view/ERR486840)
 
 Download the 2 fastq files associated with the run.
 
-## Quality control
+```bash
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR486/ERR486840/ERR486840_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR486/ERR486840/ERR486840_2.fastq.gz
+```
 
-Perform quality control of the data as you did in the [QC tutorial](qc.md)
+The files that were deposited in ENA were already trimmed, so we do not have to trim ourselves!
 
-How many reads are in the fastq file? What is the read length?
-Does the data need trimming or other filtering? If so, do it.
-
-Find the genome size of M. genitalium in the Fraser paper abstract.
-Based on the expected genome size, the read length and the number of reads – what average coverage do you expect to get from this fastq read files?
+!!! question
+    How many reads are in the files?
 
 ## De-novo assembly
 
-We will be using the SPAdes assembler to assemble our bacterium.
+We will be using the MEGAHIT assembler to assemble our bacterium
 
+```bash
+megahit -1 ERR486840_1.fastq.gz -2 ERR486840_2.fastq.gz -o m_genitalium
 ```
-module load spades
-spades.py -k 21,33,55,77,99 --careful --only-assembler -1 read_1.fastq -2 read_2.fastq -o output
+
+This will take a few minutes.
+
+The result of the assembly is in the directory m_genitalium under the name `final.contigs.fa`
+
+Let's make a copy of it
+
+```bash
+cp m_genitalium/final.contigs.fa m_genitalium.fasta
 ```
 
-This will produce a series of outputs. The scaffolds will be in fasta format.
+and look at it
 
-How well does the assembly total consensus size and coverage correspond to your earlier estimation?
-What is the N50 of the assembly? What does this mean?
-How many contigs in total did the assembly produce?
-How many contigs longer than 500bp? What is the N50 of those contigs only?
+```bash
+head m_genitalium.fasta
+```
 
-Perform another assembly with the following options:
-
-Use the raw reads (no trimming, but with adapters removed), wthout the --only-assembler option.
-
-If you have time, try out the following genome assemblers:
-
-
-* MaSurCa
-* Ray
-* Velvet
-
-## Comparing assemblies
+## Quality of the Assembly
 
 QUAST is a software evaluating the quality of genome assemblies by computing various metrics, including
 
-* N50, length for which the collection of all contigs of that length or longer covers at least 50% of assembly length
-* NG50, where length of the reference genome is being covered
-* NA50 and NGA50, where aligned blocks instead of contigs are taken
-* misassemblies, misassembled and unaligned contigs or contigs bases
-* genes and operons covered
+Run Quast on your assembly
 
-To run Quast:
-
-```
-module load quast
-quast.py assembly1.fasta assembly2.fasta ... -R reference.fasta -G reference.gff
+```bash
+quast.py m_genitalium.fasta -o m_genitalium_report
 ```
 
-Quast will produce a pdf in the `quast_results` directory. Download it on your computer and take a look. Which assembly is better?
+and take a look at the text report
+
+```bash
+cat m_genitalium_report/report.txt
+```
+
+You should see something like
+
+```
+All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
+
+Assembly                    m_genitalium
+# contigs (>= 0 bp)         17          
+# contigs (>= 1000 bp)      8           
+# contigs (>= 5000 bp)      7           
+# contigs (>= 10000 bp)     6           
+# contigs (>= 25000 bp)     5           
+# contigs (>= 50000 bp)     2           
+Total length (>= 0 bp)      584267      
+Total length (>= 1000 bp)   580160      
+Total length (>= 5000 bp)   577000      
+Total length (>= 10000 bp)  570240      
+Total length (>= 25000 bp)  554043      
+Total length (>= 50000 bp)  446481      
+# contigs                   11          
+Largest contig              368542      
+Total length                582257      
+GC (%)                      31.71       
+N50                         368542      
+N75                         77939       
+L50                         1           
+L75                         2           
+# N's per 100 kbp           0.00    
+```
+
+which is a summary stats about our assembly.
+Additionally, the file `m_genitalium_report/report.html`
+
+You can either download it and open it in your own web browser, or we make it available for your convenience:
+
+* [m_genitalium_report/report.html](data/fastqc/report.html)
+
+!!! note
+    N50: length for which the collection of all contigs of that length or longer covers at least 50% of assembly length
+
+!!! question
+    How well does the assembly total consensus size and coverage correspond to your earlier estimation?
+
+!!! question
+    How many contigs in total did the assembly produce?
+
+!!! question
+    What is the N50 of the assembly? What does this mean?
 
 ## Fixing misassemblies
 
-Pilon is a software tool which can be used to automatically improve draft assemblies. It attempts to make improvements to the input genome, including:
+Pilon is a software tool which can be used to automatically improve draft assemblies.
+It attempts to make improvements to the input genome, including:
 
 * Single base differences
 * Small Indels
@@ -76,22 +120,20 @@ Pilon is a software tool which can be used to automatically improve draft assemb
 
 Pilon then outputs a FASTA file containing an improved representation of the genome from the read data and an optional VCF file detailing variation seen between the read data and the input genome.
 
-You can read how Pilon works in detail [here](https://github.com/broadinstitute/pilon/wiki/Methods-of-Operation)
-
-Before running Pilon itself, you have to map your reads back to the assembly!
+Before running Pilon itself, we have to align our reads against the assembly
 
 ```
-bowtie2-build assembly.fasta index_prefix
-(bowtie2 -x index_prefix -1 read_1.fastq -2 read_2.fastq | samtools view -bS -o output_to_sort.bam - ) 2> bowtie.err
-samtools sort output_to_sort.bam alignment.bam
-samtools index alignment.bam
+bowtie2-build m_genitalium.fasta m_genitalium
+bowtie2 -x m_genitalium -1 ERR486840_1.fastq.gz -2 ERR486840_2.fastq.gz | \
+    samtools view -bS -o m_genitalium.bam
+samtools sort m_genitalium.bam -o m_genitalium.sorted.bam
+samtools index m_genitalium.sorted.bam
 ```
 
-Run Pilon with the following command:
+then we run Pilon
 
 ```
-module load pilon
-pilon --genome assembly.fasta --frags alignment.bam --output pilon_output
+pilon --genome m_genitalium.fasta --frags m_genitalium.sorted.bam --output m_genitalium_improved
 ```
 
-Once Pilon is finished running, compare the new assembly with the old one using Quast!
+which will correct eventual misamatches in our assembly and write the new improved assembly to `m_genitalium_improved.fasta`

@@ -1,5 +1,6 @@
 # backup of ebiokit tutorials
 *.html
+!docs/data/fastqc/*
 
 # mkdocs things
 site/

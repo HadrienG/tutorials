@@ -20,6 +20,12 @@ curl -O -J -L https://osf.io/pxk7f/download
 curl -O -J -L https://osf.io/zax3c/download
 ```
 
+look at basic stats of the nanopore reads
+
+```bash
+assembly-stats ERR1147227.fastq
+```
+
 !!! question
     How many nanopore reads do we have?
 

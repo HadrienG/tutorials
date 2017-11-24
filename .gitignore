@@ -1,5 +1,7 @@
 # backup of ebiokit tutorials
 *.html
+
+# keep the tutorial stuff
 !docs/data/fastqc/*
 
 # mkdocs things
@@ -7,3 +9,6 @@ site/
 
 # mac stuff
 .DS_Store
+
+# r stuff
+.Rhistory

@@ -29,6 +29,12 @@ assembly-stats ERR1147227.fastq
 !!! question
     How many nanopore reads do we have?
 
+!!! question
+    How long is the longest read?
+
+!!! question
+    What is the average read length?
+
 ## Adapter trimming
 
 We'll use [porechop](https://github.com/rrwick/Porechop) to remove the adapters from the reads.

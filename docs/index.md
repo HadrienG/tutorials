@@ -20,6 +20,7 @@ Feel free to follow them online, or to use and modify them for your own teaching
 * [Whole Metagenome Sequencing](wms.md)
 * [Metagenome assembly](meta_assembly.md)
 * [RNA-Seq](rna.md)
+* [Introduction to Nanopore Sequencing](nanopore.md)
 
 ## Contributing
 

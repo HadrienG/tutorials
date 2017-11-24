@@ -41,7 +41,6 @@ We'll use [porechop](https://github.com/rrwick/Porechop) to remove the adapters 
 Additionally to trim the adapters at the 3' and 5' ends, porechop can split the reads if it finds adapters in the middle.
 
 ```bash
-# export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin"
 porechop -i ERR1147227.fastq -o ERR1147227_trimmed.fastq
 ```
 

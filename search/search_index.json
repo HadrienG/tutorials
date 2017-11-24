@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "Home\n\u00b6\n\n\nWelcome!\n\n\nThis website is a collection of Bioinformatics tutorials that I've accumulated over the years, while teaching a bioinformatics course at the \nSwedish University of Agricultural Sciences\n and during various bioinformatics workshops around the globe.\n\n\nFeel free to follow them online, or to use and modify them for your own teaching.\n\n\nTable of contents\n\u00b6\n\n\n\n\nHome\n\n\nThe command-line\n\n\nFile Formats\n\n\nQuality Control and Trimming\n\n\nMapping and Variant Calling\n\n\nDe-novo Genome Assembly\n\n\nGenome Annotation\n\n\nPan-Genome Analysis\n\n\nMetabarcoding\n\n\nWhole Metagenome Sequencing\n\n\nMetagenome assembly\n\n\nRNA-Seq\n\n\n\n\nContributing\n\u00b6\n\n\nA typo? Something that irks you? Submit an \nissue\n\nor a pull request.\n\n\nLicense\n\u00b6\n\n\nThis work is licensed under the Creative Commons Attribution 4.0 International License.\nTo view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.",
+            "text": "Home\n\u00b6\n\n\nWelcome!\n\n\nThis website is a collection of Bioinformatics tutorials that I've accumulated over the years, while teaching a bioinformatics course at the \nSwedish University of Agricultural Sciences\n and during various bioinformatics workshops around the globe.\n\n\nFeel free to follow them online, or to use and modify them for your own teaching.\n\n\nTable of contents\n\u00b6\n\n\n\n\nHome\n\n\nThe command-line\n\n\nFile Formats\n\n\nQuality Control and Trimming\n\n\nMapping and Variant Calling\n\n\nDe-novo Genome Assembly\n\n\nGenome Annotation\n\n\nPan-Genome Analysis\n\n\nMetabarcoding\n\n\nWhole Metagenome Sequencing\n\n\nMetagenome assembly\n\n\nRNA-Seq\n\n\nIntroduction to Nanopore Sequencing\n\n\n\n\nContributing\n\u00b6\n\n\nA typo? Something that irks you? Submit an \nissue\n\nor a pull request.\n\n\nLicense\n\u00b6\n\n\nThis work is licensed under the Creative Commons Attribution 4.0 International License.\nTo view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.",
             "title": "Home"
         },
         {
@@ -12,7 +12,7 @@
         },
         {
             "location": "/#table-of-contents",
-            "text": "Home  The command-line  File Formats  Quality Control and Trimming  Mapping and Variant Calling  De-novo Genome Assembly  Genome Annotation  Pan-Genome Analysis  Metabarcoding  Whole Metagenome Sequencing  Metagenome assembly  RNA-Seq",
+            "text": "Home  The command-line  File Formats  Quality Control and Trimming  Mapping and Variant Calling  De-novo Genome Assembly  Genome Annotation  Pan-Genome Analysis  Metabarcoding  Whole Metagenome Sequencing  Metagenome assembly  RNA-Seq  Introduction to Nanopore Sequencing",
             "title": "Table of contents"
         },
         {
@@ -559,6 +559,46 @@
             "location": "/rna/#thanks",
             "text": "This material was inspired by Stephen Turner's blog post:   Tutorial: RNA-seq differential expression & pathway analysis with Sailfish, DESeq2, GAGE, and Pathview: http://www.gettinggeneticsdone.com/2015/12/tutorial-rna-seq-differential.html",
             "title": "Thanks"
+        },
+        {
+            "location": "/nanopore/",
+            "text": "Introduction to Nanopore Sequencing\n\u00b6\n\n\nIn this tutorial we will assemble the \nE. coli\n genome using a mix of long, error-prone reads from the MinION (Oxford Nanopore) and short reads from a HiSeq instrument (Illumina).\n\n\nThe MinION data used in this tutorial come a test run by the \nLoman lab\n.  \n\nThe Illumina data were simulated using \nInSilicoSeq\n\n\nGet the Data\n\u00b6\n\n\nFirst download the nanopore data\n\n\nfastq-dump ERR1147227\n\n\n\n\n\nYou will not need the HiSeq data right away, but you can start the download in another window\n\n\ncurl -O -J -L https://osf.io/pxk7f/download\ncurl -O -J -L https://osf.io/zax3c/download\n\n\n\n\n\nlook at basic stats of the nanopore reads\n\n\nassembly-stats ERR1147227.fastq\n\n\n\n\n\n\n\nQuestion\n\n\nHow many nanopore reads do we have?\n\n\n\n\n\n\nQuestion\n\n\nHow long is the longest read?\n\n\n\n\n\n\nQuestion\n\n\nWhat is the average read length?\n\n\n\n\nAdapter trimming\n\u00b6\n\n\nWe'll use \nporechop\n to remove the adapters from the reads.\nAdditionally to trim the adapters at the 3' and 5' ends, porechop can split the reads if it finds adapters in the middle.\n\n\nporechop -i ERR1147227.fastq -o ERR1147227_trimmed.fastq\n\n\n\n\n\nAssembly\n\u00b6\n\n\nWe assemble the reads using miniasm\n\n\nminimap2 -x ava-ont ERR1147227_trimmed.fastq ERR1147227_trimmed.fastq \n|\n \n\\\n\n    gzip -1 > ERR1147227.paf.gz\nminiasm -f ERR1147227_trimmed.fastq ERR1147227.paf.gz > ERR1147227.gfa\nawk \n'/^S/{print \">\"$2\"\\n\"$3}'\n ERR1147227.gfa \n|\n fold > ERR1147227.fasta\n\n\n\n\n\n\n\nNote\n\n\nMiniasm is a fast but has no consensus step.\nThe accuracy of the assembly will be equal to the base accuracy.\n\n\n\n\nPolishing\n\u00b6\n\n\nSince the miniasm assembly likely contains a lot if errors, we correct it with  Illumina reads.\n\n\nFirst we map the short reads against the assembly\n\n\nbowtie2-build ERR1147227.fasta ERR1147227\nbowtie2 -x ERR1147227 -1 ecoli_hiseq_R1.fastq.gz -2 ecoli_hiseq_R2.fastq.gz | \\\n    samtools view -bS -o ERR1147227.bam\nsamtools sort ERR1147227.bam -o ERR1147227.sorted.bam\nsamtools index ERR1147227.sorted.bam\n\n\n\n\n\nthen we run Pilon\n\n\npilon --genome ERR1147227.fasta --frags ERR1147227.sorted.bam \\\n    --output ERR1147227_improved\n\n\n\n\n\nwhich will correct eventual misamatches in our assembly and write the new improved assembly to \nERR1147227_improved.fasta\n\n\nFor better results we should perform more than one round of polishing.\n\n\nCompare with the existing assembly\n\u00b6\n\n\nGo to \nhttps://www.ncbi.nlm.nih.gov\n and search for NC_000913.\nDownload the associated genome in fasta format and rename it to \necoli_ref.fasta\n\n\nnucmer --maxmatch -c \n100\n -p ecoli ERR1147227_trimmed.fastq ecoli_ref.fasta\nmummerplot --fat --filter --png --large -p ecoli ecoli.delta\n\n\n\n\n\nthen take a look at \necoli.png\n\n\nAnnotation\n\u00b6\n\n\nawk \n'/^>/{print \">ctg\" ++i; next}{print}'\n < ERR1147227_improved.fasta \n\\\n\n    > ERR1147227_formatted.fasta\nprokka --outdir annotation --kingdom Bacteria ERR1147227_formatted.fasta\n\n\n\n\n\nYou can open the output to see how it went\n\n\ncat annotation/PROKKA_11232017.txt\n\n\n\n\n\n\n\nQuestion\n\n\nDoes it fit your expecations? How many genes were you expecting?",
+            "title": "Introduction to Nanopore Sequencing"
+        },
+        {
+            "location": "/nanopore/#introduction-to-nanopore-sequencing",
+            "text": "In this tutorial we will assemble the  E. coli  genome using a mix of long, error-prone reads from the MinION (Oxford Nanopore) and short reads from a HiSeq instrument (Illumina).  The MinION data used in this tutorial come a test run by the  Loman lab .   \nThe Illumina data were simulated using  InSilicoSeq",
+            "title": "Introduction to Nanopore Sequencing"
+        },
+        {
+            "location": "/nanopore/#get-the-data",
+            "text": "First download the nanopore data  fastq-dump ERR1147227  You will not need the HiSeq data right away, but you can start the download in another window  curl -O -J -L https://osf.io/pxk7f/download\ncurl -O -J -L https://osf.io/zax3c/download  look at basic stats of the nanopore reads  assembly-stats ERR1147227.fastq   Question  How many nanopore reads do we have?    Question  How long is the longest read?    Question  What is the average read length?",
+            "title": "Get the Data"
+        },
+        {
+            "location": "/nanopore/#adapter-trimming",
+            "text": "We'll use  porechop  to remove the adapters from the reads.\nAdditionally to trim the adapters at the 3' and 5' ends, porechop can split the reads if it finds adapters in the middle.  porechop -i ERR1147227.fastq -o ERR1147227_trimmed.fastq",
+            "title": "Adapter trimming"
+        },
+        {
+            "location": "/nanopore/#assembly",
+            "text": "We assemble the reads using miniasm  minimap2 -x ava-ont ERR1147227_trimmed.fastq ERR1147227_trimmed.fastq  |   \\ \n    gzip -1 > ERR1147227.paf.gz\nminiasm -f ERR1147227_trimmed.fastq ERR1147227.paf.gz > ERR1147227.gfa\nawk  '/^S/{print \">\"$2\"\\n\"$3}'  ERR1147227.gfa  |  fold > ERR1147227.fasta   Note  Miniasm is a fast but has no consensus step.\nThe accuracy of the assembly will be equal to the base accuracy.",
+            "title": "Assembly"
+        },
+        {
+            "location": "/nanopore/#polishing",
+            "text": "Since the miniasm assembly likely contains a lot if errors, we correct it with  Illumina reads.  First we map the short reads against the assembly  bowtie2-build ERR1147227.fasta ERR1147227\nbowtie2 -x ERR1147227 -1 ecoli_hiseq_R1.fastq.gz -2 ecoli_hiseq_R2.fastq.gz | \\\n    samtools view -bS -o ERR1147227.bam\nsamtools sort ERR1147227.bam -o ERR1147227.sorted.bam\nsamtools index ERR1147227.sorted.bam  then we run Pilon  pilon --genome ERR1147227.fasta --frags ERR1147227.sorted.bam \\\n    --output ERR1147227_improved  which will correct eventual misamatches in our assembly and write the new improved assembly to  ERR1147227_improved.fasta  For better results we should perform more than one round of polishing.",
+            "title": "Polishing"
+        },
+        {
+            "location": "/nanopore/#compare-with-the-existing-assembly",
+            "text": "Go to  https://www.ncbi.nlm.nih.gov  and search for NC_000913.\nDownload the associated genome in fasta format and rename it to  ecoli_ref.fasta  nucmer --maxmatch -c  100  -p ecoli ERR1147227_trimmed.fastq ecoli_ref.fasta\nmummerplot --fat --filter --png --large -p ecoli ecoli.delta  then take a look at  ecoli.png",
+            "title": "Compare with the existing assembly"
+        },
+        {
+            "location": "/nanopore/#annotation",
+            "text": "awk  '/^>/{print \">ctg\" ++i; next}{print}'  < ERR1147227_improved.fasta  \\ \n    > ERR1147227_formatted.fasta\nprokka --outdir annotation --kingdom Bacteria ERR1147227_formatted.fasta  You can open the output to see how it went  cat annotation/PROKKA_11232017.txt   Question  Does it fit your expecations? How many genes were you expecting?",
+            "title": "Annotation"
         }
     ]
 }

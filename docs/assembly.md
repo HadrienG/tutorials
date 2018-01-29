@@ -136,4 +136,26 @@ then we run Pilon
 pilon --genome m_genitalium.fasta --frags m_genitalium.sorted.bam --output m_genitalium_improved
 ```
 
-which will correct eventual misamatches in our assembly and write the new improved assembly to `m_genitalium_improved.fasta`
+which will correct eventual mismatches in our assembly and write the new improved assembly to `m_genitalium_improved.fasta`
+
+## Assembly Completeness
+
+Although quast output a range of metric to assess how contiguous our assembly is, having a long N50 does not guarantee a good assembly: it could be riddled by misassemblies!
+
+We will run `busco` to try to find marker genes in our assembly. Marker genes are conserved across a range of species and finding intact conserved genes in our assembly would be a good indication of its quality
+
+First we need to download and unpack the bacterial datasets used by `busco`
+
+```bash
+wget http://busco.ezlab.org/datasets/bacteria_odb9.tar.gz
+tar xzf bacteria_odb9.tar.gz
+```
+
+then we can run `busco` with
+
+```bash
+BUSCO.py -i m_genitalium.fasta -l bacteria_odb9 -o busco_genitalium -m genome
+```
+
+!!! question
+    How many marker genes has `busco` found? 

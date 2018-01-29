@@ -316,6 +316,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#assembly-completeness" title="Assembly Completeness" class="md-nav__link">
+    Assembly Completeness
+  </a>
+  
+</li>
+      
       
       
     </ul>
@@ -453,6 +460,13 @@
         <li class="md-nav__item">
   <a href="#fixing-misassemblies" title="Fixing misassemblies" class="md-nav__link">
     Fixing misassemblies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assembly-completeness" title="Assembly Completeness" class="md-nav__link">
+    Assembly Completeness
   </a>
   
 </li>
@@ -595,7 +609,25 @@ samtools index m_genitalium.sorted.bam
 </pre></div>
 
 
-<p>which will correct eventual misamatches in our assembly and write the new improved assembly to <code>m_genitalium_improved.fasta</code></p>
+<p>which will correct eventual mismatches in our assembly and write the new improved assembly to <code>m_genitalium_improved.fasta</code></p>
+<h2 id="assembly-completeness">Assembly Completeness<a class="headerlink" href="#assembly-completeness" title="Permanent link">&para;</a></h2>
+<p>Although quast output a range of metric to assess how contiguous our assembly is, having a long N50 does not guarantee a good assembly: it could be riddled by misassemblies!</p>
+<p>We will run <code>busco</code> to try to find marker genes in our assembly. Marker genes are conserved across a range of species and finding intact conserved genes in our assembly would be a good indication of its quality</p>
+<p>First we need to download and unpack the bacterial datasets used by <code>busco</code></p>
+<div class="codehilite"><pre><span></span>wget http://busco.ezlab.org/datasets/bacteria_odb9.tar.gz
+tar xzf bacteria_odb9.tar.gz
+</pre></div>
+
+
+<p>then we can run <code>busco</code> with</p>
+<div class="codehilite"><pre><span></span>BUSCO.py -i m_genitalium.fasta -l bacteria_odb9 -o busco_genitalium -m genome
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many marker genes has <code>busco</code> found? </p>
+</div>
                 
                   
                 

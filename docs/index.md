@@ -27,6 +27,11 @@ Feel free to follow them online, or to use and modify them for your own teaching
 A typo? Something that irks you? Submit an [issue](https://github.com/HadrienG/tutorials/issues)
 or a pull request.
 
+In no particular order, the follwing people have contributed to these tutorials:
+
+* [Hadrien Gourlé](https://github.com/HadrienG)
+* [Oskar Karlsson-Lindsjö](https://github.com/Ackia)
+
 ## License
 
 This work is licensed under the Creative Commons Attribution 4.0 International License.

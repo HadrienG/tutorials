@@ -1,5 +1,11 @@
 # Quality Control and Trimming
 
+## Lecture
+
+<iframe src='https://onedrive.live.com/embed?cid=2326C09709B01D03&resid=2326C09709B01D03%214400&authkey=ANPbEbk0W1h20vk&em=2&wdAr=1.7777777777777777' width='610px' height='367px' frameborder='0'></iframe>
+
+## Practical
+
 In this practical you will learn to import, view and check the quality of raw high thoughput sequencing sequencing data.
 
 The first dataset you will be working with is from an Illumina MiSeq dataset.

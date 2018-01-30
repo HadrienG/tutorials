@@ -1,5 +1,11 @@
 # De-novo Genome Assembly
 
+## Lecture
+
+<iframe src='https://onedrive.live.com/embed?cid=2326C09709B01D03&resid=2326C09709B01D03%214404&authkey=AEb3xrVzZ9dfYag&em=2&wdAr=1.7777777777777777' width='610px' height='367px' frameborder='0'></iframe>
+
+## Practical
+
 In this practical we will perform the assembly of *M. genitalium*, a bacterium published in 1995 by Fraser et al in Science ([abstract link](https://www.ncbi.nlm.nih.gov/pubmed/7569993)).
 
 ## Getting the data
@@ -158,4 +164,4 @@ BUSCO.py -i m_genitalium.fasta -l bacteria_odb9 -o busco_genitalium -m genome
 ```
 
 !!! question
-    How many marker genes has `busco` found? 
+    How many marker genes has `busco` found?

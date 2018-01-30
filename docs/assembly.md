@@ -165,3 +165,10 @@ BUSCO.py -i m_genitalium.fasta -l bacteria_odb9 -o busco_genitalium -m genome
 
 !!! question
     How many marker genes has `busco` found?
+
+
+### Course literature
+
+
+Course litteraturer for today is:
+<iframe src="https://onedrive.live.com/embed?cid=2326C09709B01D03&resid=2326C09709B01D03%214408&authkey=AEaLmwF-LQqgjMc&em=2" width="476" height="288" frameborder="0" scrolling="no"></iframe>

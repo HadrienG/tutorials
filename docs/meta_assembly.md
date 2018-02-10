@@ -54,7 +54,7 @@ Megahit will be used for the assembly.
 megahit -1 tara_trimmed_R1.fastq -2 tara_trimmed_R2.fastq -o tara_assembly
 ```
 
-the resulting assenmbly can be found under `tara_assembly/scaffolds.fasta`.
+the resulting assenmbly can be found under `tara_assembly/final.contigs.fa`.
 
 !!! question
     How many contigs does this assembly contain?
@@ -64,9 +64,9 @@ the resulting assenmbly can be found under `tara_assembly/scaffolds.fasta`.
 First we need to map the reads back against the assembly to get coverage information
 
 ```bash
-ln -s tara_assembly/scaffolds.fasta .
-bowtie2-build scaffolds.fasta scaffolds
-bowtie2 -x scaffolds -1 tara_reads_R1.fastq.gz -2 tara_reads_R2.fastq.gz | \
+ln -s tara_assembly/final.contigs.fa .
+bowtie2-build final.contigs.fa final.contigs
+bowtie2 -x final.contigs -1 tara_reads_R1.fastq.gz -2 tara_reads_R2.fastq.gz | \
     samtools view -bS -o tara_to_sort.bam
 samtools sort tara_to_sort.bam -o tara.bam
 samtools index tara.bam
@@ -75,8 +75,8 @@ samtools index tara.bam
 then we run metabat
 
 ```bash
-runMetaBat.sh -m 1500 scaffolds.fasta tara.bam
-mv $metabat_output metabat
+runMetaBat.sh -m 1500 final.contigs.fa tara.bam
+mv final.contigs.fa.metabat-bins1500 metabat
 ```
 
 !!! question
@@ -84,8 +84,14 @@ mv $metabat_output metabat
 
 ## Checking the quality of the bins
 
+The first time you run `checkm` you have to create the database
+
 ```bash
-checkm lineage_wf -t 12 -x fa metabat checkm/
+sudo checkm data setRoot ~/.local/data/checkm
+```
+
+```bash
+checkm lineage_wf -x fa metabat checkm/
 checkm bin_qa_plot -x fa checkm metabat plots
 ```
 
@@ -95,6 +101,26 @@ checkm bin_qa_plot -x fa checkm metabat plots
 !!! note
     checkm can plot a lot of metrics. If you have time, check the manual
     and try to produce different plots
+
+
+!!! warning
+    if checkm fails at the phylogeny step, it is likely that your vm doesn't have enough RAM.
+    pplacer requires about 35G of RAM to place the bins in the tree of life.
+
+    In that case, execute the following
+
+    `cd ~/results`  
+    `curl -O -J -L https://osf.io/xuzhn/download`  
+    `tar xzf checkm.tar.gz`  
+    `checkm qa checkm/lineage.ms checkm`  
+
+then plot the completeness
+
+```bash
+checkm bin_qa_plot -x fa checkm metabat plots
+```
+
+and take a look at `plots/bin_qa_plot.png`
 
 ## Further reading
 

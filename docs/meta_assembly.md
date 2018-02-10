@@ -1,88 +1,102 @@
-# Metagenome assembly
+# Metagenome assembly and binning
 
-In this tutorial you'll learn how to inspect the quality of High-throughput sequencing and
-perform a metagenomic assembly.
+In this tutorial you'll learn how to inspect assemble metagenomic data and retrieve draft genomes from assembled metagenomes
 
-We will use data under the accession SRS018585 in the Sequence Read Archive. this sample is
-"a Human Metagenome sample from G_DNA_Anterior nares of a male participant in the dbGaP study
-HMP Core Microbiome Sampling Protocol A (HMP-A)"
+We'll use a mock community of 20 bacteria sequenced using the Illumina HiSeq.
+In reality the data were simulated using [InSilicoSeq](http://insilicoseq.readthedocs.io).
 
-### Table of Contents
+The 20 bacteria in the dataset were selected from the [Tara Ocean study](http://ocean-microbiome.embl.de/companion.html) that recovered 957 distinct Metagenome-assembled-genomes (or MAGs) that were previsouly unknown! (full list on [figshare](https://figshare.com/articles/TARA-NON-REDUNDANT-MAGs/4902923/1) )
 
-* [Softwares Required for this Tutorial](#softwares-required-for-this-tutorial)
-* [Getting the Data](#getting-the-data)
-* [Quality Control](#quality-control)
-* [Assembly](#assembly)
-* [Taxonomic Classification and Visualization](#taxonomic-classification-and-visualization)
+## Getting the Data
 
-### Softwares Required for this Tutorial
-
-* [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-* [sickle](https://github.com/najoshi/sickle)
-* [SPAdes](http://bioinf.spbau.ru/en/spades)
-* [Blast](https://blast.ncbi.nlm.nih.gov)
-* [blobtools](https://drl.github.io/blobtools/)
-
-### Getting the Data
-
-```
-wget http://downloads.hmpdacc.org/data/Illumina/anterior_nares/SRS018585.tar.bz2
-tar xjf SRS018585.tar.bz2
-cd SRS018585
+```bash
+mkdir -p ~/data
+cd ~/data
+curl -O -J -L https://osf.io/th9z6/download
+curl -O -J -L https://osf.io/k6vme/download
+chmod -w tara_reads_R*
 ```
 
-### Quality Control
+## Quality Control
 
-we'll use FastQC to check the quality of our data. FastQC can be downloaded and
-ran on a Windows or LINUX computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+we'll use FastQC to check the quality of our data, as well as sickle for trimming the bad quality part of the reads.
+If you need a refresher on how and why to check the quality of sequence data, please check the [Quality Control and Trimming](qc) tutorial
 
-Start FastQC and select the fastq files you just downloaded with `file -> open`
+```bash
+mkdir -p ~/results
+cd ~/results
+ln -s ~/data/tara_reads_* .
+fastqc tara_reads_*.fastq.gz
+```
 
-What is the average read length? The average quality?
+!!! question
+    What is the average read length? The average quality?
+
+!!! question
+    Compared to single genome sequencing, what graphs differ?
+
 
 Now we'll trim the reads using sickle
 
 ```
-sickle pe -f SRS018585.denovo_duplicates_marked.trimmed.1.fastq \
--r SRS018585.denovo_duplicates_marked.trimmed.2.fastq -t sanger \
--o SRS018585_trimmed_1.fastq -p SRS018585_trimmed_2.fastq -s unpaired.fastq
+sickle pe -f tara_reads_R1.fastq.gz -r tara_reads_R2.fastq.gz -t sanger \
+    -o tara_trimmed_R1.fastq -p tara_trimmed_R2.fastq -s /dev/null
 ```
 
-sickle normally gives you a summary of how many reads were trimmed.
+!!! question
+    How many reads were trimmed?
 
-### Assembly
+## Assembly
 
-SPAdes will be used for the assembly. Since version 3.7, SPAdes includes a metagenomic version of its algorithm, callable
-with the option --meta
-
-```
-spades.py --meta -1 SRS018585_trimmed_1.fastq -2 SRS018585_trimmed_2.fastq -t 8 -o assembly
-```
-
-the resulting assenmbly can be found under assembly/scaffolds.fasta. How many contigs does this assembly contain?
-How long is the longest contig and to what organism does it belong to?
-
-### Taxonomic Classification and Visualization
-
-For the vizualisation of the assembly we will use a tool called blobtools.
-Blobtools produces "Taxon annotated GC-coverage plots" (TAGC) and was orignially made for
-the visualisation of (draft) genome assemblies.  
+Megahit will be used for the assembly.
 
 ```
-mkdir blobtools && cd $_
-blastn -num_threads 8 -db nt -query ../assembly/scaffolds.fasta -out blastresults.txt -outfmt '6 qseqid staxids bitscore'
+megahit -1 tara_trimmed_R1.fastq -2 tara_trimmed_R2.fastq -o tara_assembly
 ```
 
-This blast step is necessary to obtain the taxonomic information of your contigs.
-It might take a while. Be patient!
+the resulting assenmbly can be found under `tara_assembly/scaffolds.fasta`.
 
-```
-blobtools create -i ../assembly/scaffolds.fasta -y spades -t blastresults.txt \
-    --nodes /export/databases/taxonomy/nodes.dmp \
-    --names /export/databases/taxonomy/names.dmp \
-    -o scaffolds --title SRS018585
-blobtools plot -i scaffolds.blob.BlobDB.json -o scaffolds --title -r family
+!!! question
+    How many contigs does this assembly contain?
+
+## Binning
+
+First we need to map the reads back against the assembly to get coverage information
+
+```bash
+ln -s tara_assembly/scaffolds.fasta .
+bowtie2-build scaffolds.fasta scaffolds
+bowtie2 -x scaffolds -1 tara_reads_R1.fastq.gz -2 tara_reads_R2.fastq.gz | \
+    samtools view -bS -o tara_to_sort.bam
+samtools sort tara_to_sort.bam -o tara.bam
+samtools index tara.bam
 ```
 
-Inspect the plot, what is the most abundant families? try to play with the parameters
-(especially `-r`)
+then we run metabat
+
+```bash
+runMetaBat.sh -m 1500 scaffolds.fasta tara.bam
+mv $metabat_output metabat
+```
+
+!!! question
+    How many bins did we obtain?
+
+## Checking the quality of the bins
+
+```bash
+checkm lineage_wf -t 12 -x fa metabat checkm/
+checkm bin_qa_plot -x fa checkm metabat plots
+```
+
+!!! question
+    Which bins should we keep for downstream analysis?
+
+!!! note
+    checkm can plot a lot of metrics. If you have time, check the manual
+    and try to produce different plots
+
+## Further reading
+
+* [Recovery of nearly 8,000 metagenome-assembled genomes substantially expands the tree of life](https://www.nature.com/articles/s41564-017-0012-7)
+* [The reconstruction of 2,631 draft metagenome-assembled genomes from the global oceans](https://www.nature.com/articles/sdata2017203)

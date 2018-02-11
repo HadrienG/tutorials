@@ -1,11 +1,5 @@
 # RNA-Seq
 
-## Load salmon
-
-```
-module load Salmon
-```
-
 ## Downloading the data
 
 For this tutorial we will use the test data from [this](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004393) paper:
@@ -27,18 +21,19 @@ So to summarize we have:
 * HBR + ERCC Spike-In Mix2, Replicate 2
 * HBR + ERCC Spike-In Mix2, Replicate 3
 
-You can download the data from [here](http://139.162.178.46/files/tutorials/toy_rna.tar.gz).
+You can download the data from [here](http://genomedata.org/rnaseq-tutorial/HBR_UHR_ERCC_ds_5pc.tar).
 
-Unpack the data and go into the toy_rna directory
+Download and unpack the data
 
-```
+```bash
+curl -O -J -L https://osf.io/7zepj/download
 tar xzf toy_rna.tar.gz
 cd toy_rna
 ```
 
 ## Indexing transcriptome
 
-```
+```bash
 salmon index -t chr22_transcripts.fa -i chr22_index
 ```
 
@@ -60,22 +55,40 @@ This loop simply goes through each sample and invokes salmon using fairly basic 
 * The -1 and -2 arguments tell salmon where to find the left and right reads for this sample (notice, salmon will accept gzipped FASTQ files directly).
 * the -o argument specifies the directory where salmon’s quantification results sould be written.
 
-Salmon exposes many different options to the user that enable extra features or modify default behavior. However, the purpose and behavior of all of those options is beyond the scope of this introductory tutorial. You can read about salmon’s many options in the [documentation](http://salmon.readthedocs.io/en/latest/).
+Salmon exposes many different options to the user that enable extra features or modify default behavior.
+However, the purpose and behavior of all of those options is beyond the scope of this introductory tutorial.
+You can read about salmon’s many options in the [documentation](http://salmon.readthedocs.io/en/latest/).
 
-After the salmon commands finish running, you should have a directory named `quant`, which will have a sub-directory for each sample. These sub-directories contain the quantification results of salmon, as well as a lot of other information salmon records about the sample and the run. The main output file (called quant.sf) is rather self-explanatory. For example, take a peek at the quantification file for sample `HBR_Rep1` in `quant/HBR_Rep1/quant.sf` and you’ll see a simple TSV format file listing the name (Name) of each transcript, its length (Length), effective length (EffectiveLength) (more details on this in the documentation), and its abundance in terms of Transcripts Per Million (TPM) and estimated number of reads (NumReads) originating from this transcript.
+After the salmon commands finish running, you should have a directory named `quant`, which will have a sub-directory for each sample.
+These sub-directories contain the quantification results of salmon, as well as a lot of other information salmon records about the sample and the run.
+The main output file (called quant.sf) is rather self-explanatory. For example, take a peek at the quantification file for sample `HBR_Rep1` in `quant/HBR_Rep1/quant.sf` and you’ll see a simple TSV format file listing the name (Name) of each transcript, its length (Length), effective length (EffectiveLength) (more details on this in the documentation), and its abundance in terms of Transcripts Per Million (TPM) and estimated number of reads (NumReads) originating from this transcript.
 
 ## Import read counts using tximport
 
 Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis.
 
-First, open up your favourite R IDE and install the necessary packages:
+First, got in Rstudio server using the following in your browser:
+
+`http://MY_IP_ADDRESS:8787/`
+
+where you replace `MY_IP_ADDRESS` by the IP address of your Virtual Machine.
+
+!!! note
+    To access Rstudio server on the virtual machine, you'll need a password
+
+*TODO* change pass or ask instructor here depending on DNS settings
+
+!!! note
+    If you wish, you may work on Rstudio on your own laptop if it is powerful enough.
+    You will need an up-to-date version of R, and can install the necessary packages using [this script](https://osf.io/a7kqz/download)
+
+    You will also need to download the `toy_rna` directory
+
+
+Once in Rstudio, set your working directory
 
 ```R
-source("https://bioconductor.org/biocLite.R")
-biocLite("tximport")
-biocLite("GenomicFeatures")
-
-install.packages("readr")
+setwd('~/toy_rna')
 ```
 
 Then load the modules:
@@ -86,7 +99,9 @@ library(GenomicFeatures)
 library(readr)
 ```
 
-Salmon did the quantifiation of the transcript level. We want to see which genes are differentially expressed, so we need to link the transcript names to the gene names. We can use our .gtf annotation for that, and the GenomicFeatures package:
+Salmon did the quantifiation of the transcript level.
+We want to see which genes are differentially expressed, so we need to link the transcript names to the gene names.
+We can use our .gtf annotation for that, and the GenomicFeatures package:
 
 ```R
 txdb <- makeTxDbFromGFF("chr22_genes.gtf")
@@ -95,13 +110,13 @@ tx2gene <- select(txdb, keys = k, keytype = "GENEID", columns = "TXNAME")
 head(tx2gene)
 ```
 
-Now we can import the salmon quantification. First, download the file with sample descriptions from [here](https://raw.githubusercontent.com/HadrienG/tutorials/master/data/samples.txt) and put it in the toy_rna directory. Then, use that file to load the corresponding quantification data.
+Now we can import the salmon quantification.
 
 ```R
 samples <- read.table("samples.txt", header = TRUE)
 files <- file.path("quant", samples$sample, "quant.sf")
 names(files) <- paste0(samples$sample)
-txi.salmon <- tximport(files, type = "salmon", tx2gene = tx2gene, reader = read_tsv)
+txi.salmon <- tximport(files, type = "salmon", tx2gene = tx2gene)
 ```
 
 Take a look at the data:
@@ -112,13 +127,7 @@ head(txi.salmon$counts)
 
 ## Differential expression using DESeq2
 
-Install the necessary package:
-
-```R
-biocLite('DESeq2')
-```
-
-Then load it:
+load DESeq2:
 
 ```R
 library(DESeq2)
@@ -134,7 +143,9 @@ res <- results(dds)
 
 Run the `summary` command to get an idea of how many genes are up- and downregulated between the two conditions:
 
-`summary(res)`
+```R
+summary(res)
+```
 
 DESeq uses a negative binomial distribution. Such distributions have two parameters: mean and dispersion. The dispersion is a parameter describing how much the variance deviates from the mean.
 
@@ -157,7 +168,7 @@ Then, we create a sample distance heatmap:
 
 ```R
 library(RColorBrewer)
-library(gplots) # you may need to install this package
+library(gplots)
 
 (mycols <- brewer.pal(8, "Dark2")[1:length(unique(samples$condition))])
 sampleDists <- as.matrix(dist(t(assay(rld))))
@@ -197,15 +208,9 @@ with(subset(res, padj<.05 ), points(log2FoldChange, -log10(pvalue), pch=20, col=
 
 ## KEGG pathway analysis
 
-As always, install and load the necessary packages:
+As always, load the necessary packages:
 
 ```R
-biocLite("AnnotationDbi")
-biocLite("org.Hs.eg.db")
-biocLite("pathview")
-biocLite("gage")
-biocLite("gageData")
-
 library(AnnotationDbi)
 library(org.Hs.eg.db)
 library(pathview)

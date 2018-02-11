@@ -584,14 +584,14 @@ These sub-directories contain the quantification results of salmon, as well as a
 The main output file (called quant.sf) is rather self-explanatory. For example, take a peek at the quantification file for sample <code>HBR_Rep1</code> in <code>quant/HBR_Rep1/quant.sf</code> and you’ll see a simple TSV format file listing the name (Name) of each transcript, its length (Length), effective length (EffectiveLength) (more details on this in the documentation), and its abundance in terms of Transcripts Per Million (TPM) and estimated number of reads (NumReads) originating from this transcript.</p>
 <h2 id="import-read-counts-using-tximport">Import read counts using tximport<a class="headerlink" href="#import-read-counts-using-tximport" title="Permanent link">&para;</a></h2>
 <p>Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis.</p>
-<p>First, got in Rstudio server using the following in your browser:</p>
+<p>First, go in Rstudio server by typing the address to your server in your browser:</p>
 <p><code>http://MY_IP_ADDRESS:8787/</code></p>
 <p>where you replace <code>MY_IP_ADDRESS</code> by the IP address of your Virtual Machine.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To access Rstudio server on the virtual machine, you'll need a password</p>
+<p>To access Rstudio server on the virtual machine, you'll need a password
+Ask your instructor for the password!</p>
 </div>
-<p><em>TODO</em> change pass or ask instructor here depending on DNS settings</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you wish, you may work on Rstudio on your own laptop if it is powerful enough.

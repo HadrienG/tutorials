@@ -67,7 +67,7 @@ The main output file (called quant.sf) is rather self-explanatory. For example, 
 
 Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis.
 
-First, got in Rstudio server using the following in your browser:
+First, go in Rstudio server by typing the address to your server in your browser:
 
 `http://MY_IP_ADDRESS:8787/`
 
@@ -75,8 +75,7 @@ where you replace `MY_IP_ADDRESS` by the IP address of your Virtual Machine.
 
 !!! note
     To access Rstudio server on the virtual machine, you'll need a password
-
-*TODO* change pass or ask instructor here depending on DNS settings
+    Ask your instructor for the password!
 
 !!! note
     If you wish, you may work on Rstudio on your own laptop if it is powerful enough.

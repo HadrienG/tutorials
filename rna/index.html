@@ -361,13 +361,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#load-salmon" title="Load salmon" class="md-nav__link">
-    Load salmon
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#downloading-the-data" title="Downloading the data" class="md-nav__link">
     Downloading the data
   </a>
@@ -464,13 +457,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#load-salmon" title="Load salmon" class="md-nav__link">
-    Load salmon
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#downloading-the-data" title="Downloading the data" class="md-nav__link">
     Downloading the data
   </a>
@@ -543,11 +529,6 @@
                 
                 
                 <h1 id="rna-seq">RNA-Seq<a class="headerlink" href="#rna-seq" title="Permanent link">&para;</a></h1>
-<h2 id="load-salmon">Load salmon<a class="headerlink" href="#load-salmon" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">load</span> <span class="n">Salmon</span>
-</pre></div>
-
-
 <h2 id="downloading-the-data">Downloading the data<a class="headerlink" href="#downloading-the-data" title="Permanent link">&para;</a></h2>
 <p>For this tutorial we will use the test data from <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004393">this</a> paper:</p>
 <blockquote>
@@ -565,10 +546,11 @@
 <li>HBR + ERCC Spike-In Mix2, Replicate 2</li>
 <li>HBR + ERCC Spike-In Mix2, Replicate 3</li>
 </ul>
-<p>You can download the data from <a href="http://139.162.178.46/files/tutorials/toy_rna.tar.gz">here</a>.</p>
-<p>Unpack the data and go into the toy_rna directory</p>
-<div class="codehilite"><pre><span></span>tar xzf toy_rna.tar.gz
-cd toy_rna
+<p>You can download the data from <a href="http://genomedata.org/rnaseq-tutorial/HBR_UHR_ERCC_ds_5pc.tar">here</a>.</p>
+<p>Download and unpack the data</p>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/7zepj/download
+tar xzf toy_rna.tar.gz
+<span class="nb">cd</span> toy_rna
 </pre></div>
 
 
@@ -594,16 +576,30 @@ cd toy_rna
 <li>The -1 and -2 arguments tell salmon where to find the left and right reads for this sample (notice, salmon will accept gzipped FASTQ files directly).</li>
 <li>the -o argument specifies the directory where salmon’s quantification results sould be written.</li>
 </ul>
-<p>Salmon exposes many different options to the user that enable extra features or modify default behavior. However, the purpose and behavior of all of those options is beyond the scope of this introductory tutorial. You can read about salmon’s many options in the <a href="http://salmon.readthedocs.io/en/latest/">documentation</a>.</p>
-<p>After the salmon commands finish running, you should have a directory named <code>quant</code>, which will have a sub-directory for each sample. These sub-directories contain the quantification results of salmon, as well as a lot of other information salmon records about the sample and the run. The main output file (called quant.sf) is rather self-explanatory. For example, take a peek at the quantification file for sample <code>HBR_Rep1</code> in <code>quant/HBR_Rep1/quant.sf</code> and you’ll see a simple TSV format file listing the name (Name) of each transcript, its length (Length), effective length (EffectiveLength) (more details on this in the documentation), and its abundance in terms of Transcripts Per Million (TPM) and estimated number of reads (NumReads) originating from this transcript.</p>
+<p>Salmon exposes many different options to the user that enable extra features or modify default behavior.
+However, the purpose and behavior of all of those options is beyond the scope of this introductory tutorial.
+You can read about salmon’s many options in the <a href="http://salmon.readthedocs.io/en/latest/">documentation</a>.</p>
+<p>After the salmon commands finish running, you should have a directory named <code>quant</code>, which will have a sub-directory for each sample.
+These sub-directories contain the quantification results of salmon, as well as a lot of other information salmon records about the sample and the run.
+The main output file (called quant.sf) is rather self-explanatory. For example, take a peek at the quantification file for sample <code>HBR_Rep1</code> in <code>quant/HBR_Rep1/quant.sf</code> and you’ll see a simple TSV format file listing the name (Name) of each transcript, its length (Length), effective length (EffectiveLength) (more details on this in the documentation), and its abundance in terms of Transcripts Per Million (TPM) and estimated number of reads (NumReads) originating from this transcript.</p>
 <h2 id="import-read-counts-using-tximport">Import read counts using tximport<a class="headerlink" href="#import-read-counts-using-tximport" title="Permanent link">&para;</a></h2>
 <p>Using the tximport R package, you can import salmon’s transcript-level quantifications and optionally aggregate them to the gene level for gene-level differential expression analysis.</p>
-<p>First, open up your favourite R IDE and install the necessary packages:</p>
-<div class="codehilite"><pre><span></span><span class="kn">source</span><span class="p">(</span><span class="s">&quot;https://bioconductor.org/biocLite.R&quot;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&quot;tximport&quot;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&quot;GenomicFeatures&quot;</span><span class="p">)</span>
-
-install.packages<span class="p">(</span><span class="s">&quot;readr&quot;</span><span class="p">)</span>
+<p>First, got in Rstudio server using the following in your browser:</p>
+<p><code>http://MY_IP_ADDRESS:8787/</code></p>
+<p>where you replace <code>MY_IP_ADDRESS</code> by the IP address of your Virtual Machine.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To access Rstudio server on the virtual machine, you'll need a password</p>
+</div>
+<p><em>TODO</em> change pass or ask instructor here depending on DNS settings</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you wish, you may work on Rstudio on your own laptop if it is powerful enough.
+You will need an up-to-date version of R, and can install the necessary packages using <a href="https://osf.io/a7kqz/download">this script</a></p>
+<p>You will also need to download the <code>toy_rna</code> directory</p>
+</div>
+<p>Once in Rstudio, set your working directory</p>
+<div class="codehilite"><pre><span></span><span class="kp">setwd</span><span class="p">(</span><span class="s">&#39;~/toy_rna&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -614,7 +610,9 @@ install.packages<span class="p">(</span><span class="s">&quot;readr&quot;</span>
 </pre></div>
 
 
-<p>Salmon did the quantifiation of the transcript level. We want to see which genes are differentially expressed, so we need to link the transcript names to the gene names. We can use our .gtf annotation for that, and the GenomicFeatures package:</p>
+<p>Salmon did the quantifiation of the transcript level.
+We want to see which genes are differentially expressed, so we need to link the transcript names to the gene names.
+We can use our .gtf annotation for that, and the GenomicFeatures package:</p>
 <div class="codehilite"><pre><span></span>txdb <span class="o">&lt;-</span> makeTxDbFromGFF<span class="p">(</span><span class="s">&quot;chr22_genes.gtf&quot;</span><span class="p">)</span>
 k <span class="o">&lt;-</span> keys<span class="p">(</span>txdb<span class="p">,</span> keytype <span class="o">=</span> <span class="s">&quot;GENEID&quot;</span><span class="p">)</span>
 tx2gene <span class="o">&lt;-</span> select<span class="p">(</span>txdb<span class="p">,</span> keys <span class="o">=</span> k<span class="p">,</span> keytype <span class="o">=</span> <span class="s">&quot;GENEID&quot;</span><span class="p">,</span> columns <span class="o">=</span> <span class="s">&quot;TXNAME&quot;</span><span class="p">)</span>
@@ -622,11 +620,11 @@ tx2gene <span class="o">&lt;-</span> select<span class="p">(</span>txdb<span cla
 </pre></div>
 
 
-<p>Now we can import the salmon quantification. First, download the file with sample descriptions from <a href="https://raw.githubusercontent.com/HadrienG/tutorials/master/data/samples.txt">here</a> and put it in the toy_rna directory. Then, use that file to load the corresponding quantification data.</p>
+<p>Now we can import the salmon quantification.</p>
 <div class="codehilite"><pre><span></span>samples <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;samples.txt&quot;</span><span class="p">,</span> header <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 files <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span><span class="s">&quot;quant&quot;</span><span class="p">,</span> samples<span class="o">$</span><span class="kp">sample</span><span class="p">,</span> <span class="s">&quot;quant.sf&quot;</span><span class="p">)</span>
 <span class="kp">names</span><span class="p">(</span>files<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">paste0</span><span class="p">(</span>samples<span class="o">$</span><span class="kp">sample</span><span class="p">)</span>
-txi.salmon <span class="o">&lt;-</span> tximport<span class="p">(</span>files<span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;salmon&quot;</span><span class="p">,</span> tx2gene <span class="o">=</span> tx2gene<span class="p">,</span> reader <span class="o">=</span> read_tsv<span class="p">)</span>
+txi.salmon <span class="o">&lt;-</span> tximport<span class="p">(</span>files<span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;salmon&quot;</span><span class="p">,</span> tx2gene <span class="o">=</span> tx2gene<span class="p">)</span>
 </pre></div>
 
 
@@ -636,12 +634,7 @@ txi.salmon <span class="o">&lt;-</span> tximport<span class="p">(</span>files<sp
 
 
 <h2 id="differential-expression-using-deseq2">Differential expression using DESeq2<a class="headerlink" href="#differential-expression-using-deseq2" title="Permanent link">&para;</a></h2>
-<p>Install the necessary package:</p>
-<div class="codehilite"><pre><span></span>biocLite<span class="p">(</span><span class="s">&#39;DESeq2&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<p>Then load it:</p>
+<p>load DESeq2:</p>
 <div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>DESeq2<span class="p">)</span>
 </pre></div>
 
@@ -654,7 +647,10 @@ res <span class="o">&lt;-</span> results<span class="p">(</span>dds<span class="
 
 
 <p>Run the <code>summary</code> command to get an idea of how many genes are up- and downregulated between the two conditions:</p>
-<p><code>summary(res)</code></p>
+<div class="codehilite"><pre><span></span><span class="kp">summary</span><span class="p">(</span>res<span class="p">)</span>
+</pre></div>
+
+
 <p>DESeq uses a negative binomial distribution. Such distributions have two parameters: mean and dispersion. The dispersion is a parameter describing how much the variance deviates from the mean.</p>
 <p>You can read more about the methods used by DESeq2 in the <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8">paper</a> or the <a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq/inst/doc/DESeq.pdf">vignette</a></p>
 <p>Plot dispersions:</p>
@@ -670,7 +666,7 @@ res <span class="o">&lt;-</span> results<span class="p">(</span>dds<span class="
 
 <p>Then, we create a sample distance heatmap:</p>
 <div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>RColorBrewer<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>gplots<span class="p">)</span> <span class="c1"># you may need to install this package</span>
+<span class="kn">library</span><span class="p">(</span>gplots<span class="p">)</span>
 
 <span class="p">(</span>mycols <span class="o">&lt;-</span> brewer.pal<span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="kp">length</span><span class="p">(</span><span class="kp">unique</span><span class="p">(</span>samples<span class="o">$</span>condition<span class="p">))])</span>
 sampleDists <span class="o">&lt;-</span> <span class="kp">as.matrix</span><span class="p">(</span>dist<span class="p">(</span><span class="kp">t</span><span class="p">(</span>assay<span class="p">(</span>rld<span class="p">))))</span>
@@ -707,14 +703,8 @@ DESeq2<span class="o">::</span>plotMA<span class="p">(</span>dds<span class="p">
 
 
 <h2 id="kegg-pathway-analysis">KEGG pathway analysis<a class="headerlink" href="#kegg-pathway-analysis" title="Permanent link">&para;</a></h2>
-<p>As always, install and load the necessary packages:</p>
-<div class="codehilite"><pre><span></span>biocLite<span class="p">(</span><span class="s">&quot;AnnotationDbi&quot;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&quot;org.Hs.eg.db&quot;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&quot;pathview&quot;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&quot;gage&quot;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&quot;gageData&quot;</span><span class="p">)</span>
-
-<span class="kn">library</span><span class="p">(</span>AnnotationDbi<span class="p">)</span>
+<p>As always, load the necessary packages:</p>
+<div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>AnnotationDbi<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>org.Hs.eg.db<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>pathview<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>gage<span class="p">)</span>

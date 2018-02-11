@@ -349,20 +349,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#table-of-contents" title="Table of Contents" class="md-nav__link">
-    Table of Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#softwares-required-for-this-tutorial" title="Softwares Required for this Tutorial" class="md-nav__link">
-    Softwares Required for this Tutorial
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#getting-the-data" title="Getting the Data" class="md-nav__link">
     Getting the Data
   </a>
@@ -384,8 +370,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#taxonomic-classification-and-visualization" title="Taxonomic Classification and Visualization" class="md-nav__link">
-    Taxonomic Classification and Visualization
+  <a href="#binning" title="Binning" class="md-nav__link">
+    Binning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-the-quality-of-the-bins" title="Checking the quality of the bins" class="md-nav__link">
+    Checking the quality of the bins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" title="Further reading" class="md-nav__link">
+    Further reading
   </a>
   
 </li>
@@ -444,20 +444,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#table-of-contents" title="Table of Contents" class="md-nav__link">
-    Table of Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#softwares-required-for-this-tutorial" title="Softwares Required for this Tutorial" class="md-nav__link">
-    Softwares Required for this Tutorial
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#getting-the-data" title="Getting the Data" class="md-nav__link">
     Getting the Data
   </a>
@@ -479,8 +465,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#taxonomic-classification-and-visualization" title="Taxonomic Classification and Visualization" class="md-nav__link">
-    Taxonomic Classification and Visualization
+  <a href="#binning" title="Binning" class="md-nav__link">
+    Binning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-the-quality-of-the-bins" title="Checking the quality of the bins" class="md-nav__link">
+    Checking the quality of the bins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" title="Further reading" class="md-nav__link">
+    Further reading
   </a>
   
 </li>
@@ -502,78 +502,121 @@
                   <a href="https://github.com/HadrienG/tutorials/edit/master/docs/meta_assembly.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="metagenome-assembly">Metagenome assembly<a class="headerlink" href="#metagenome-assembly" title="Permanent link">&para;</a></h1>
-<p>In this tutorial you'll learn how to inspect the quality of High-throughput sequencing and
-perform a metagenomic assembly.</p>
-<p>We will use data under the accession SRS018585 in the Sequence Read Archive. this sample is
-"a Human Metagenome sample from G_DNA_Anterior nares of a male participant in the dbGaP study
-HMP Core Microbiome Sampling Protocol A (HMP-A)"</p>
-<h3 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="#softwares-required-for-this-tutorial">Softwares Required for this Tutorial</a></li>
-<li><a href="#getting-the-data">Getting the Data</a></li>
-<li><a href="#quality-control">Quality Control</a></li>
-<li><a href="#assembly">Assembly</a></li>
-<li><a href="#taxonomic-classification-and-visualization">Taxonomic Classification and Visualization</a></li>
-</ul>
-<h3 id="softwares-required-for-this-tutorial">Softwares Required for this Tutorial<a class="headerlink" href="#softwares-required-for-this-tutorial" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a></li>
-<li><a href="https://github.com/najoshi/sickle">sickle</a></li>
-<li><a href="http://bioinf.spbau.ru/en/spades">SPAdes</a></li>
-<li><a href="https://blast.ncbi.nlm.nih.gov">Blast</a></li>
-<li><a href="https://drl.github.io/blobtools/">blobtools</a></li>
-</ul>
-<h3 id="getting-the-data">Getting the Data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span>wget http://downloads.hmpdacc.org/data/Illumina/anterior_nares/SRS018585.tar.bz2
-tar xjf SRS018585.tar.bz2
-cd SRS018585
+                <h1 id="metagenome-assembly-and-binning">Metagenome assembly and binning<a class="headerlink" href="#metagenome-assembly-and-binning" title="Permanent link">&para;</a></h1>
+<p>In this tutorial you'll learn how to inspect assemble metagenomic data and retrieve draft genomes from assembled metagenomes</p>
+<p>We'll use a mock community of 20 bacteria sequenced using the Illumina HiSeq.
+In reality the data were simulated using <a href="http://insilicoseq.readthedocs.io">InSilicoSeq</a>.</p>
+<p>The 20 bacteria in the dataset were selected from the <a href="http://ocean-microbiome.embl.de/companion.html">Tara Ocean study</a> that recovered 957 distinct Metagenome-assembled-genomes (or MAGs) that were previsouly unknown! (full list on <a href="https://figshare.com/articles/TARA-NON-REDUNDANT-MAGs/4902923/1">figshare</a> )</p>
+<h2 id="getting-the-data">Getting the Data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>mkdir -p ~/data
+<span class="nb">cd</span> ~/data
+curl -O -J -L https://osf.io/th9z6/download
+curl -O -J -L https://osf.io/k6vme/download
+chmod -w tara_reads_R*
 </pre></div>
 
 
-<h3 id="quality-control">Quality Control<a class="headerlink" href="#quality-control" title="Permanent link">&para;</a></h3>
-<p>we'll use FastQC to check the quality of our data. FastQC can be downloaded and
-ran on a Windows or LINUX computer without installation. It is available <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">here</a></p>
-<p>Start FastQC and select the fastq files you just downloaded with <code>file -&gt; open</code></p>
+<h2 id="quality-control">Quality Control<a class="headerlink" href="#quality-control" title="Permanent link">&para;</a></h2>
+<p>we'll use FastQC to check the quality of our data, as well as sickle for trimming the bad quality part of the reads.
+If you need a refresher on how and why to check the quality of sequence data, please check the <a href="../qc">Quality Control and Trimming</a> tutorial</p>
+<div class="codehilite"><pre><span></span>mkdir -p ~/results
+<span class="nb">cd</span> ~/results
+ln -s ~/data/tara_reads_* .
+fastqc tara_reads_*.fastq.gz
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
 <p>What is the average read length? The average quality?</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Compared to single genome sequencing, what graphs differ?</p>
+</div>
 <p>Now we'll trim the reads using sickle</p>
-<div class="codehilite"><pre><span></span>sickle pe -f SRS018585.denovo_duplicates_marked.trimmed.1.fastq \
--r SRS018585.denovo_duplicates_marked.trimmed.2.fastq -t sanger \
--o SRS018585_trimmed_1.fastq -p SRS018585_trimmed_2.fastq -s unpaired.fastq
+<div class="codehilite"><pre><span></span>sickle pe -f tara_reads_R1.fastq.gz -r tara_reads_R2.fastq.gz -t sanger \
+    -o tara_trimmed_R1.fastq -p tara_trimmed_R2.fastq -s /dev/null
 </pre></div>
 
 
-<p>sickle normally gives you a summary of how many reads were trimmed.</p>
-<h3 id="assembly">Assembly<a class="headerlink" href="#assembly" title="Permanent link">&para;</a></h3>
-<p>SPAdes will be used for the assembly. Since version 3.7, SPAdes includes a metagenomic version of its algorithm, callable
-with the option --meta</p>
-<div class="codehilite"><pre><span></span>spades.py --meta -1 SRS018585_trimmed_1.fastq -2 SRS018585_trimmed_2.fastq -t 8 -o assembly
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many reads were trimmed?</p>
+</div>
+<h2 id="assembly">Assembly<a class="headerlink" href="#assembly" title="Permanent link">&para;</a></h2>
+<p>Megahit will be used for the assembly.</p>
+<div class="codehilite"><pre><span></span>megahit -1 tara_trimmed_R1.fastq -2 tara_trimmed_R2.fastq -o tara_assembly
 </pre></div>
 
 
-<p>the resulting assenmbly can be found under assembly/scaffolds.fasta. How many contigs does this assembly contain?
-How long is the longest contig and to what organism does it belong to?</p>
-<h3 id="taxonomic-classification-and-visualization">Taxonomic Classification and Visualization<a class="headerlink" href="#taxonomic-classification-and-visualization" title="Permanent link">&para;</a></h3>
-<p>For the vizualisation of the assembly we will use a tool called blobtools.
-Blobtools produces "Taxon annotated GC-coverage plots" (TAGC) and was orignially made for
-the visualisation of (draft) genome assemblies.  </p>
-<div class="codehilite"><pre><span></span>mkdir blobtools &amp;&amp; cd $_
-blastn -num_threads 8 -db nt -query ../assembly/scaffolds.fasta -out blastresults.txt -outfmt &#39;6 qseqid staxids bitscore&#39;
+<p>the resulting assenmbly can be found under <code>tara_assembly/final.contigs.fa</code>.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many contigs does this assembly contain?</p>
+</div>
+<h2 id="binning">Binning<a class="headerlink" href="#binning" title="Permanent link">&para;</a></h2>
+<p>First we need to map the reads back against the assembly to get coverage information</p>
+<div class="codehilite"><pre><span></span>ln -s tara_assembly/final.contigs.fa .
+bowtie2-build final.contigs.fa final.contigs
+bowtie2 -x final.contigs -1 tara_reads_R1.fastq.gz -2 tara_reads_R2.fastq.gz <span class="p">|</span> <span class="se">\</span>
+    samtools view -bS -o tara_to_sort.bam
+samtools sort tara_to_sort.bam -o tara.bam
+samtools index tara.bam
 </pre></div>
 
 
-<p>This blast step is necessary to obtain the taxonomic information of your contigs.
-It might take a while. Be patient!</p>
-<div class="codehilite"><pre><span></span>blobtools create -i ../assembly/scaffolds.fasta -y spades -t blastresults.txt \
-    --nodes /export/databases/taxonomy/nodes.dmp \
-    --names /export/databases/taxonomy/names.dmp \
-    -o scaffolds --title SRS018585
-blobtools plot -i scaffolds.blob.BlobDB.json -o scaffolds --title -r family
+<p>then we run metabat</p>
+<div class="codehilite"><pre><span></span>runMetaBat.sh -m <span class="m">1500</span> final.contigs.fa tara.bam
+mv final.contigs.fa.metabat-bins1500 metabat
 </pre></div>
 
 
-<p>Inspect the plot, what is the most abundant families? try to play with the parameters
-(especially <code>-r</code>)</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many bins did we obtain?</p>
+</div>
+<h2 id="checking-the-quality-of-the-bins">Checking the quality of the bins<a class="headerlink" href="#checking-the-quality-of-the-bins" title="Permanent link">&para;</a></h2>
+<p>The first time you run <code>checkm</code> you have to create the database</p>
+<div class="codehilite"><pre><span></span>sudo checkm data setRoot ~/.local/data/checkm
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>checkm lineage_wf -x fa metabat checkm/
+checkm bin_qa_plot -x fa checkm metabat plots
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Which bins should we keep for downstream analysis?</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>checkm can plot a lot of metrics. If you have time, check the manual
+and try to produce different plots</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>if checkm fails at the phylogeny step, it is likely that your vm doesn't have enough RAM.
+pplacer requires about 35G of RAM to place the bins in the tree of life.</p>
+<p>In that case, execute the following</p>
+<p><code>cd ~/results</code><br />
+<code>curl -O -J -L https://osf.io/xuzhn/download</code><br />
+<code>tar xzf checkm.tar.gz</code><br />
+<code>checkm qa checkm/lineage.ms checkm</code>  </p>
+</div>
+<p>then plot the completeness</p>
+<div class="codehilite"><pre><span></span>checkm bin_qa_plot -x fa checkm metabat plots
+</pre></div>
+
+
+<p>and take a look at <code>plots/bin_qa_plot.png</code></p>
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.nature.com/articles/s41564-017-0012-7">Recovery of nearly 8,000 metagenome-assembled genomes substantially expands the tree of life</a></li>
+<li><a href="https://www.nature.com/articles/sdata2017203">The reconstruction of 2,631 draft metagenome-assembled genomes from the global oceans</a></li>
+</ul>
                 
                   
                 

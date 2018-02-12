@@ -105,16 +105,16 @@ KRAKEN_DB=/home/student/databases/minikraken_20171013_4GB
 Now run kraken on the reads
 
 ```bash
-mkdir kraken_results
+# In the data/wms directory
 for i in *_1.fastq.gz
 do
     prefix=$(basename $i _1.fastq.gz)
-    # set number of threads to number of cores if running under SLURM, otherwise use 2 threads
-    nthreads=${SLURM_NPROCS:=2}
-    kraken --db $KRAKEN_DB --threads ${nthreads} --fastq-input --gzip-compressed \
-        ${prefix}_1.fastq.gz ${prefix}_2.fastq.gz > kraken_results/${prefix}.tab
+    # print which sample is being processed
+    echo $prefix
+    kraken --db $KRAKEN_DB --threads 2 --fastq-input --gzip-compressed \
+        ${prefix}_1.fastq.gz ${prefix}_2.fastq.gz > /home/student/wms/results/${prefix}.tab
     kraken-report --db $KRAKEN_DB \
-        kraken_results/${prefix}.tab > kraken_results/${prefix}_tax.txt
+        /home/student/wms/results/${prefix}.tab > /home/student/wms/results/${prefix}_tax.txt
 done
 ```
 

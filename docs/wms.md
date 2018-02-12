@@ -38,11 +38,22 @@ The choice of shotgun or 16S approaches is usually dictated by the nature of the
 * [R](https://www.r-project.org/)
 * [Pavian](https://github.com/fbreitwieser/pavian)
 
+### Prepare and organise your working directory
+
+```
+mkdir wms
+cd wms
+mkdir data
+mkdir results
+mkdir scripts
+```
+
 ### Getting the Data and Checking their Quality
 
 If you are reading this tutorial online and haven't cloned the directory, first download and unpack the data:
 
 ```
+cd data
 wget http://77.235.253.14/metlab/wms.tar
 tar xvf wms.tar
 cd wms
@@ -70,15 +81,25 @@ Kraken aims to achieve high sensitivity and high speed by utilizing exact alignm
 In short, kraken uses a new approach with exact k-mer matching to assign taxonomy to short reads. It is *extremely* fast compared to traditional
 approaches (i.e. BLAST).
 
-By default, the authors of kraken built their database based on RefSeq Bacteria, Archea and Viruses. We'll use it for the purpose of this tutorial.
-
-**NOTE: The database may have been installed already! Ask your instructor!**
+First, we will install Kraken:
 
 ```bash
+sudo apt install kraken
+```
+
+By default, the authors of kraken built their database based on RefSeq Bacteria, Archea and Viruses. We'll use it for the purpose of this tutorial.
+We will download a shrinked database (minikraken) provided by Kraken developers that is only 4GB.
+
+```bash
+# First we create a databases directory in our home
+cd
+mkdir databases
+cd databases
+# Then we download the minikraken database
 # You might not need this step (for example if you're working on Uppmax!)
-wget https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz
-tar xzf minikraken.tgz
-$KRAKEN_DB=minikraken_20141208
+wget https://ccb.jhu.edu/software/kraken/dl/minikraken_20171019_4GB.tgz
+tar xzf minikraken_20171019_4GB.tgz
+KRAKEN_DB=/home/student/databases/minikraken_20171013_4GB
 ```
 
 Now run kraken on the reads

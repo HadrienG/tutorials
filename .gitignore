@@ -6,6 +6,7 @@
 
 # mkdocs things
 site/
+mkdocs_env/
 
 # mac stuff
 .DS_Store

@@ -39,6 +39,12 @@ The choice of shotgun or 16S approaches is usually dictated by the nature of the
 
 ### Prepare and organise your working directory
 
+You will first login to your virtual machine using the IP provided by the teachers.
+All the exercise will be performed on your VM in the cloud.
+
+!!! note
+    When you login with the ssh command, please add the option -X at the end of it to be able to use graphical interface
+
 ```
 mkdir wms
 cd wms
@@ -49,25 +55,34 @@ mkdir scripts
 
 ### Getting the Data and Checking their Quality
 
-If you are reading this tutorial online and haven't cloned the directory, first download and unpack the data:
+As the data were very big, we have prepared performed a downsampling on all 6 datasets (3 pigs and 3 humans).
+We will first download and unpack the data.
 
 ```
 cd data
-wget http://77.235.253.14/metlab/wms.tar
-tar xvf wms.tar
-cd wms
+curl -O -J -L https://osf.io/h9x6e/download
+tar xvf subset_wms.tar.gz
+cd sub_100000
 ```
 
-We'll use FastQC to check the quality of our data. FastQC can be downloaded and
-run on a Windows or Linux computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+We'll use FastQC to check the quality of our data.
+FastQC should be already installed on your VM, so you just need to type:
+```
+fastqc
+```
 
-Start FastQC and select the fastq file you just downloaded with `file -> open`  
+When FastQC has started you can select the fastq file you just downloaded with `file -> open`  
 What do you think about the quality of the reads? Do they need trimming? Are there still adapters
 present? Overrepresented sequences?
 
+
+!!! note
+    FastQC can be downloaded and run on a Windows or Linux computer without installation.
+    It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+
 Alternatively, run fastqc on the command-line:
 
-`fastqc *.fastq.gz`
+`fastqc *.fastq`
 
 If the quality appears to be good, it's because it was probably the cleaned reads that were deposited into SRA.
 We can directly move to the classification step.
@@ -81,7 +96,7 @@ In short, kraken uses a new approach with exact k-mer matching to assign taxonom
 approaches (i.e. BLAST).
 
 By default, the authors of kraken built their database based on RefSeq Bacteria, Archaea and Viruses. We'll use it for the purpose of this tutorial.
-We will download a shrinked database (minikraken) provided by Kraken developers that is only 4GB.
+We will download a shrunk database (minikraken) provided by Kraken developers that is only 4GB.
 
 ```bash
 # First we create a databases directory in our home
@@ -98,15 +113,15 @@ cd
 Now run kraken on the reads
 
 ```bash
-# In the data/wms directory
-cd wms/data/wms
-for i in *_1.fastq.gz
+# In the data/ directory
+cd wms/data/sub_100000
+for i in *_1.fastq
 do
-    prefix=$(basename $i _1.fastq.gz)
+    prefix=$(basename $i _1.fastq)
     # print which sample is being processed
     echo $prefix
-    kraken --db $KRAKEN_DB --threads 2 --fastq-input --gzip-compressed \
-        ${prefix}_1.fastq.gz ${prefix}_2.fastq.gz > /home/student/wms/results/${prefix}.tab
+    kraken --db $KRAKEN_DB --threads 2 --fastq-input \
+        ${prefix}_1.fastq ${prefix}_2.fastq > /home/student/wms/results/${prefix}.tab
     kraken-report --db $KRAKEN_DB \
         /home/student/wms/results/${prefix}.tab > /home/student/wms/results/${prefix}_tax.txt
 done
@@ -127,7 +142,7 @@ First, go in Rstudio server by typing the address to your server in your browser
 where you replace `MY_IP_ADDRESS` by the IP address of your Virtual Machine.
 
 !!! note
-    To access Rstudio server on the virtual machine, you'll need a password
+    To access Rstudio server on the virtual machine, you'll need a password.
     Ask your instructor for the password!
 
 !!! note
@@ -144,3 +159,5 @@ if (!require(remotes)) { install.packages("remotes") }
 remotes::install_github("fbreitwieser/pavian")
 pavian::runApp(port=5000)
 ```
+
+Then you will explore and compare the results produced by Kraken.

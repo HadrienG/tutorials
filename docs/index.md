@@ -31,6 +31,7 @@ In no particular order, the follwing people have contributed to these tutorials:
 
 * [Hadrien Gourlé](https://github.com/HadrienG)
 * [Oskar Karlsson-Lindsjö](https://github.com/Ackia)
+* [Juliette Hayer](https://github.com/jhayer)
 
 ## License
 

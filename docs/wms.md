@@ -45,9 +45,9 @@ All the exercise will be performed on your VM in the cloud.
 !!! note
     When you login with the ssh command, please add the option -X at the end of it to be able to use graphical interface
 
-```
-mkdir wms
-cd wms
+```bash
+mkdir ~/wms
+cd ~/wms
 mkdir data
 mkdir results
 mkdir scripts
@@ -58,15 +58,16 @@ mkdir scripts
 As the data were very big, we have prepared performed a downsampling on all 6 datasets (3 pigs and 3 humans).
 We will first download and unpack the data.
 
-```
-cd data
+```bash
+cd ~/wms/data
 curl -O -J -L https://osf.io/h9x6e/download
 tar xvf subset_wms.tar.gz
 cd sub_100000
 ```
 
 We'll use FastQC to check the quality of our data.
-FastQC should be already installed on your VM, so you just need to type:
+FastQC should be already installed on your VM, so you need to type
+
 ```
 fastqc
 ```
@@ -82,7 +83,9 @@ present? Overrepresented sequences?
 
 Alternatively, run fastqc on the command-line:
 
-`fastqc *.fastq`
+```bash
+fastqc *.fastq
+```
 
 If the quality appears to be good, it's because it was probably the cleaned reads that were deposited into SRA.
 We can directly move to the classification step.
@@ -114,7 +117,7 @@ Now run kraken on the reads
 
 ```bash
 # In the data/ directory
-cd wms/data/sub_100000
+cd ~/wms/data/sub_100000
 for i in *_1.fastq
 do
     prefix=$(basename $i _1.fastq)

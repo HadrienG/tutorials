@@ -34,30 +34,58 @@ The choice of shotgun or 16S approaches is usually dictated by the nature of the
 
 * [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 * [Kraken](https://ccb.jhu.edu/software/kraken/)
-* [Bracken](https://ccb.jhu.edu/software/bracken/)
 * [R](https://www.r-project.org/)
 * [Pavian](https://github.com/fbreitwieser/pavian)
 
+### Prepare and organise your working directory
+
+You will first login to your virtual machine using the IP provided by the teachers.
+All the exercise will be performed on your VM in the cloud.
+
+!!! note
+    When you login with the ssh command, please add the option -X at the end of it to be able to use graphical interface
+
+```bash
+mkdir ~/wms
+cd ~/wms
+mkdir data
+mkdir results
+mkdir scripts
+```
+
 ### Getting the Data and Checking their Quality
 
-If you are reading this tutorial online and haven't cloned the directory, first download and unpack the data:
+As the data were very big, we have prepared performed a downsampling on all 6 datasets (3 pigs and 3 humans).
+We will first download and unpack the data.
+
+```bash
+cd ~/wms/data
+curl -O -J -L https://osf.io/h9x6e/download
+tar xvf subset_wms.tar.gz
+cd sub_100000
+```
+
+We'll use FastQC to check the quality of our data.
+FastQC should be already installed on your VM, so you need to type
 
 ```
-wget http://77.235.253.14/metlab/wms.tar
-tar xvf wms.tar
-cd wms
+fastqc
 ```
 
-We'll use FastQC to check the quality of our data. FastQC can be downloaded and
-run on a Windows or Linux computer without installation. It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-
-Start FastQC and select the fastq file you just downloaded with `file -> open`  
+When FastQC has started you can select the fastq file you just downloaded with `file -> open`  
 What do you think about the quality of the reads? Do they need trimming? Are there still adapters
 present? Overrepresented sequences?
 
+
+!!! note
+    FastQC can be downloaded and run on a Windows or Linux computer without installation.
+    It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+
 Alternatively, run fastqc on the command-line:
 
-`fastqc *.fastq.gz`
+```bash
+fastqc *.fastq
+```
 
 If the quality appears to be good, it's because it was probably the cleaned reads that were deposited into SRA.
 We can directly move to the classification step.
@@ -70,30 +98,35 @@ Kraken aims to achieve high sensitivity and high speed by utilizing exact alignm
 In short, kraken uses a new approach with exact k-mer matching to assign taxonomy to short reads. It is *extremely* fast compared to traditional
 approaches (i.e. BLAST).
 
-By default, the authors of kraken built their database based on RefSeq Bacteria, Archea and Viruses. We'll use it for the purpose of this tutorial.
-
-**NOTE: The database may have been installed already! Ask your instructor!**
+By default, the authors of kraken built their database based on RefSeq Bacteria, Archaea and Viruses. We'll use it for the purpose of this tutorial.
+We will download a shrunk database (minikraken) provided by Kraken developers that is only 4GB.
 
 ```bash
-# You might not need this step (for example if you're working on Uppmax!)
-wget https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz
-tar xzf minikraken.tgz
-$KRAKEN_DB=minikraken_20141208
+# First we create a databases directory in our home
+cd /mnt
+sudo mkdir databases
+cd databases
+# Then we download the minikraken database
+sudo wget https://ccb.jhu.edu/software/kraken/dl/minikraken_20171019_4GB.tgz
+sudo tar xzf minikraken_20171019_4GB.tgz
+KRAKEN_DB=/mnt/databases/minikraken_20171013_4GB
+cd
 ```
 
 Now run kraken on the reads
 
 ```bash
-mkdir kraken_results
-for i in *_1.fastq.gz
+# In the data/ directory
+cd ~/wms/data/sub_100000
+for i in *_1.fastq
 do
-    prefix=$(basename $i _1.fastq.gz)
-    # set number of threads to number of cores if running under SLURM, otherwise use 2 threads
-    nthreads=${SLURM_NPROCS:=2}
-    kraken --db $KRAKEN_DB --threads ${nthreads} --fastq-input --gzip-compressed \
-        ${prefix}_1.fastq.gz ${prefix}_2.fastq.gz > kraken_results/${prefix}.tab
+    prefix=$(basename $i _1.fastq)
+    # print which sample is being processed
+    echo $prefix
+    kraken --db $KRAKEN_DB --threads 2 --fastq-input \
+        ${prefix}_1.fastq ${prefix}_2.fastq > /home/student/wms/results/${prefix}.tab
     kraken-report --db $KRAKEN_DB \
-        kraken_results/${prefix}.tab > kraken_results/${prefix}_tax.txt
+        /home/student/wms/results/${prefix}.tab > /home/student/wms/results/${prefix}_tax.txt
 done
 ```
 
@@ -101,79 +134,33 @@ which produces a tab-delimited file with an assigned TaxID for each read.
 
 Kraken includes a script called `kraken-report` to transform this file into a "tree" view with the percentage of reads assigned to each taxa. We've run this script at each step in the loop. Take a look at the `_tax.txt` files!
 
-### Abundance estimation using Bracken
-
-Bracken (Bayesian Reestimation of Abundance with KrakEN) is a highly accurate statistical method that computes the abundance of species in DNA sequences from a metagenomics sample
-
-Before starting, you need to install Bracken:
-
-```bash
-cd
-git clone https://github.com/jenniferlu717/Bracken.git
-chmod 755 Bracken/*.py
-chmod 755 Bracken/*.pl
-export PATH=$PATH:$HOME/Bracken
-```
-
-Unfortunately, Uppmax lacks some perl packages necessary for Bracken to work:
-
-Follow the tutorial [here](http://www.uppmax.uu.se/support/faq/software-faq/installing-local-perl-packages/) to install `cpanm`
-
-then install the two perl libraries that are missing:
-
-```bash
-cpanm Parallel::ForkManager
-cpanm List::MoreUtils
-```
-
-Three steps are necessary to set up Kraken abundance estimation.
-
-1. Classify all reads using Kraken and Generate a Kraken report file. We've done this!
-
-2. Search all library input sequences against the database and compute the classifications for each perfect read of ${READ_LENGTH} base pairs from one of the input sequences.
-
-
-```bash
-find -L $KRAKEN_DB/library -name "*.fna" -o -name "*.fa" -o -name "*.fasta" > genomes.list
-cat $(grep -v '^#' genomes.list) > genomes.fasta
-kraken --db=${KRAKEN_DB} --fasta-input --threads=${SLURM_NPROCS:=10} kraken.fasta > database.kraken
-count-kmer-abundances.pl --db=${KRAKEN_DB} --read-length=100 database.kraken > database100mers.kraken_cnts
-```
-
-3. Generate the kmer distribution file
-
-```bash
-python generate_kmer_distribution.py -i database100mers.kraken_cnts -o KMER_DISTR.TXT
-```
-
-Now, given the expected kmer distribution for genomes in a kraken database along
-with a kraken report file, the number of reads belonging to each species (or
-genus) is estimated using the estimate_abundance.py file, run with the
-following command line:
-
-`python estimate_abundance.py -i KRAKEN.REPORT -k KMER_DISTR.TXT -o OUTPUT_FILE.TXT`
-
-Run this command for the six `_tax.txt` files that you generated with kraken!
-
-The following required parameters must be specified:
-- KRAKEN.REPORT     :: the kraken report generated for a given dataset
-- KMER_DISTR.TXT    :: the file generated by generate_kmer_distribution.py
-- OUTPUT_FILE.TXT   :: the desired name of the output file to be generated by the code
-
-### Visualization
-
-#### Alternative 1: Pavian
+### Visualization with Pavian
 
 Pavian is a web application for exploring metagenomics classification results.
 
+First, go in Rstudio server by typing the address to your server in your browser:
+
+`http://MY_IP_ADDRESS:8787/`
+
+where you replace `MY_IP_ADDRESS` by the IP address of your Virtual Machine.
+
+!!! note
+    To access Rstudio server on the virtual machine, you'll need a password.
+    Ask your instructor for the password!
+
+!!! note
+    If you wish, you may work on Rstudio on your own laptop if it is powerful enough.
+    You will need an up-to-date version of R, and can install the necessary packages using [this script](https://osf.io/a7kqz/download)
+
+
 Install and run Pavian:
 
-(In R or Rstudio)
 
 ```R
-## Installs required packages from CRAN and Bioconductor
-source("https://raw.githubusercontent.com/fbreitwieser/pavian/master/inst/shinyapp/install-pavian.R")
+options(repos = c(CRAN = "http://cran.rstudio.com"))
+if (!require(remotes)) { install.packages("remotes") }
+remotes::install_github("fbreitwieser/pavian")
 pavian::runApp(port=5000)
 ```
 
-Pavian will be available at http://127.0.0.1:5000
+Then you will explore and compare the results produced by Kraken.

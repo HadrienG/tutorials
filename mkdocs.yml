@@ -36,3 +36,5 @@ pages:
     - Metagenome assembly: meta_assembly.md
     - RNA-Seq: rna.md
     - Introduction to Nanopore Sequencing: nanopore.md
+    - Programming:
+        - Structuring a python project: python.md

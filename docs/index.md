@@ -6,7 +6,7 @@ This website is a collection of Bioinformatics tutorials that I've accumulated o
 
 Feel free to follow them online, or to use and modify them for your own teaching.
 
-## Table of contents
+## Available lessons
 
 * [Home](index.md)
 * [The command-line](command_line.md)

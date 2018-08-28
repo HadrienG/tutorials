@@ -1,20 +1,6 @@
 language: python
 python:
     - "3.6"
-env:
-    global:
-        -secure: TSyR/fkadSy/Uk7/5lwThajgshNpSXKS/CxxoTa4c6PFrvMulO7VqZTidQQ2E4C5Y2AKPhDbZ8tU62agHhkWmLSdi7LoCUi2i8K0egVwM1A//0ejWaPH7lVkLzBD/9gesJJTtZcffInMgchYMxGNpgWB6LIH8lc9QejiYIihzKYjvYD8A6GAMVk12H6mafnr9qZ77cYAGg8fHJwXwtBYUp86+pNhLwI4S2T7biT2v244DMVBM/Kj+Ld3oeOdoE6PJmD4doEqbY/qGJDvpm8WOc0DQdR6S9SnIJLTEeNTgBQmuSRT37OoYe0OfK2lmcWlZ06uZsCE0yheXj1OmplKRkHRTN6n0dt1KYaIwdXJRfNkg0Oll7ZA495DvdVw6xognWgAI45ZNx6C5IjfX3M7A/C0PuRC9ISkuLX/ujfEMY9KaOJQ0/BUcTgtE88UN9PL8la8PETV+/BOUp8SZV2KDKxWb54spg7O6nKVSnwCFnA8Lsd8kSxXrWaeBFEjw2AhzKRBVfo9GUTwmYK1TSVskfbKWW04ZrVhcnfMmVUWbRPkBYHxWVEWLT3ajfuUU/U/kO2sX+J63UMehnrQDxikUHKAZyF+0h7wDTJzijdjE3TehSm2NOZUrU7UVX6xi2WIeWqmtt9n50C/o4xbpq32bZyr378vTHzwZL2u2XS2xjQ=
-    file_glob: true
-    file:
-        - samtools*.tar.gz
-        - megahit*.tar.gz
-    skip_cleanup: true
-    on:
-        repo: SGBC/metlab_tools
-        tags: true
-notifications:
-    email: false
-
 install:
     - pip install pipenv
     - pipenv install --dev
@@ -24,7 +10,8 @@ deploy:
     provider: pages
     skip-cleanup: true
     keep-history: true
-    github-token: $api_key
+    github-token:
+        -secure: TSyR/fkadSy/Uk7/5lwThajgshNpSXKS/CxxoTa4c6PFrvMulO7VqZTidQQ2E4C5Y2AKPhDbZ8tU62agHhkWmLSdi7LoCUi2i8K0egVwM1A//0ejWaPH7lVkLzBD/9gesJJTtZcffInMgchYMxGNpgWB6LIH8lc9QejiYIihzKYjvYD8A6GAMVk12H6mafnr9qZ77cYAGg8fHJwXwtBYUp86+pNhLwI4S2T7biT2v244DMVBM/Kj+Ld3oeOdoE6PJmD4doEqbY/qGJDvpm8WOc0DQdR6S9SnIJLTEeNTgBQmuSRT37OoYe0OfK2lmcWlZ06uZsCE0yheXj1OmplKRkHRTN6n0dt1KYaIwdXJRfNkg0Oll7ZA495DvdVw6xognWgAI45ZNx6C5IjfX3M7A/C0PuRC9ISkuLX/ujfEMY9KaOJQ0/BUcTgtE88UN9PL8la8PETV+/BOUp8SZV2KDKxWb54spg7O6nKVSnwCFnA8Lsd8kSxXrWaeBFEjw2AhzKRBVfo9GUTwmYK1TSVskfbKWW04ZrVhcnfMmVUWbRPkBYHxWVEWLT3ajfuUU/U/kO2sX+J63UMehnrQDxikUHKAZyF+0h7wDTJzijdjE3TehSm2NOZUrU7UVX6xi2WIeWqmtt9n50C/o4xbpq32bZyr378vTHzwZL2u2XS2xjQ=
     on:
         branch: master
 notifications:

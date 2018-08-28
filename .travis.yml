@@ -2,15 +2,16 @@ language: python
 python:
     - "3.6"
 before_install:
-    openssl aes-256-cbc -K $encrypted_ee7c0283e3d9_key -iv $encrypted_ee7c0283e3d9_iv -in github_deploy_key.enc -out .ssh/github_deploy_key -d
+    - declare -r SSH_FILE="$(mktemp -u $HOME/.ssh/ee7c0283e3d9)"
+    - openssl aes-256-cbc -K $encrypted_ee7c0283e3d9_key -iv $encrypted_ee7c0283e3d9_iv -in github_deploy_key.enc -out .ssh/github_deploy_key -d
 install:
     - pip install pipenv
     - pipenv install --dev
 script:
-    pipenv build
+    pipenv run build
 deploy:
     provider: pages
     skip-cleanup: true
     keep-history: true
-        on:
-            branch: master
+    on:
+        branch: master

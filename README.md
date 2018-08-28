@@ -5,31 +5,18 @@ bioinformatics subjects:
 
 ## Dev
 
-First install mkdocs in a virtual environment
-
-```bash
-virtualenv mkdocs_env
-source mkdocs_env/bin/activate
-pip install mkdocs
-```
-
-then the theme
-
-```bash
-pip install mkdocs-material
-```
-
-Then clone the directory
+First clone the repository and install mkdocs and the theme using pipenv
 
 ```bash
 git clone https://github.com/HadrienG/tutorials.git
 cd tutorials
+pipenv install
 ```
 
 For a live preview in your browser do
 
 ```bash
-mkdocs serve &
+pipenv run dev
 ```
 
 ## Deploy
@@ -39,5 +26,5 @@ Only do this if you want your own version of the website! If you are modifying
 the original, please open a pull request.
 
 ```bash
-mkdocs gh-deploy
+pipenv run deploy
 ```

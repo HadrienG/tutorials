@@ -24,15 +24,22 @@ markdown_extensions:
 # page tree
 pages:
     - Home: index.md
-    - The command-line: command_line.md
-    - File Formats: file_formats.md
-    - Quality Control and Trimming: qc.md
-    - Mapping and Variant Calling: mapping.md
-    - De-novo Genome Assembly: assembly.md
-    - Genome Annotation: annotation.md
-    - Pan-Genome Analysis: pan_genome.md
-    - Metabarcoding: 16S.md
-    - Whole Metagenome Sequencing: wms.md
-    - Metagenome assembly: meta_assembly.md
-    - RNA-Seq: rna.md
-    - Introduction to Nanopore Sequencing: nanopore.md
+    - Individual lessons:
+        - The command-line: command_line.md
+        - File Formats: file_formats.md
+        - Quality Control and Trimming: qc.md
+        - Mapping and Variant Calling: mapping.md
+        - De-novo Genome Assembly: assembly.md
+        - Genome Annotation: annotation.md
+        - Pan-Genome Analysis: pan_genome.md
+        - Metabarcoding: 16S.md
+        - Whole Metagenome Sequencing: wms.md
+        - Metagenome assembly: meta_assembly.md
+        - RNA-Seq: rna.md
+        - Introduction to Nanopore Sequencing: nanopore.md
+    - Microbiome week:
+        - The command-line: command_line.md
+        - Quality Control and Trimming: qc.md
+        - Metabarcoding: 16S.md
+        - Whole Metagenome Sequencing: wms.md
+        - Metagenome assembly: meta_assembly.md

@@ -1,5 +1,9 @@
 # The command-line
 
+!!! warning
+    This lesson has been deprecated. Please refer to <http://swcarpentry.github.io/shell-novice/> for a better, up-to-date lesson
+
+
 This tutorial is largely inspired of the [Introduction to UNIX](ftp://ftp.sanger.ac.uk/pub/project/pathogens/jm15/unix.pdf) course from the Sanger Institute.
 
 The aim of this module is to introduce Unix and cover some of the basics that will allow you to be more comfortable with the command-line. Several of the programs that you are going to use during this course are useful for bioinformatics analyses. This module is only designed to provide a very brief introduction to some of the features and useful commands of Unix. During this module we will also obtain a genome sequence and examine the basic structure of an EMBL entry.

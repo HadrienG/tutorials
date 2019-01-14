@@ -7,11 +7,6 @@ name = "pypi"
 mkdocs = "*"
 mkdocs-material = "*"
 
-[dev-packages]
-
-[requires]
-python_version = "3.7"
-
 [scripts]
 dev = "mkdocs serve"
 deploy = "mkdocs gh-deploy"

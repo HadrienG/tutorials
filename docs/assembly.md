@@ -2,15 +2,15 @@
 
 ## Lecture
 
-<iframe src='https://onedrive.live.com/embed?cid=2326C09709B01D03&resid=2326C09709B01D03%214404&authkey=AEb3xrVzZ9dfYag&em=2&wdAr=1.7777777777777777' width='610px' height='367px' frameborder='0'></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRKVI_pHGubDWeRPaAO7c9g55DzHMO5Lgd7g7AZXvjB77wAAb-wED82lXgV5P7GPF02k-21YMx8ObaX/embed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 ## Practical
 
-In this practical we will perform the assembly of *M. genitalium*, a bacterium published in 1995 by Fraser et al in Science ([abstract link](https://www.ncbi.nlm.nih.gov/pubmed/7569993)).
+In this practical we will perform the assembly of _M. genitalium_, a bacterium published in 1995 by Fraser et al in Science ([abstract link](https://www.ncbi.nlm.nih.gov/pubmed/7569993)).
 
 ## Getting the data
 
-*M. genitalium* was sequenced using the MiSeq platform (2 * 150bp).
+_M. genitalium_ was sequenced using the MiSeq platform (2 \* 150bp).
 The reads were deposited in the ENA Short Read Archive under the accession [ERR486840](https://www.ebi.ac.uk/ena/data/view/ERR486840)
 
 Download the 2 fastq files associated with the run.
@@ -23,7 +23,7 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR486/ERR486840/ERR486840_2.fastq.gz
 The files that were deposited in ENA were already trimmed, so we do not have to trim ourselves!
 
 !!! question
-    How many reads are in the files?
+How many reads are in the files?
 
 ## De-novo assembly
 
@@ -71,27 +71,27 @@ You should see something like
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
 Assembly                    m_genitalium
-# contigs (>= 0 bp)         17          
-# contigs (>= 1000 bp)      8           
-# contigs (>= 5000 bp)      7           
-# contigs (>= 10000 bp)     6           
-# contigs (>= 25000 bp)     5           
-# contigs (>= 50000 bp)     2           
-Total length (>= 0 bp)      584267      
-Total length (>= 1000 bp)   580160      
-Total length (>= 5000 bp)   577000      
-Total length (>= 10000 bp)  570240      
-Total length (>= 25000 bp)  554043      
-Total length (>= 50000 bp)  446481      
-# contigs                   11          
-Largest contig              368542      
-Total length                582257      
-GC (%)                      31.71       
-N50                         368542      
-N75                         77939       
-L50                         1           
-L75                         2           
-# N's per 100 kbp           0.00    
+# contigs (>= 0 bp)         17
+# contigs (>= 1000 bp)      8
+# contigs (>= 5000 bp)      7
+# contigs (>= 10000 bp)     6
+# contigs (>= 25000 bp)     5
+# contigs (>= 50000 bp)     2
+Total length (>= 0 bp)      584267
+Total length (>= 1000 bp)   580160
+Total length (>= 5000 bp)   577000
+Total length (>= 10000 bp)  570240
+Total length (>= 25000 bp)  554043
+Total length (>= 50000 bp)  446481
+# contigs                   11
+Largest contig              368542
+Total length                582257
+GC (%)                      31.71
+N50                         368542
+N75                         77939
+L50                         1
+L75                         2
+# N's per 100 kbp           0.00
 ```
 
 which is a summary stats about our assembly.
@@ -99,30 +99,30 @@ Additionally, the file `m_genitalium_report/report.html`
 
 You can either download it and open it in your own web browser, or we make it available for your convenience:
 
-* [m_genitalium_report/report.html](data/fastqc/report.html)
+- [m_genitalium_report/report.html](data/fastqc/report.html)
 
 !!! note
-    N50: length for which the collection of all contigs of that length or longer covers at least 50% of assembly length
+N50: length for which the collection of all contigs of that length or longer covers at least 50% of assembly length
 
 !!! question
-    How well does the assembly total consensus size and coverage correspond to your earlier estimation?
+How well does the assembly total consensus size and coverage correspond to your earlier estimation?
 
 !!! question
-    How many contigs in total did the assembly produce?
+How many contigs in total did the assembly produce?
 
 !!! question
-    What is the N50 of the assembly? What does this mean?
+What is the N50 of the assembly? What does this mean?
 
 ## Fixing misassemblies
 
 Pilon is a software tool which can be used to automatically improve draft assemblies.
 It attempts to make improvements to the input genome, including:
 
-* Single base differences
-* Small Indels
-* Larger Indels or block substitution events
-* Gap filling
-* Identification of local misassemblies, including optional opening of new gaps
+- Single base differences
+- Small Indels
+- Larger Indels or block substitution events
+- Gap filling
+- Identification of local misassemblies, including optional opening of new gaps
 
 Pilon then outputs a FASTA file containing an improved representation of the genome from the read data and an optional VCF file detailing variation seen between the read data and the input genome.
 
@@ -164,11 +164,10 @@ BUSCO.py -i m_genitalium.fasta -l bacteria_odb9 -o busco_genitalium -m genome
 ```
 
 !!! question
-    How many marker genes has `busco` found?
+How many marker genes has `busco` found?
 
-
-### Course literature
-
+## Course literature
 
 Course litteraturer for today is:
-<iframe src="https://onedrive.live.com/embed?cid=2326C09709B01D03&resid=2326C09709B01D03%214408&authkey=AEaLmwF-LQqgjMc&em=2" width="476" height="288" frameborder="0" scrolling="no"></iframe>
+
+- Next-Generation Sequence Assembly: Four Stages of Data Processing and Computational Challenges: <https://doi.org/10.1371/journal.pcbi.1003345>

@@ -2,7 +2,9 @@
 
 ## Lecture
 
-<iframe src='https://onedrive.live.com/embed?cid=2326C09709B01D03&resid=2326C09709B01D03%214400&authkey=ANPbEbk0W1h20vk&em=2&wdAr=1.7777777777777777' width='610px' height='367px' frameborder='0'></iframe>
+<br>
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR7ZN5Gc-3q5DR8CWQgyHhjUIc-6uKJnB48lDVMB7tWrt4gpZFipbJRVWfaqdxSw9n_WnMfXoFMZXds/embed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 ## Practical
 
@@ -73,7 +75,6 @@ chmod u-w *
 
 ## Working Directory
 
-
 First we make a work directory: a directory where we can play around with a copy of the data without messing with the original
 
 ```bash
@@ -94,15 +95,15 @@ zless SRR957824_500K_R1.fastq.gz
 ```
 
 !!! tip
-    Use the spacebar to scroll down, and type ‘q’ to exit ‘less’
+Use the spacebar to scroll down, and type ‘q’ to exit ‘less’
 
 You can read more on the FASTQ format in the [File Formats](file_formats.md) lesson.
 
 !!! question
-    Where does the filename come from?
+Where does the filename come from?
 
 !!! question
-    Why are there 1 and 2 in the file names?    
+Why are there 1 and 2 in the file names?
 
 ## FastQC
 
@@ -130,14 +131,14 @@ Download and open the html files with your favourite web browser.
 
 Alternatively you can look a these copies of them:
 
-* [SRR957824_500K_R1_fastqc.html](data/fastqc/SRR957824_500K_R1_fastqc.html)
-* [SRR957824_500K_R2_fastqc.html](data/fastqc/SRR957824_500K_R2_fastqc.html)
+- [SRR957824_500K_R1_fastqc.html](data/fastqc/SRR957824_500K_R1_fastqc.html)
+- [SRR957824_500K_R2_fastqc.html](data/fastqc/SRR957824_500K_R2_fastqc.html)
 
 !!! question
-    What should you pay attention to in the FastQC report?
+What should you pay attention to in the FastQC report?
 
 !!! question
-    Which file is of better quality?
+Which file is of better quality?
 
 Pay special attention to the per base sequence quality and sequence length distribution.
 Explanations for the various quality modules can be found [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/).
@@ -166,7 +167,7 @@ scythe -a adapters.fasta -o SRR957824_adapt_R2.fastq SRR957824_500K_R2.fastq.gz
 ```
 
 !!! question
-    What adapters do you use?
+What adapters do you use?
 
 ## Sickle
 
@@ -209,9 +210,8 @@ fastqc SRR957824_trimmed_R1.fastq SRR957824_trimmed_R2.fastq
 
 and look at the reports
 
-* [SRR957824_trimmed_R1_fastqc.html](data/fastqc/SRR957824_trimmed_R1_fastqc.html)
-* [SRR957824_trimmed_R2_fastqc.html](data/fastqc/SRR957824_trimmed_R2_fastqc.html)
-
+- [SRR957824_trimmed_R1_fastqc.html](data/fastqc/SRR957824_trimmed_R1_fastqc.html)
+- [SRR957824_trimmed_R2_fastqc.html](data/fastqc/SRR957824_trimmed_R2_fastqc.html)
 
 ## MultiQC
 
@@ -225,8 +225,7 @@ multiqc .
 
 You can download the report or view it by clickinh on the link below
 
-* [multiqc_report.html](data/fastqc/multiqc_report.html)
-
+- [multiqc_report.html](data/fastqc/multiqc_report.html)
 
 !!! question
-    What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution?
+What did the trimming do to the per-base sequence quality, the per sequence quality scores and the sequence length distribution?

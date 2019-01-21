@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.2, mkdocs-material-3.0.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
     
     
       
@@ -40,7 +40,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.572ca0f0.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
       
@@ -51,16 +51,17 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
     
     
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
     
     
   </head>
@@ -98,7 +99,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#metabarcoding" tabindex="1" class="md-skip">
+      <a href="#metabarcoding" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -885,22 +886,22 @@ It uses the data of the now famous <a href="http://www.mothur.org/wiki/MiSeq_SOP
 </ul>
 <h2 id="install-and-load-packages">Install and Load Packages<a class="headerlink" href="#install-and-load-packages" title="Permanent link">&para;</a></h2>
 <p>First install DADA2 and other necessary packages</p>
-<div class="codehilite"><pre><span></span><span class="kn">source</span><span class="p">(</span><span class="s">&#39;https://bioconductor.org/biocLite.R&#39;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&#39;dada2&#39;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&#39;phyloseq&#39;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&#39;DECIPHER&#39;</span><span class="p">)</span>
-install.packages<span class="p">(</span><span class="s">&#39;ggplot2&#39;</span><span class="p">)</span>
-install.packages<span class="p">(</span><span class="s">&#39;phangorn&#39;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">source</span><span class="p">(</span><span class="s">&#39;https://bioconductor.org/biocLite.R&#39;</span><span class="p">)</span>
+<span class="nf">biocLite</span><span class="p">(</span><span class="s">&#39;dada2&#39;</span><span class="p">)</span>
+<span class="nf">biocLite</span><span class="p">(</span><span class="s">&#39;phyloseq&#39;</span><span class="p">)</span>
+<span class="nf">biocLite</span><span class="p">(</span><span class="s">&#39;DECIPHER&#39;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&#39;ggplot2&#39;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&#39;phangorn&#39;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Now load the packages and verify you have the correct DADA2 version</p>
-<div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>dada2<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>phyloseq<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>phangorn<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>DECIPHER<span class="p">)</span>
-packageVersion<span class="p">(</span><span class="s">&#39;dada2&#39;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dada2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">phyloseq</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">phangorn</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">DECIPHER</span><span class="p">)</span>
+<span class="nf">packageVersion</span><span class="p">(</span><span class="s">&#39;dada2&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -922,29 +923,29 @@ wget https://zenodo.org/record/824551/files/silva_species_assignment_v128.fa.gz
 
 
 <p>Back in R, check that you have downloaded the data</p>
-<div class="codehilite"><pre><span></span>path <span class="o">&lt;-</span> <span class="s">&#39;MiSeq_SOP&#39;</span>
-<span class="kp">list.files</span><span class="p">(</span>path<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">path</span> <span class="o">&lt;-</span> <span class="s">&#39;MiSeq_SOP&#39;</span>
+<span class="nf">list.files</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="filtering-and-trimming">Filtering and Trimming<a class="headerlink" href="#filtering-and-trimming" title="Permanent link">&para;</a></h2>
 <p>First we create two lists with the sorted name of the reads: one for the forward reads, one for the reverse reads</p>
-<div class="codehilite"><pre><span></span>raw_forward <span class="o">&lt;-</span> <span class="kp">sort</span><span class="p">(</span><span class="kp">list.files</span><span class="p">(</span>path<span class="p">,</span> pattern<span class="o">=</span><span class="s">&quot;_R1_001.fastq&quot;</span><span class="p">,</span>
-                               full.names<span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<div class="codehilite"><pre><span></span><span class="n">raw_forward</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="nf">list.files</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s">&quot;_R1_001.fastq&quot;</span><span class="p">,</span>
+                               <span class="n">full.names</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 
-raw_reverse <span class="o">&lt;-</span> <span class="kp">sort</span><span class="p">(</span><span class="kp">list.files</span><span class="p">(</span>path<span class="p">,</span> pattern<span class="o">=</span><span class="s">&quot;_R2_001.fastq&quot;</span><span class="p">,</span>
-                               full.names<span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="n">raw_reverse</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="nf">list.files</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s">&quot;_R2_001.fastq&quot;</span><span class="p">,</span>
+                               <span class="n">full.names</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 
 <span class="c1"># we also need the sample names</span>
-sample_names <span class="o">&lt;-</span> <span class="kp">sapply</span><span class="p">(</span><span class="kp">strsplit</span><span class="p">(</span><span class="kp">basename</span><span class="p">(</span>raw_forward<span class="p">),</span> <span class="s">&quot;_&quot;</span><span class="p">),</span>
-                       <span class="sb">`[`</span><span class="p">,</span>  <span class="c1"># extracts the first element of a subset</span>
+<span class="n">sample_names</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="nf">strsplit</span><span class="p">(</span><span class="nf">basename</span><span class="p">(</span><span class="n">raw_forward</span><span class="p">),</span> <span class="s">&quot;_&quot;</span><span class="p">),</span>
+                       <span class="n">`[`</span><span class="p">,</span>  <span class="c1"># extracts the first element of a subset</span>
                        <span class="m">1</span><span class="p">)</span>
 </pre></div>
 
 
 <p>then we visualise the quality of our reads</p>
-<div class="codehilite"><pre><span></span>plotQualityProfile<span class="p">(</span>raw_forward<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">])</span>
-plotQualityProfile<span class="p">(</span>raw_reverse<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">])</span>
+<div class="codehilite"><pre><span></span><span class="nf">plotQualityProfile</span><span class="p">(</span><span class="n">raw_forward[1</span><span class="o">:</span><span class="m">2</span><span class="n">]</span><span class="p">)</span>
+<span class="nf">plotQualityProfile</span><span class="p">(</span><span class="n">raw_reverse[1</span><span class="o">:</span><span class="m">2</span><span class="n">]</span><span class="p">)</span>
 </pre></div>
 
 
@@ -962,37 +963,37 @@ If you wish to do it outside of DADA2, you can refer to the <a href="../qc/">Qua
 <hr />
 <p>Dada2 requires us to define the name of our output files</p>
 <div class="codehilite"><pre><span></span><span class="c1"># place filtered files in filtered/ subdirectory</span>
-filtered_path <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span>path<span class="p">,</span> <span class="s">&quot;filtered&quot;</span><span class="p">)</span>
+<span class="n">filtered_path</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;filtered&quot;</span><span class="p">)</span>
 
-filtered_forward <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span>filtered_path<span class="p">,</span>
-                              <span class="kp">paste0</span><span class="p">(</span>sample_names<span class="p">,</span> <span class="s">&quot;_R1_trimmed.fastq.gz&quot;</span><span class="p">))</span>
+<span class="n">filtered_forward</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">filtered_path</span><span class="p">,</span>
+                              <span class="nf">paste0</span><span class="p">(</span><span class="n">sample_names</span><span class="p">,</span> <span class="s">&quot;_R1_trimmed.fastq.gz&quot;</span><span class="p">))</span>
 
-filtered_reverse <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span>filtered_path<span class="p">,</span>
-                              <span class="kp">paste0</span><span class="p">(</span>sample_names<span class="p">,</span> <span class="s">&quot;_R2_trimmed.fastq.gz&quot;</span><span class="p">))</span>
+<span class="n">filtered_reverse</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">filtered_path</span><span class="p">,</span>
+                              <span class="nf">paste0</span><span class="p">(</span><span class="n">sample_names</span><span class="p">,</span> <span class="s">&quot;_R2_trimmed.fastq.gz&quot;</span><span class="p">))</span>
 </pre></div>
 
 
 <p>We’ll use standard filtering parameters: <code>maxN=0</code> (DADA22 requires no Ns), <code>truncQ=2</code>, <code>rm.phix=TRUE</code> and <code>maxEE=2</code>.
 The maxEE parameter sets the maximum number of “expected errors” allowed in a read, which <a href="http://www.drive5.com/usearch/manual/expected_errors.html">according to the USEARCH authors</a> is a better filter than simply averaging quality scores.</p>
-<div class="codehilite"><pre><span></span>out <span class="o">&lt;-</span> filterAndTrim<span class="p">(</span>raw_forward<span class="p">,</span> filtered_forward<span class="p">,</span> raw_reverse<span class="p">,</span>
-                     filtered_reverse<span class="p">,</span> truncLen<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">240</span><span class="p">,</span><span class="m">160</span><span class="p">),</span> maxN<span class="o">=</span><span class="m">0</span><span class="p">,</span>
-                     maxEE<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> truncQ<span class="o">=</span><span class="m">2</span><span class="p">,</span> rm.phix<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> compress<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
-                     multithread<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kp">head</span><span class="p">(</span>out<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">out</span> <span class="o">&lt;-</span> <span class="nf">filterAndTrim</span><span class="p">(</span><span class="n">raw_forward</span><span class="p">,</span> <span class="n">filtered_forward</span><span class="p">,</span> <span class="n">raw_reverse</span><span class="p">,</span>
+                     <span class="n">filtered_reverse</span><span class="p">,</span> <span class="n">truncLen</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">240</span><span class="p">,</span><span class="m">160</span><span class="p">),</span> <span class="n">maxN</span><span class="o">=</span><span class="m">0</span><span class="p">,</span>
+                     <span class="n">maxEE</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> <span class="n">truncQ</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">rm.phix</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
+                     <span class="n">multithread</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="learn-the-error-rates">Learn the Error Rates<a class="headerlink" href="#learn-the-error-rates" title="Permanent link">&para;</a></h2>
 <p>The DADA2 algorithm depends on a parametric error model and every amplicon dataset has a slightly different error rate.
 The <code>learnErrors</code> of Dada2 learns the error model from the data and will help DADA2 to fits its method to your data</p>
-<div class="codehilite"><pre><span></span>errors_forward <span class="o">&lt;-</span> learnErrors<span class="p">(</span>filtered_forward<span class="p">,</span> multithread<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-errors_reverse <span class="o">&lt;-</span> learnErrors<span class="p">(</span>filtered_reverse<span class="p">,</span> multithread<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">errors_forward</span> <span class="o">&lt;-</span> <span class="nf">learnErrors</span><span class="p">(</span><span class="n">filtered_forward</span><span class="p">,</span> <span class="n">multithread</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">errors_reverse</span> <span class="o">&lt;-</span> <span class="nf">learnErrors</span><span class="p">(</span><span class="n">filtered_reverse</span><span class="p">,</span> <span class="n">multithread</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 
 
 <p>then we visualise the estimated error rates</p>
-<div class="codehilite"><pre><span></span>plotErrors<span class="p">(</span>errors_forward<span class="p">,</span> nominalQ<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">+</span>
-    theme_minimal<span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="nf">plotErrors</span><span class="p">(</span><span class="n">errors_forward</span><span class="p">,</span> <span class="n">nominalQ</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span>
 </pre></div>
 
 
@@ -1006,169 +1007,169 @@ errors_reverse <span class="o">&lt;-</span> learnErrors<span class="p">(</span>f
 <p><strong>Dereplication</strong> combines all identical sequencing reads into into “unique sequences” with a corresponding “abundance”: the number of reads with that unique sequence.
 <strong>Dereplication</strong> substantially reduces computation time by eliminating redundant comparisons.</p>
 </blockquote>
-<div class="codehilite"><pre><span></span>derep_forward <span class="o">&lt;-</span> derepFastq<span class="p">(</span>filtered_forward<span class="p">,</span> verbose<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-derep_reverse <span class="o">&lt;-</span> derepFastq<span class="p">(</span>filtered_reverse<span class="p">,</span> verbose<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">derep_forward</span> <span class="o">&lt;-</span> <span class="nf">derepFastq</span><span class="p">(</span><span class="n">filtered_forward</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">derep_reverse</span> <span class="o">&lt;-</span> <span class="nf">derepFastq</span><span class="p">(</span><span class="n">filtered_reverse</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1"># name the derep-class objects by the sample names</span>
-<span class="kp">names</span><span class="p">(</span>derep_forward<span class="p">)</span> <span class="o">&lt;-</span> sample_names
-<span class="kp">names</span><span class="p">(</span>derep_reverse<span class="p">)</span> <span class="o">&lt;-</span> sample_names
+<span class="nf">names</span><span class="p">(</span><span class="n">derep_forward</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">sample_names</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">derep_reverse</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">sample_names</span>
 </pre></div>
 
 
 <h2 id="sample-inference">Sample inference<a class="headerlink" href="#sample-inference" title="Permanent link">&para;</a></h2>
 <p>We are now ready to apply the core sequence-variant inference algorithm to the dereplicated data.</p>
-<div class="codehilite"><pre><span></span>dada_forward <span class="o">&lt;-</span> dada<span class="p">(</span>derep_forward<span class="p">,</span> err<span class="o">=</span>errors_forward<span class="p">,</span> multithread<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-dada_reverse <span class="o">&lt;-</span> dada<span class="p">(</span>derep_reverse<span class="p">,</span> err<span class="o">=</span>errors_reverse<span class="p">,</span> multithread<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">dada_forward</span> <span class="o">&lt;-</span> <span class="nf">dada</span><span class="p">(</span><span class="n">derep_forward</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">errors_forward</span><span class="p">,</span> <span class="n">multithread</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">dada_reverse</span> <span class="o">&lt;-</span> <span class="nf">dada</span><span class="p">(</span><span class="n">derep_reverse</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">errors_reverse</span><span class="p">,</span> <span class="n">multithread</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 
 <span class="c1"># inspect the dada-class object</span>
-dada_forward<span class="p">[[</span><span class="m">1</span><span class="p">]]</span>
+<span class="n">dada_forward[[1]]</span>
 </pre></div>
 
 
 <p>The DADA2 algorithm inferred 128 real sequence variants from the 1979 unique sequences in the first sample.</p>
 <h2 id="merge-paired-end-reads">Merge Paired-end Reads<a class="headerlink" href="#merge-paired-end-reads" title="Permanent link">&para;</a></h2>
 <p>Now that the reads are trimmed, dereplicated and error-corrected we can merge them together</p>
-<div class="codehilite"><pre><span></span>merged_reads <span class="o">&lt;-</span> mergePairs<span class="p">(</span>dada_forward<span class="p">,</span> derep_forward<span class="p">,</span> dada_reverse<span class="p">,</span>
-                           derep_reverse<span class="p">,</span> verbose<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">merged_reads</span> <span class="o">&lt;-</span> <span class="nf">mergePairs</span><span class="p">(</span><span class="n">dada_forward</span><span class="p">,</span> <span class="n">derep_forward</span><span class="p">,</span> <span class="n">dada_reverse</span><span class="p">,</span>
+                           <span class="n">derep_reverse</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 
 <span class="c1"># inspect the merger data.frame from the first sample</span>
-<span class="kp">head</span><span class="p">(</span>merged_reads<span class="p">[[</span><span class="m">1</span><span class="p">]])</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">merged_reads[[1]]</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="construct-sequence-table">Construct Sequence Table<a class="headerlink" href="#construct-sequence-table" title="Permanent link">&para;</a></h2>
 <p>We can now construct a sequence table of our mouse samples, a higher-resolution version of the OTU table produced by traditional methods.</p>
-<div class="codehilite"><pre><span></span>seq_table <span class="o">&lt;-</span> makeSequenceTable<span class="p">(</span>merged_reads<span class="p">)</span>
-<span class="kp">dim</span><span class="p">(</span>seq_table<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">seq_table</span> <span class="o">&lt;-</span> <span class="nf">makeSequenceTable</span><span class="p">(</span><span class="n">merged_reads</span><span class="p">)</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">seq_table</span><span class="p">)</span>
 
 <span class="c1"># inspect distribution of sequence lengths</span>
-<span class="kp">table</span><span class="p">(</span><span class="kp">nchar</span><span class="p">(</span>getSequences<span class="p">(</span>seq_table<span class="p">)))</span>
+<span class="nf">table</span><span class="p">(</span><span class="nf">nchar</span><span class="p">(</span><span class="nf">getSequences</span><span class="p">(</span><span class="n">seq_table</span><span class="p">)))</span>
 </pre></div>
 
 
 <h2 id="remove-chimeras">Remove Chimeras<a class="headerlink" href="#remove-chimeras" title="Permanent link">&para;</a></h2>
 <p>The <code>dada</code> method used earlier removes substitutions and indel errors but chimeras remain.
 We remove the chimeras with</p>
-<div class="codehilite"><pre><span></span>seq_table_nochim <span class="o">&lt;-</span> removeBimeraDenovo<span class="p">(</span>seq_table<span class="p">,</span> method<span class="o">=</span><span class="s">&#39;consensus&#39;</span><span class="p">,</span>
-                                       multithread<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> verbose<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kp">dim</span><span class="p">(</span>seq_table_nochim<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">seq_table_nochim</span> <span class="o">&lt;-</span> <span class="nf">removeBimeraDenovo</span><span class="p">(</span><span class="n">seq_table</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;consensus&#39;</span><span class="p">,</span>
+                                       <span class="n">multithread</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">seq_table_nochim</span><span class="p">)</span>
 
 <span class="c1"># which percentage of our reads did we keep?</span>
-<span class="kp">sum</span><span class="p">(</span>seq_table_nochim<span class="p">)</span> <span class="o">/</span> <span class="kp">sum</span><span class="p">(</span>seq_table<span class="p">)</span>
+<span class="nf">sum</span><span class="p">(</span><span class="n">seq_table_nochim</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">seq_table</span><span class="p">)</span>
 </pre></div>
 
 
 <p>As a final check of our progress, we’ll look at the number of reads that made it through each step in the pipeline</p>
-<div class="codehilite"><pre><span></span>get_n <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="kp">sum</span><span class="p">(</span>getUniques<span class="p">(</span>x<span class="p">))</span>
+<div class="codehilite"><pre><span></span><span class="n">get_n</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nf">sum</span><span class="p">(</span><span class="nf">getUniques</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 
-track <span class="o">&lt;-</span> <span class="kp">cbind</span><span class="p">(</span>out<span class="p">,</span> <span class="kp">sapply</span><span class="p">(</span>dada_forward<span class="p">,</span> get_n<span class="p">),</span> <span class="kp">sapply</span><span class="p">(</span>merged_reads<span class="p">,</span> get_n<span class="p">),</span>
-               <span class="kp">rowSums</span><span class="p">(</span>seq_table<span class="p">),</span> <span class="kp">rowSums</span><span class="p">(</span>seq_table_nochim<span class="p">))</span>
+<span class="n">track</span> <span class="o">&lt;-</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nf">sapply</span><span class="p">(</span><span class="n">dada_forward</span><span class="p">,</span> <span class="n">get_n</span><span class="p">),</span> <span class="nf">sapply</span><span class="p">(</span><span class="n">merged_reads</span><span class="p">,</span> <span class="n">get_n</span><span class="p">),</span>
+               <span class="nf">rowSums</span><span class="p">(</span><span class="n">seq_table</span><span class="p">),</span> <span class="nf">rowSums</span><span class="p">(</span><span class="n">seq_table_nochim</span><span class="p">))</span>
 
-<span class="kp">colnames</span><span class="p">(</span>track<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span> <span class="s">&#39;filtered&#39;</span><span class="p">,</span> <span class="s">&#39;denoised&#39;</span><span class="p">,</span> <span class="s">&#39;merged&#39;</span><span class="p">,</span> <span class="s">&#39;tabled&#39;</span><span class="p">,</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">track</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span> <span class="s">&#39;filtered&#39;</span><span class="p">,</span> <span class="s">&#39;denoised&#39;</span><span class="p">,</span> <span class="s">&#39;merged&#39;</span><span class="p">,</span> <span class="s">&#39;tabled&#39;</span><span class="p">,</span>
                      <span class="s">&#39;nonchim&#39;</span><span class="p">)</span>
-<span class="kp">rownames</span><span class="p">(</span>track<span class="p">)</span> <span class="o">&lt;-</span> sample_names
-<span class="kp">head</span><span class="p">(</span>track<span class="p">)</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">track</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">sample_names</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">track</span><span class="p">)</span>
 </pre></div>
 
 
 <p>We kept the majority of our reads!</p>
 <h2 id="assign-taxonomy">Assign Taxonomy<a class="headerlink" href="#assign-taxonomy" title="Permanent link">&para;</a></h2>
 <p>Now we assign taxonomy to our sequences using the SILVA database</p>
-<div class="codehilite"><pre><span></span>taxa <span class="o">&lt;-</span> assignTaxonomy<span class="p">(</span>seq_table_nochim<span class="p">,</span>
+<div class="codehilite"><pre><span></span><span class="n">taxa</span> <span class="o">&lt;-</span> <span class="nf">assignTaxonomy</span><span class="p">(</span><span class="n">seq_table_nochim</span><span class="p">,</span>
                        <span class="s">&#39;MiSeq_SOP/silva_nr_v128_train_set.fa.gz&#39;</span><span class="p">,</span>
-                       multithread<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-taxa <span class="o">&lt;-</span> addSpecies<span class="p">(</span>taxa<span class="p">,</span> <span class="s">&#39;MiSeq_SOP/silva_species_assignment_v128.fa.gz&#39;</span><span class="p">)</span>
+                       <span class="n">multithread</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">taxa</span> <span class="o">&lt;-</span> <span class="nf">addSpecies</span><span class="p">(</span><span class="n">taxa</span><span class="p">,</span> <span class="s">&#39;MiSeq_SOP/silva_species_assignment_v128.fa.gz&#39;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>for inspecting the classification</p>
-<div class="codehilite"><pre><span></span>taxa_print <span class="o">&lt;-</span> taxa  <span class="c1"># removing sequence rownames for display only</span>
-<span class="kp">rownames</span><span class="p">(</span>taxa_print<span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
-<span class="kp">head</span><span class="p">(</span>taxa_print<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">taxa_print</span> <span class="o">&lt;-</span> <span class="n">taxa</span>  <span class="c1"># removing sequence rownames for display only</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">taxa_print</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">taxa_print</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="phylogenetic-tree">Phylogenetic Tree<a class="headerlink" href="#phylogenetic-tree" title="Permanent link">&para;</a></h2>
 <p>DADA2 is reference-free so we have to build the tree ourselves</p>
 <p>We first align our sequences</p>
-<div class="codehilite"><pre><span></span>sequences <span class="o">&lt;-</span> getSequences<span class="p">(</span>seq_table<span class="p">)</span>
-<span class="kp">names</span><span class="p">(</span>sequences<span class="p">)</span> <span class="o">&lt;-</span> sequences  <span class="c1"># this propagates to the tip labels of the tree</span>
-alignment <span class="o">&lt;-</span> AlignSeqs<span class="p">(</span>DNAStringSet<span class="p">(</span>sequences<span class="p">),</span> anchor<span class="o">=</span><span class="kc">NA</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">sequences</span> <span class="o">&lt;-</span> <span class="nf">getSequences</span><span class="p">(</span><span class="n">seq_table</span><span class="p">)</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">sequences</span>  <span class="c1"># this propagates to the tip labels of the tree</span>
+<span class="n">alignment</span> <span class="o">&lt;-</span> <span class="nf">AlignSeqs</span><span class="p">(</span><span class="nf">DNAStringSet</span><span class="p">(</span><span class="n">sequences</span><span class="p">),</span> <span class="n">anchor</span><span class="o">=</span><span class="kc">NA</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Then we build a neighbour-joining tree then fit a maximum likelihood tree using the neighbour-joining tree as a starting point</p>
-<div class="codehilite"><pre><span></span>phang_align <span class="o">&lt;-</span> phyDat<span class="p">(</span>as<span class="p">(</span>alignment<span class="p">,</span> <span class="s">&#39;matrix&#39;</span><span class="p">),</span> type<span class="o">=</span><span class="s">&#39;DNA&#39;</span><span class="p">)</span>
-dm <span class="o">&lt;-</span> dist.ml<span class="p">(</span>phang_align<span class="p">)</span>
-treeNJ <span class="o">&lt;-</span> NJ<span class="p">(</span>dm<span class="p">)</span>  <span class="c1"># note, tip order != sequence order</span>
-fit <span class="o">=</span> pml<span class="p">(</span>treeNJ<span class="p">,</span> data<span class="o">=</span>phang_align<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">phang_align</span> <span class="o">&lt;-</span> <span class="nf">phyDat</span><span class="p">(</span><span class="nf">as</span><span class="p">(</span><span class="n">alignment</span><span class="p">,</span> <span class="s">&#39;matrix&#39;</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;DNA&#39;</span><span class="p">)</span>
+<span class="n">dm</span> <span class="o">&lt;-</span> <span class="nf">dist.ml</span><span class="p">(</span><span class="n">phang_align</span><span class="p">)</span>
+<span class="n">treeNJ</span> <span class="o">&lt;-</span> <span class="nf">NJ</span><span class="p">(</span><span class="n">dm</span><span class="p">)</span>  <span class="c1"># note, tip order != sequence order</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="nf">pml</span><span class="p">(</span><span class="n">treeNJ</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">phang_align</span><span class="p">)</span>
 
 <span class="c1">## negative edges length changed to 0!</span>
 
-fitGTR <span class="o">&lt;-</span> update<span class="p">(</span>fit<span class="p">,</span> k<span class="o">=</span><span class="m">4</span><span class="p">,</span> inv<span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
-fitGTR <span class="o">&lt;-</span> optim.pml<span class="p">(</span>fitGTR<span class="p">,</span> model<span class="o">=</span><span class="s">&#39;GTR&#39;</span><span class="p">,</span> optInv<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> optGamma<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
-                    rearrangement <span class="o">=</span> <span class="s">&#39;stochastic&#39;</span><span class="p">,</span>
-                    control <span class="o">=</span> pml.control<span class="p">(</span>trace <span class="o">=</span> <span class="m">0</span><span class="p">))</span>
-<span class="kn">detach</span><span class="p">(</span><span class="s">&#39;package:phangorn&#39;</span><span class="p">,</span> unload<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">fitGTR</span> <span class="o">&lt;-</span> <span class="nf">update</span><span class="p">(</span><span class="n">fit</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="n">inv</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
+<span class="n">fitGTR</span> <span class="o">&lt;-</span> <span class="nf">optim.pml</span><span class="p">(</span><span class="n">fitGTR</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s">&#39;GTR&#39;</span><span class="p">,</span> <span class="n">optInv</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">optGamma</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
+                    <span class="n">rearrangement</span> <span class="o">=</span> <span class="s">&#39;stochastic&#39;</span><span class="p">,</span>
+                    <span class="n">control</span> <span class="o">=</span> <span class="nf">pml.control</span><span class="p">(</span><span class="n">trace</span> <span class="o">=</span> <span class="m">0</span><span class="p">))</span>
+<span class="nf">detach</span><span class="p">(</span><span class="s">&#39;package:phangorn&#39;</span><span class="p">,</span> <span class="n">unload</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="phyloseq">Phyloseq<a class="headerlink" href="#phyloseq" title="Permanent link">&para;</a></h2>
 <p>First load the metadata</p>
-<div class="codehilite"><pre><span></span>sample_data <span class="o">&lt;-</span> read.table<span class="p">(</span>
+<div class="codehilite"><pre><span></span><span class="n">sample_data</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span>
     <span class="s">&#39;https://hadrieng.github.io/tutorials/data/16S_metadata.txt&#39;</span><span class="p">,</span>
-    header<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> row.names<span class="o">=</span><span class="s">&quot;sample_name&quot;</span><span class="p">)</span>
+    <span class="n">header</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">row.names</span><span class="o">=</span><span class="s">&quot;sample_name&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>We can now construct a phyloseq object from our output and newly created metadata</p>
-<div class="codehilite"><pre><span></span>physeq <span class="o">&lt;-</span> phyloseq<span class="p">(</span>otu_table<span class="p">(</span>seq_table_nochim<span class="p">,</span> taxa_are_rows<span class="o">=</span><span class="kc">FALSE</span><span class="p">),</span>
-                   sample_data<span class="p">(</span>sample_data<span class="p">),</span>
-                   tax_table<span class="p">(</span>taxa<span class="p">),</span>
-                   phy_tree<span class="p">(</span>fitGTR<span class="o">$</span>tree<span class="p">))</span>
+<div class="codehilite"><pre><span></span><span class="n">physeq</span> <span class="o">&lt;-</span> <span class="nf">phyloseq</span><span class="p">(</span><span class="nf">otu_table</span><span class="p">(</span><span class="n">seq_table_nochim</span><span class="p">,</span> <span class="n">taxa_are_rows</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">),</span>
+                   <span class="nf">sample_data</span><span class="p">(</span><span class="n">sample_data</span><span class="p">),</span>
+                   <span class="nf">tax_table</span><span class="p">(</span><span class="n">taxa</span><span class="p">),</span>
+                   <span class="nf">phy_tree</span><span class="p">(</span><span class="n">fitGTR</span><span class="o">$</span><span class="n">tree</span><span class="p">))</span>
 <span class="c1"># remove mock sample</span>
-physeq <span class="o">&lt;-</span> prune_samples<span class="p">(</span>sample_names<span class="p">(</span>physeq<span class="p">)</span> <span class="o">!=</span> <span class="s">&#39;Mock&#39;</span><span class="p">,</span> physeq<span class="p">)</span>
-physeq
+<span class="n">physeq</span> <span class="o">&lt;-</span> <span class="nf">prune_samples</span><span class="p">(</span><span class="nf">sample_names</span><span class="p">(</span><span class="n">physeq</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#39;Mock&#39;</span><span class="p">,</span> <span class="n">physeq</span><span class="p">)</span>
+<span class="n">physeq</span>
 </pre></div>
 
 
 <p>Let's look at the alpha diversity of our samples</p>
-<div class="codehilite"><pre><span></span>plot_richness<span class="p">(</span>physeq<span class="p">,</span> x<span class="o">=</span><span class="s">&#39;day&#39;</span><span class="p">,</span> measures<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;Shannon&#39;</span><span class="p">,</span> <span class="s">&#39;Fisher&#39;</span><span class="p">),</span> color<span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">)</span> <span class="o">+</span>
-    theme_minimal<span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_richness</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&#39;day&#39;</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Shannon&#39;</span><span class="p">,</span> <span class="s">&#39;Fisher&#39;</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span>
 </pre></div>
 
 
 <p>No obvious differences. Let's look at ordination methods (beta diversity)</p>
 <p>We can perform an MDS with euclidean distance (mathematically equivalent to a PCA)</p>
-<div class="codehilite"><pre><span></span>ord <span class="o">&lt;-</span> ordinate<span class="p">(</span>physeq<span class="p">,</span> <span class="s">&#39;MDS&#39;</span><span class="p">,</span> <span class="s">&#39;euclidean&#39;</span><span class="p">)</span>
-plot_ordination<span class="p">(</span>physeq<span class="p">,</span> ord<span class="p">,</span> type<span class="o">=</span><span class="s">&#39;samples&#39;</span><span class="p">,</span> color<span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">,</span>
-                title<span class="o">=</span><span class="s">&#39;PCA of the samples from the MiSeq SOP&#39;</span><span class="p">)</span> <span class="o">+</span>
-    theme_minimal<span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="n">ord</span> <span class="o">&lt;-</span> <span class="nf">ordinate</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="s">&#39;MDS&#39;</span><span class="p">,</span> <span class="s">&#39;euclidean&#39;</span><span class="p">)</span>
+<span class="nf">plot_ordination</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="n">ord</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;samples&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s">&#39;PCA of the samples from the MiSeq SOP&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span>
 </pre></div>
 
 
 <p>now with the Bray-Curtis distance</p>
-<div class="codehilite"><pre><span></span>ord <span class="o">&lt;-</span> ordinate<span class="p">(</span>physeq<span class="p">,</span> <span class="s">&#39;NMDS&#39;</span><span class="p">,</span> <span class="s">&#39;bray&#39;</span><span class="p">)</span>
-plot_ordination<span class="p">(</span>physeq<span class="p">,</span> ord<span class="p">,</span> type<span class="o">=</span><span class="s">&#39;samples&#39;</span><span class="p">,</span> color<span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">,</span>
-                title<span class="o">=</span><span class="s">&#39;PCA of the samples from the MiSeq SOP&#39;</span><span class="p">)</span> <span class="o">+</span>
-    theme_minimal<span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="n">ord</span> <span class="o">&lt;-</span> <span class="nf">ordinate</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="s">&#39;NMDS&#39;</span><span class="p">,</span> <span class="s">&#39;bray&#39;</span><span class="p">)</span>
+<span class="nf">plot_ordination</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="n">ord</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;samples&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s">&#39;PCA of the samples from the MiSeq SOP&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span>
 </pre></div>
 
 
 <p>There we can see a clear difference between our samples.</p>
 <p>Let us take a look a the distribution of the most abundant families</p>
-<div class="codehilite"><pre><span></span>top20 <span class="o">&lt;-</span> <span class="kp">names</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>taxa_sums<span class="p">(</span>physeq<span class="p">),</span> decreasing<span class="o">=</span><span class="kc">TRUE</span><span class="p">))[</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">]</span>
-physeq_top20 <span class="o">&lt;-</span> transform_sample_counts<span class="p">(</span>physeq<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>OTU<span class="p">)</span> OTU<span class="o">/</span><span class="kp">sum</span><span class="p">(</span>OTU<span class="p">))</span>
-physeq_top20 <span class="o">&lt;-</span> prune_taxa<span class="p">(</span>top20<span class="p">,</span> physeq_top20<span class="p">)</span>
-plot_bar<span class="p">(</span>physeq_top20<span class="p">,</span> x<span class="o">=</span><span class="s">&#39;day&#39;</span><span class="p">,</span> fill<span class="o">=</span><span class="s">&#39;Family&#39;</span><span class="p">)</span> <span class="o">+</span>
-    facet_wrap<span class="p">(</span><span class="o">~</span>when<span class="p">,</span> scales<span class="o">=</span><span class="s">&#39;free_x&#39;</span><span class="p">)</span> <span class="o">+</span>
-    theme_minimal<span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="n">top20</span> <span class="o">&lt;-</span> <span class="nf">names</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="nf">taxa_sums</span><span class="p">(</span><span class="n">physeq</span><span class="p">),</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span><span class="n">[1</span><span class="o">:</span><span class="m">20</span><span class="n">]</span>
+<span class="n">physeq_top20</span> <span class="o">&lt;-</span> <span class="nf">transform_sample_counts</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">OTU</span><span class="p">)</span> <span class="n">OTU</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">OTU</span><span class="p">))</span>
+<span class="n">physeq_top20</span> <span class="o">&lt;-</span> <span class="nf">prune_taxa</span><span class="p">(</span><span class="n">top20</span><span class="p">,</span> <span class="n">physeq_top20</span><span class="p">)</span>
+<span class="nf">plot_bar</span><span class="p">(</span><span class="n">physeq_top20</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&#39;day&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s">&#39;Family&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">when</span><span class="p">,</span> <span class="n">scales</span><span class="o">=</span><span class="s">&#39;free_x&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span>
 </pre></div>
 
 
 <p>We can place them in a tree</p>
-<div class="codehilite"><pre><span></span>bacteroidetes <span class="o">&lt;-</span> subset_taxa<span class="p">(</span>physeq<span class="p">,</span> Phylum <span class="o">%in%</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;Bacteroidetes&#39;</span><span class="p">))</span>
-plot_tree<span class="p">(</span>bacteroidetes<span class="p">,</span> ladderize<span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span> size<span class="o">=</span><span class="s">&#39;abundance&#39;</span><span class="p">,</span>
-          color<span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">,</span> label.tips<span class="o">=</span><span class="s">&#39;Family&#39;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">bacteroidetes</span> <span class="o">&lt;-</span> <span class="nf">subset_taxa</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="n">Phylum</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;Bacteroidetes&#39;</span><span class="p">))</span>
+<span class="nf">plot_tree</span><span class="p">(</span><span class="n">bacteroidetes</span><span class="p">,</span> <span class="n">ladderize</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s">&#39;abundance&#39;</span><span class="p">,</span>
+          <span class="n">color</span><span class="o">=</span><span class="s">&#39;when&#39;</span><span class="p">,</span> <span class="n">label.tips</span><span class="o">=</span><span class="s">&#39;Family&#39;</span><span class="p">)</span>
 </pre></div>
                 
                   
@@ -1250,9 +1251,9 @@ plot_tree<span class="p">(</span>bacteroidetes<span class="p">,</span> ladderize
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.b41f3d20.js"></script>
       
-      <script>app.initialize({version:"1.0.2",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
     
     

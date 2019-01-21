@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.2, mkdocs-material-3.0.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
     
     
       
@@ -40,7 +40,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.572ca0f0.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
       
@@ -51,16 +51,17 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
     
     
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
     
     
   </head>
@@ -98,7 +99,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#metabarcoding" tabindex="1" class="md-skip">
+      <a href="#metabarcoding" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -937,25 +938,25 @@ commands that you previously entered in interactive mode.</p>
 <p>If you have time, copy all the commands from this tutorial in a file, a try to make mothur work in batch mode!</p>
 <h3 id="phyloseq-analysis">PhyloSeq Analysis<a class="headerlink" href="#phyloseq-analysis" title="Permanent link">&para;</a></h3>
 <p>First, install and load the phyloseq package:</p>
-<div class="codehilite"><pre><span></span><span class="kn">source</span><span class="p">(</span><span class="s">&#39;http://bioconductor.org/biocLite.R&#39;</span><span class="p">)</span>
-biocLite<span class="p">(</span><span class="s">&#39;phyloseq&#39;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">source</span><span class="p">(</span><span class="s">&#39;http://bioconductor.org/biocLite.R&#39;</span><span class="p">)</span>
+<span class="nf">biocLite</span><span class="p">(</span><span class="s">&#39;phyloseq&#39;</span><span class="p">)</span>
 
-<span class="kn">library</span><span class="p">(</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span><span class="s">&quot;ggplot2&quot;</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span><span class="s">&quot;plyr&quot;</span><span class="p">)</span>
-theme_set<span class="p">(</span>theme_bw<span class="p">())</span>  <span class="c1"># set the ggplot theme</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">&quot;ggplot2&quot;</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">&quot;plyr&quot;</span><span class="p">)</span>
+<span class="nf">theme_set</span><span class="p">(</span><span class="nf">theme_bw</span><span class="p">())</span>  <span class="c1"># set the ggplot theme</span>
 </pre></div>
 
 
 <p>The PhyloSeq package has an <code>import_mothur</code> function that you can use to import the files you generated with mothur. As an example, import the example mothur data provided by phyloseq as an example:</p>
-<div class="codehilite"><pre><span></span>mothlist <span class="o">&lt;-</span> <span class="kp">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;esophagus.fn.list.gz&quot;</span><span class="p">,</span> package<span class="o">=</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
-mothgroup <span class="o">&lt;-</span> <span class="kp">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;esophagus.good.groups.gz&quot;</span><span class="p">,</span> package<span class="o">=</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
-mothtree <span class="o">&lt;-</span> <span class="kp">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;esophagus.tree.gz&quot;</span><span class="p">,</span> package<span class="o">=</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">mothlist</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;esophagus.fn.list.gz&quot;</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
+<span class="n">mothgroup</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;esophagus.good.groups.gz&quot;</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
+<span class="n">mothtree</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;esophagus.tree.gz&quot;</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&quot;phyloseq&quot;</span><span class="p">)</span>
 
-show_mothur_cutoffs<span class="p">(</span>mothlist<span class="p">)</span>
-cutoff <span class="o">&lt;-</span> <span class="s">&#39;0.10&#39;</span>
-x <span class="o">&lt;-</span> import_mothur<span class="p">(</span>mothlist<span class="p">,</span> mothgroup<span class="p">,</span> mothtree<span class="p">,</span> cutoff<span class="p">)</span>
-x
+<span class="nf">show_mothur_cutoffs</span><span class="p">(</span><span class="n">mothlist</span><span class="p">)</span>
+<span class="n">cutoff</span> <span class="o">&lt;-</span> <span class="s">&#39;0.10&#39;</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">import_mothur</span><span class="p">(</span><span class="n">mothlist</span><span class="p">,</span> <span class="n">mothgroup</span><span class="p">,</span> <span class="n">mothtree</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">)</span>
+<span class="n">x</span>
 </pre></div>
 
 
@@ -965,20 +966,20 @@ x
 </blockquote>
 <p>More info on <a href="http://biom-format.org/">http://biom-format.org/</a></p>
 <p>For the rest of this tutorial, we will work with an example dataset provided by the phyloseq package. Load the data with the following command:</p>
-<div class="codehilite"><pre><span></span>data<span class="p">(</span>enterotype<span class="p">)</span>
-data<span class="p">(</span><span class="s">&quot;GlobalPatterns&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">enterotype</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="s">&quot;GlobalPatterns&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <h4 id="ordination-and-distance-based-analysis">Ordination and distance-based analysis<a class="headerlink" href="#ordination-and-distance-based-analysis" title="Permanent link">&para;</a></h4>
 <p>Let's do some preliminary filtering. Remove the OTUs that included all unassigned sequences ("-1")</p>
-<div class="codehilite"><pre><span></span>enterotype <span class="o">&lt;-</span> subset_species<span class="p">(</span>enterotype<span class="p">,</span> Genus <span class="o">!=</span> <span class="s">&quot;-1&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">enterotype</span> <span class="o">&lt;-</span> <span class="nf">subset_species</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="n">Genus</span> <span class="o">!=</span> <span class="s">&quot;-1&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>The available distance methods coded in the phyloseq package:</p>
-<div class="codehilite"><pre><span></span>dist_methods <span class="o">&lt;-</span> <span class="kp">unlist</span><span class="p">(</span>distanceMethodList<span class="p">)</span>
-<span class="kp">print</span><span class="p">(</span>dist_methods<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">dist_methods</span> <span class="o">&lt;-</span> <span class="nf">unlist</span><span class="p">(</span><span class="n">distanceMethodList</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dist_methods</span><span class="p">)</span>
 
 <span class="c1">##     UniFrac1     UniFrac2        DPCoA          JSD     vegdist1</span>
 <span class="c1">##    &quot;unifrac&quot;   &quot;wunifrac&quot;      &quot;dpcoa&quot;        &quot;jsd&quot;  &quot;manhattan&quot;</span>
@@ -1005,119 +1006,119 @@ data<span class="p">(</span><span class="s">&quot;GlobalPatterns&quot;</span><sp
 
 <p>Remove the two distance-methods that require a tree, and the generic custom method that requires user-defined distance arguments.</p>
 <div class="codehilite"><pre><span></span><span class="c1"># These require tree</span>
-dist_methods<span class="p">[(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)]</span>
+<span class="n">dist_methods</span><span class="nf">[</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span><span class="n">]</span>
 
 <span class="c1"># Remove them from the vector</span>
-dist_methods <span class="o">&lt;-</span> dist_methods<span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)]</span>
+<span class="n">dist_methods</span> <span class="o">&lt;-</span> <span class="n">dist_methods[</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span><span class="n">]</span>
 <span class="c1"># This is the user-defined method:</span>
-dist_methods<span class="p">[</span><span class="s">&quot;designdist&quot;</span><span class="p">]</span>
+<span class="n">dist_methods[</span><span class="s">&quot;designdist&quot;</span><span class="n">]</span>
 
 <span class="c1"># Remove the user-defined distance</span>
-dist_methods <span class="o">=</span> dist_methods<span class="p">[</span><span class="o">-</span><span class="kp">which</span><span class="p">(</span>dist_methods<span class="o">==</span><span class="s">&quot;ANY&quot;</span><span class="p">)]</span>
+<span class="n">dist_methods</span> <span class="o">=</span> <span class="n">dist_methods[</span><span class="o">-</span><span class="nf">which</span><span class="p">(</span><span class="n">dist_methods</span><span class="o">==</span><span class="s">&quot;ANY&quot;</span><span class="p">)</span><span class="n">]</span>
 </pre></div>
 
 
 <p>Loop through each distance method, save each plot to a list, called plist.</p>
-<div class="codehilite"><pre><span></span>plist <span class="o">&lt;-</span> <span class="kt">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="kp">length</span><span class="p">(</span>dist_methods<span class="p">))</span>
-<span class="kp">names</span><span class="p">(</span>plist<span class="p">)</span> <span class="o">=</span> dist_methods
-<span class="kr">for</span><span class="p">(</span> i <span class="kr">in</span> dist_methods <span class="p">){</span>
+<div class="codehilite"><pre><span></span><span class="n">plist</span> <span class="o">&lt;-</span> <span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">dist_methods</span><span class="p">))</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">plist</span><span class="p">)</span> <span class="o">=</span> <span class="n">dist_methods</span>
+<span class="nf">for</span><span class="p">(</span> <span class="n">i</span> <span class="n">in</span> <span class="n">dist_methods</span> <span class="p">){</span>
     <span class="c1"># Calculate distance matrix</span>
-    iDist <span class="o">&lt;-</span> distance<span class="p">(</span>enterotype<span class="p">,</span> method<span class="o">=</span>i<span class="p">)</span>
+    <span class="n">iDist</span> <span class="o">&lt;-</span> <span class="nf">distance</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
     <span class="c1"># Calculate ordination</span>
-    iMDS  <span class="o">&lt;-</span> ordinate<span class="p">(</span>enterotype<span class="p">,</span> <span class="s">&quot;MDS&quot;</span><span class="p">,</span> distance<span class="o">=</span>iDist<span class="p">)</span>
+    <span class="n">iMDS</span>  <span class="o">&lt;-</span> <span class="nf">ordinate</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="s">&quot;MDS&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">iDist</span><span class="p">)</span>
     <span class="c1">## Make plot</span>
     <span class="c1"># Don&#39;t carry over previous plot (if error, p will be blank)</span>
-    p <span class="o">&lt;-</span> <span class="kc">NULL</span>
+    <span class="n">p</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
     <span class="c1"># Create plot, store as temp variable, p</span>
-    p <span class="o">&lt;-</span> plot_ordination<span class="p">(</span>enterotype<span class="p">,</span> iMDS<span class="p">,</span> color<span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> shape<span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">plot_ordination</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="n">iMDS</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">)</span>
     <span class="c1"># Add title to each plot</span>
-    p <span class="o">&lt;-</span> p <span class="o">+</span> ggtitle<span class="p">(</span><span class="kp">paste</span><span class="p">(</span><span class="s">&quot;MDS using distance method &quot;</span><span class="p">,</span> i<span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">))</span>
+    <span class="n">p</span> <span class="o">&lt;-</span> <span class="n">p</span> <span class="o">+</span> <span class="nf">ggtitle</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;MDS using distance method &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">))</span>
     <span class="c1"># Save the graphic to file.</span>
-    plist<span class="p">[[</span>i<span class="p">]]</span> <span class="o">=</span> p
+    <span class="n">plist[[i]]</span> <span class="o">=</span> <span class="n">p</span>
 <span class="p">}</span>
 </pre></div>
 
 
 <p>Combine results and shade according to Sequencing technology:</p>
-<div class="codehilite"><pre><span></span>df <span class="o">=</span> ldply<span class="p">(</span>plist<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> x<span class="o">$</span>data<span class="p">)</span>
-<span class="kp">names</span><span class="p">(</span>df<span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s">&quot;distance&quot;</span>
-p <span class="o">=</span> ggplot<span class="p">(</span>df<span class="p">,</span> aes<span class="p">(</span>Axis.1<span class="p">,</span> Axis.2<span class="p">,</span> color<span class="o">=</span>SeqTech<span class="p">,</span> shape<span class="o">=</span>Enterotype<span class="p">))</span>
-p <span class="o">=</span> p <span class="o">+</span> geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">3</span><span class="p">,</span> alpha<span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
-p <span class="o">=</span> p <span class="o">+</span> facet_wrap<span class="p">(</span><span class="o">~</span>distance<span class="p">,</span> scales<span class="o">=</span><span class="s">&quot;free&quot;</span><span class="p">)</span>
-p <span class="o">=</span> p <span class="o">+</span> ggtitle<span class="p">(</span><span class="s">&quot;MDS on various distance metrics for Enterotype dataset&quot;</span><span class="p">)</span>
-p
+<div class="codehilite"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="nf">ldply</span><span class="p">(</span><span class="n">plist</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="o">$</span><span class="n">data</span><span class="p">)</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="n">[1]</span> <span class="o">&lt;-</span> <span class="s">&quot;distance&quot;</span>
+<span class="n">p</span> <span class="o">=</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">Axis.1</span><span class="p">,</span> <span class="n">Axis.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SeqTech</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Enterotype</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">distance</span><span class="p">,</span> <span class="n">scales</span><span class="o">=</span><span class="s">&quot;free&quot;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;MDS on various distance metrics for Enterotype dataset&quot;</span><span class="p">)</span>
+<span class="n">p</span>
 </pre></div>
 
 
 <p>Print individual plots:</p>
-<div class="codehilite"><pre><span></span><span class="kp">print</span><span class="p">(</span>plist<span class="p">[[</span><span class="s">&quot;jsd&quot;</span><span class="p">]])</span>
-<span class="kp">print</span><span class="p">(</span>plist<span class="p">[[</span><span class="s">&quot;jaccard&quot;</span><span class="p">]])</span>
-<span class="kp">print</span><span class="p">(</span>plist<span class="p">[[</span><span class="s">&quot;bray&quot;</span><span class="p">]])</span>
-<span class="kp">print</span><span class="p">(</span>plist<span class="p">[[</span><span class="s">&quot;euclidean&quot;</span><span class="p">]])</span>
+<div class="codehilite"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">plist[[</span><span class="s">&quot;jsd&quot;</span><span class="n">]]</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">plist[[</span><span class="s">&quot;jaccard&quot;</span><span class="n">]]</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">plist[[</span><span class="s">&quot;bray&quot;</span><span class="n">]]</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">plist[[</span><span class="s">&quot;euclidean&quot;</span><span class="n">]]</span><span class="p">)</span>
 </pre></div>
 
 
 <h4 id="alpha-diversity-graphics">Alpha diversity graphics<a class="headerlink" href="#alpha-diversity-graphics" title="Permanent link">&para;</a></h4>
 <p>Here is the default graphic produced by the plot_richness function on the GP example dataset:</p>
-<div class="codehilite"><pre><span></span>GP <span class="o">&lt;-</span> prune_species<span class="p">(</span>speciesSums<span class="p">(</span>GlobalPatterns<span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">,</span> GlobalPatterns<span class="p">)</span>
-plot_richness<span class="p">(</span>GP<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">GP</span> <span class="o">&lt;-</span> <span class="nf">prune_species</span><span class="p">(</span><span class="nf">speciesSums</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">,</span> <span class="n">GlobalPatterns</span><span class="p">)</span>
+<span class="nf">plot_richness</span><span class="p">(</span><span class="n">GP</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Note that in this case, the Fisher calculation results in a warning (but still plots). We can avoid this by specifying a measures argument to plot_richness, which will include just the alpha-diversity measures that we want.</p>
-<div class="codehilite"><pre><span></span>plot_richness<span class="p">(</span>GP<span class="p">,</span> measures<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_richness</span><span class="p">(</span><span class="n">GP</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
 </pre></div>
 
 
 <p>We can specify a sample variable on which to group/organize samples along the horizontal (x) axis. An experimentally meaningful categorical variable is usually a good choice – in this case, the "SampleType" variable works much better than attempting to interpret the sample names directly (as in the previous plot):</p>
-<div class="codehilite"><pre><span></span>plot_richness<span class="p">(</span>GP<span class="p">,</span> x<span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> measures<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_richness</span><span class="p">(</span><span class="n">GP</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
 </pre></div>
 
 
 <p>Now suppose we wanted to use an external variable in the plot that isn’t in the GP dataset already – for example, a logical that indicated whether or not the samples are human-associated. First, define this new variable, human, as a factor (other vectors could also work; or other data you might have describing the samples).</p>
-<div class="codehilite"><pre><span></span>sampleData<span class="p">(</span>GP<span class="p">)</span><span class="o">$</span>human <span class="o">&lt;-</span> getVariable<span class="p">(</span>GP<span class="p">,</span> <span class="s">&quot;SampleType&quot;</span><span class="p">)</span> <span class="o">%in%</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Feces&quot;</span><span class="p">,</span> <span class="s">&quot;Mock&quot;</span><span class="p">,</span> <span class="s">&quot;Skin&quot;</span><span class="p">,</span> <span class="s">&quot;Tongue&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">sampleData</span><span class="p">(</span><span class="n">GP</span><span class="p">)</span><span class="o">$</span><span class="n">human</span> <span class="o">&lt;-</span> <span class="nf">getVariable</span><span class="p">(</span><span class="n">GP</span><span class="p">,</span> <span class="s">&quot;SampleType&quot;</span><span class="p">)</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Feces&quot;</span><span class="p">,</span> <span class="s">&quot;Mock&quot;</span><span class="p">,</span> <span class="s">&quot;Skin&quot;</span><span class="p">,</span> <span class="s">&quot;Tongue&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Now tell plot_richness to map the new human variable on the horizontal axis, and shade the points in different color groups, according to which "SampleType" they belong.</p>
-<div class="codehilite"><pre><span></span>plot_richness<span class="p">(</span>GP<span class="p">,</span> x<span class="o">=</span><span class="s">&quot;human&quot;</span><span class="p">,</span> color<span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> measures<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_richness</span><span class="p">(</span><span class="n">GP</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;human&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
 </pre></div>
 
 
 <p>We can merge samples that are from the environment (SampleType), and make the points bigger with a ggplot2 layer. First, merge the samples.</p>
-<div class="codehilite"><pre><span></span>GPst <span class="o">=</span> merge_samples<span class="p">(</span>GP<span class="p">,</span> <span class="s">&quot;SampleType&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">GPst</span> <span class="o">=</span> <span class="nf">merge_samples</span><span class="p">(</span><span class="n">GP</span><span class="p">,</span> <span class="s">&quot;SampleType&quot;</span><span class="p">)</span>
 <span class="c1"># repair variables that were damaged during merge (coerced to numeric)</span>
-sample_data<span class="p">(</span>GPst<span class="p">)</span><span class="o">$</span>SampleType <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>sample_names<span class="p">(</span>GPst<span class="p">))</span>
-sample_data<span class="p">(</span>GPst<span class="p">)</span><span class="o">$</span>human <span class="o">&lt;-</span> <span class="kp">as.logical</span><span class="p">(</span>sample_data<span class="p">(</span>GPst<span class="p">)</span><span class="o">$</span>human<span class="p">)</span>
+<span class="nf">sample_data</span><span class="p">(</span><span class="n">GPst</span><span class="p">)</span><span class="o">$</span><span class="n">SampleType</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">sample_names</span><span class="p">(</span><span class="n">GPst</span><span class="p">))</span>
+<span class="nf">sample_data</span><span class="p">(</span><span class="n">GPst</span><span class="p">)</span><span class="o">$</span><span class="n">human</span> <span class="o">&lt;-</span> <span class="nf">as.logical</span><span class="p">(</span><span class="nf">sample_data</span><span class="p">(</span><span class="n">GPst</span><span class="p">)</span><span class="o">$</span><span class="n">human</span><span class="p">)</span>
 
-p <span class="o">=</span> plot_richness<span class="p">(</span>GPst<span class="p">,</span> x<span class="o">=</span><span class="s">&quot;human&quot;</span><span class="p">,</span> color<span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> measures<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
-p <span class="o">+</span> geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">5</span><span class="p">,</span> alpha<span class="o">=</span><span class="m">0.7</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="nf">plot_richness</span><span class="p">(</span><span class="n">GPst</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;human&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Chao1&quot;</span><span class="p">,</span> <span class="s">&quot;Shannon&quot;</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="m">0.7</span><span class="p">)</span>
 </pre></div>
 
 
 <h4 id="trees">Trees<a class="headerlink" href="#trees" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="kp">head</span><span class="p">(</span>phy_tree<span class="p">(</span>GlobalPatterns<span class="p">)</span><span class="o">$</span>node.label<span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">head</span><span class="p">(</span><span class="nf">phy_tree</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">)</span><span class="o">$</span><span class="n">node.label</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
 </pre></div>
 
 
 <p>The node data from the <code>GlobalPatterns</code> dataset are strange. They look like they might be bootstrap values, but they sometimes have two decimals.</p>
-<div class="codehilite"><pre><span></span>phy_tree<span class="p">(</span>GlobalPatterns<span class="p">)</span><span class="o">$</span>node.label <span class="o">=</span> <span class="kp">substr</span><span class="p">(</span>phy_tree<span class="p">(</span>GlobalPatterns<span class="p">)</span><span class="o">$</span>node.label<span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">phy_tree</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">)</span><span class="o">$</span><span class="n">node.label</span> <span class="o">=</span> <span class="nf">substr</span><span class="p">(</span><span class="nf">phy_tree</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">)</span><span class="o">$</span><span class="n">node.label</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Additionally, the dataset has many OTUs, too many to fit them all on a tree. Let's take the 50 more abundant and plot a basic tree:</p>
-<div class="codehilite"><pre><span></span>physeq <span class="o">=</span> prune_taxa<span class="p">(</span>taxa_names<span class="p">(</span>GlobalPatterns<span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">50</span><span class="p">],</span> GlobalPatterns<span class="p">)</span>
-plot_tree<span class="p">(</span>physeq<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">physeq</span> <span class="o">=</span> <span class="nf">prune_taxa</span><span class="p">(</span><span class="nf">taxa_names</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">)</span><span class="n">[1</span><span class="o">:</span><span class="m">50</span><span class="n">]</span><span class="p">,</span> <span class="n">GlobalPatterns</span><span class="p">)</span>
+<span class="nf">plot_tree</span><span class="p">(</span><span class="n">physeq</span><span class="p">)</span>
 </pre></div>
 
 
 <p>dots are annotated next to tips (OTUs) in the tree, one for each sample in which that OTU was observed. Let's color the dots by taxonomic ranks, and sample covariates:</p>
-<div class="codehilite"><pre><span></span>plot_tree<span class="p">(</span>physeq<span class="p">,</span> nodelabf<span class="o">=</span>nodeplotboot<span class="p">(),</span> ladderize<span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">,</span> color<span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_tree</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="n">nodelabf</span><span class="o">=</span><span class="nf">nodeplotboot</span><span class="p">(),</span> <span class="n">ladderize</span><span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>by taxonomic class:</p>
-<div class="codehilite"><pre><span></span>plot_tree<span class="p">(</span>physeq<span class="p">,</span> nodelabf<span class="o">=</span>nodeplotboot<span class="p">(),</span> ladderize<span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">,</span> color<span class="o">=</span><span class="s">&quot;Class&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_tree</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="n">nodelabf</span><span class="o">=</span><span class="nf">nodeplotboot</span><span class="p">(),</span> <span class="n">ladderize</span><span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;Class&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -1127,46 +1128,46 @@ plot_tree<span class="p">(</span>physeq<span class="p">)</span>
 
 
 <p>Making a radial tree is easy with ggplot2, simply recognizing that our vertically-oriented tree is a cartesian mapping of the data to a graphic – and that a radial tree is the same mapping, but with polar coordinates instead.</p>
-<div class="codehilite"><pre><span></span>plot_tree<span class="p">(</span>physeq<span class="p">,</span> nodelabf<span class="o">=</span>nodeplotboot<span class="p">(</span><span class="m">60</span><span class="p">,</span><span class="m">60</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> color<span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> shape<span class="o">=</span><span class="s">&quot;Class&quot;</span><span class="p">,</span> ladderize<span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">)</span> <span class="o">+</span> coord_polar<span class="p">(</span>theta<span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_tree</span><span class="p">(</span><span class="n">physeq</span><span class="p">,</span> <span class="n">nodelabf</span><span class="o">=</span><span class="nf">nodeplotboot</span><span class="p">(</span><span class="m">60</span><span class="p">,</span><span class="m">60</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s">&quot;Class&quot;</span><span class="p">,</span> <span class="n">ladderize</span><span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">coord_polar</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <h4 id="bar-plots">Bar plots<a class="headerlink" href="#bar-plots" title="Permanent link">&para;</a></h4>
 <p>Bar plots are one of the easiest way to vizualize your data. But be careful, they can be misleading if grouping sample!</p>
 <p>Let's take a subset of the GlobalPatterns dataset, and produce a basic bar plot:</p>
-<div class="codehilite"><pre><span></span>gp.ch <span class="o">=</span> subset_taxa<span class="p">(</span>GlobalPatterns<span class="p">,</span> Phylum <span class="o">==</span> <span class="s">&quot;Chlamydiae&quot;</span><span class="p">)</span>
-plot_bar<span class="p">(</span>gp.ch<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">gp.ch</span> <span class="o">=</span> <span class="nf">subset_taxa</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">,</span> <span class="n">Phylum</span> <span class="o">==</span> <span class="s">&quot;Chlamydiae&quot;</span><span class="p">)</span>
+<span class="nf">plot_bar</span><span class="p">(</span><span class="n">gp.ch</span><span class="p">)</span>
 </pre></div>
 
 
 <p>The dataset is plotted with every sample mapped individually to the horizontal (x) axis, and abundance values mapped to the veritcal (y) axis. At each sample’s horizontal position, the abundance values for each OTU are stacked in order from greatest to least, separate by a thin horizontal line. As long as the parameters you choose to separate the data result in more than one OTU abundance value at the respective position in the plot, the values will be stacked in order as a means of displaying both the sum total value while still representing the individual OTU abundances.</p>
 <p>The bar plot will be clearer with color to represent the Genus to which each OTU belongs.</p>
-<div class="codehilite"><pre><span></span>plot_bar<span class="p">(</span>gp.ch<span class="p">,</span> fill<span class="o">=</span><span class="s">&quot;Genus&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_bar</span><span class="p">(</span><span class="n">gp.ch</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s">&quot;Genus&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Now keep the same fill color, and group the samples together by the SampleType variable; essentially, the environment from which the sample was taken and sequenced.</p>
-<div class="codehilite"><pre><span></span>plot_bar<span class="p">(</span>gp.ch<span class="p">,</span> x<span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> fill<span class="o">=</span><span class="s">&quot;Genus&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_bar</span><span class="p">(</span><span class="n">gp.ch</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s">&quot;Genus&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>A more complex example using facets:</p>
-<div class="codehilite"><pre><span></span>plot_bar<span class="p">(</span>gp.ch<span class="p">,</span> <span class="s">&quot;Family&quot;</span><span class="p">,</span> fill<span class="o">=</span><span class="s">&quot;Genus&quot;</span><span class="p">,</span> facet_grid<span class="o">=~</span>SampleType<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_bar</span><span class="p">(</span><span class="n">gp.ch</span><span class="p">,</span> <span class="s">&quot;Family&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s">&quot;Genus&quot;</span><span class="p">,</span> <span class="n">facet_grid</span><span class="o">=~</span><span class="n">SampleType</span><span class="p">)</span>
 </pre></div>
 
 
 <h4 id="heatmaps">Heatmaps<a class="headerlink" href="#heatmaps" title="Permanent link">&para;</a></h4>
 <p>The following two lines subset the dataset to just the top 300 most abundant Bacteria taxa across all samples (in this case, with no prior preprocessing. Not recommended, but quick).</p>
-<div class="codehilite"><pre><span></span>data<span class="p">(</span><span class="s">&quot;GlobalPatterns&quot;</span><span class="p">)</span>
-gpt <span class="o">&lt;-</span> subset_taxa<span class="p">(</span>GlobalPatterns<span class="p">,</span> Kingdom<span class="o">==</span><span class="s">&quot;Bacteria&quot;</span><span class="p">)</span>
-gpt <span class="o">&lt;-</span> prune_taxa<span class="p">(</span><span class="kp">names</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>taxa_sums<span class="p">(</span>gpt<span class="p">),</span><span class="kc">TRUE</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">300</span><span class="p">]),</span> gpt<span class="p">)</span>
-plot_heatmap<span class="p">(</span>gpt<span class="p">,</span> sample.label<span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="s">&quot;GlobalPatterns&quot;</span><span class="p">)</span>
+<span class="n">gpt</span> <span class="o">&lt;-</span> <span class="nf">subset_taxa</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">,</span> <span class="n">Kingdom</span><span class="o">==</span><span class="s">&quot;Bacteria&quot;</span><span class="p">)</span>
+<span class="n">gpt</span> <span class="o">&lt;-</span> <span class="nf">prune_taxa</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="nf">taxa_sums</span><span class="p">(</span><span class="n">gpt</span><span class="p">),</span><span class="kc">TRUE</span><span class="p">)</span><span class="n">[1</span><span class="o">:</span><span class="m">300</span><span class="n">]</span><span class="p">),</span> <span class="n">gpt</span><span class="p">)</span>
+<span class="nf">plot_heatmap</span><span class="p">(</span><span class="n">gpt</span><span class="p">,</span> <span class="n">sample.label</span><span class="o">=</span><span class="s">&quot;SampleType&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>subset a smaller dataset based on an Archaeal phylum</p>
-<div class="codehilite"><pre><span></span>gpac <span class="o">&lt;-</span> subset_taxa<span class="p">(</span>GlobalPatterns<span class="p">,</span> Phylum<span class="o">==</span><span class="s">&quot;Crenarchaeota&quot;</span><span class="p">)</span>
-plot_heatmap<span class="p">(</span>gpac<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">gpac</span> <span class="o">&lt;-</span> <span class="nf">subset_taxa</span><span class="p">(</span><span class="n">GlobalPatterns</span><span class="p">,</span> <span class="n">Phylum</span><span class="o">==</span><span class="s">&quot;Crenarchaeota&quot;</span><span class="p">)</span>
+<span class="nf">plot_heatmap</span><span class="p">(</span><span class="n">gpac</span><span class="p">)</span>
 </pre></div>
 
 
@@ -1174,30 +1175,30 @@ plot_heatmap<span class="p">(</span>gpac<span class="p">)</span>
 <p>There is a random aspect to some of the network layout methods. For complete reproducibility of the images produced later in this tutorial, it is possible to set the random number generator seed explicitly:</p>
 <p><code>set.seed(711L)</code></p>
 <p>Because we want to use the enterotype designations as a plot feature in these plots, we need to remove the 9 samples for which no enterotype designation was assigned (this will save us the hassle of some pesky warning messages, but everything still works; the offending samples are anyway omitted).</p>
-<div class="codehilite"><pre><span></span>enterotype <span class="o">=</span> subset_samples<span class="p">(</span>enterotype<span class="p">,</span> <span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>Enterotype<span class="p">))</span>
+<div class="codehilite"><pre><span></span><span class="n">enterotype</span> <span class="o">=</span> <span class="nf">subset_samples</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">Enterotype</span><span class="p">))</span>
 </pre></div>
 
 
 <p>Create an igraph-based network based on the default distance method, “Jaccard”, and a maximum distance between connected nodes of 0.3.</p>
-<div class="codehilite"><pre><span></span>ig <span class="o">&lt;-</span> make_network<span class="p">(</span>enterotype<span class="p">,</span> max.dist<span class="o">=</span><span class="m">0.3</span><span class="p">)</span>
-plot_network<span class="p">(</span>ig<span class="p">,</span> enterotype<span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">ig</span> <span class="o">&lt;-</span> <span class="nf">make_network</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="n">max.dist</span><span class="o">=</span><span class="m">0.3</span><span class="p">)</span>
+<span class="nf">plot_network</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span> <span class="n">enterotype</span><span class="p">)</span>
 </pre></div>
 
 
 <p>The previous graphic displayed some interesting structure, with one or two major subgraphs comprising a majority of samples. Furthermore, there seemed to be a correlation in the sample naming scheme and position within the network. Instead of trying to read all of the sample names to understand the pattern, let’s map some of the sample variables onto this graphic as color and shape:</p>
-<div class="codehilite"><pre><span></span>plot_network<span class="p">(</span>ig<span class="p">,</span> enterotype<span class="p">,</span> color<span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> shape<span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">,</span> line_weight<span class="o">=</span><span class="m">0.4</span><span class="p">,</span> label<span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nf">plot_network</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span> <span class="n">enterotype</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">,</span> <span class="n">line_weight</span><span class="o">=</span><span class="m">0.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
 
 
 <p>In the previous examples, the choice of maximum-distance and distance method were informed, but arbitrary. Let’s see what happens when the maximum distance is lowered, decreasing the number of edges in the network</p>
-<div class="codehilite"><pre><span></span>ig <span class="o">&lt;-</span> make_network<span class="p">(</span>enterotype<span class="p">,</span> max.dist<span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
-plot_network<span class="p">(</span>ig<span class="p">,</span> enterotype<span class="p">,</span> color<span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> shape<span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">,</span> line_weight<span class="o">=</span><span class="m">0.4</span><span class="p">,</span> label<span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">ig</span> <span class="o">&lt;-</span> <span class="nf">make_network</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="n">max.dist</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
+<span class="nf">plot_network</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span> <span class="n">enterotype</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">,</span> <span class="n">line_weight</span><span class="o">=</span><span class="m">0.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Let’s repeat the previous exercise, but replace the Jaccard (default) distance method with Bray-Curtis</p>
-<div class="codehilite"><pre><span></span>ig <span class="o">&lt;-</span> make_network<span class="p">(</span>enterotype<span class="p">,</span> dist.fun<span class="o">=</span><span class="s">&quot;bray&quot;</span><span class="p">,</span> max.dist<span class="o">=</span><span class="m">0.3</span><span class="p">)</span>
-plot_network<span class="p">(</span>ig<span class="p">,</span> enterotype<span class="p">,</span> color<span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> shape<span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">,</span> line_weight<span class="o">=</span><span class="m">0.4</span><span class="p">,</span> label<span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">ig</span> <span class="o">&lt;-</span> <span class="nf">make_network</span><span class="p">(</span><span class="n">enterotype</span><span class="p">,</span> <span class="n">dist.fun</span><span class="o">=</span><span class="s">&quot;bray&quot;</span><span class="p">,</span> <span class="n">max.dist</span><span class="o">=</span><span class="m">0.3</span><span class="p">)</span>
+<span class="nf">plot_network</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span> <span class="n">enterotype</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;SeqTech&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s">&quot;Enterotype&quot;</span><span class="p">,</span> <span class="n">line_weight</span><span class="o">=</span><span class="m">0.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
                 
                   
@@ -1244,9 +1245,9 @@ plot_network<span class="p">(</span>ig<span class="p">,</span> enterotype<span c
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.b41f3d20.js"></script>
       
-      <script>app.initialize({version:"1.0.2",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
     
     

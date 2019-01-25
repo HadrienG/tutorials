@@ -8,17 +8,23 @@ The dolphin had a self-limiting gastroenteritis of suspected viral origin.
 
 ## Getting the Data
 
-Your instructor will let you know where to get the dataset from.
-There are 2 files to retrieve:
-```
-Dol1_S19_L001_R1_001.fastq
-Dol1_S19_L001_R2_001.fastq
-```
-
-You will place them into a new directory:
+First, create an appropriate directory to put the data:
 ```bash
 mkdir -p ~/dolphin/data
 cd ~/dolphin/data
+```
+
+You can download them from here:
+```
+curl -O -J -L https://osf.io/4x6qs/download
+curl -O -J -L https://osf.io/z2xed/download
+```
+Alternatively, your instructor will let you know where to get the dataset from.
+
+You should get 2 compressed files:
+```
+Dol1_S19_L001_R1_001.fastq.gz
+Dol1_S19_L001_R2_001.fastq.gz
 ```
 
 ## Quality Control
@@ -30,7 +36,7 @@ If you need a refresher on how and why to check the quality of sequence data, pl
 mkdir -p ~/dolphin/results
 cd ~/dolphin/results
 ln -s ~/dolphin/data/Dol1* .
-fastqc Dol1_*.fastq
+fastqc Dol1_*.fastq.gz
 ```
 
 !!! question
@@ -39,31 +45,69 @@ fastqc Dol1_*.fastq
 !!! question
     Compared to single genome sequencing, which graphs differ?
 
+Removing adapters with Scythe
+
+The first thing we need is the adapters to trim off
+
+```bash
+curl -O -J -L https://osf.io/v24pt/download
+```
+
+Now we run scythe on both our read files
+```bash
+scythe -a adapters.fasta -o Dol1_adapt_R1.fastq Dol1_S19_L001_R1_001.fastq.gz
+scythe -a adapters.fasta -o Dol1_adapt_R2.fastq Dol1_S19_L001_R2_001.fastq.gz
+```
 
 Now we'll trim the reads using sickle
 
 ```
-sickle pe -f Dol1_S19_L001_R1_001.fastq -r Dol1_S19_L001_R2_001.fastq -t sanger \
-    -o Dol1_trimmed_R1.fastq -p Dol1_trimmed_R2.fastq -s /dev/null
+sickle pe -f Dol1_adapt_R1.fastq -r Dol1_adapt_R2.fastq -t sanger \
+    -o Dol1_trimmed_R1.fastq -p Dol1_trimmed_R2.fastq -s /dev/null -q 25
 ```
 
 !!! question
     How many reads were trimmed?
+
+## Removing the host sequences by mapping/aligning on the dolphin genome
+
+For this we will use Bowtie2.
+We have downloaded the genome of Tursiops truncatus from Ensembl (fasta file).
+
+Alternatively, you can get it from ensembl FTP:
+```
+curl -O -J -L ftp://ftp.ensembl.org/pub/release-94/fasta/tursiops_truncatus/dna/Tursiops_truncatus.turTru1.dna.toplevel.fa.gz
+```
+
+Then we have built the Bowtie2 indexes for this genomes using the following command (do not run it, we have pre-calculated the results for you):
+```
+bowtie2-build Tursiops_truncatus.turTru1.dna.toplevel.fa Tursiops_truncatus
+```
+
+First we will copy the bowtie indexed of the dolphin genome into our results directory:
+
+```
+cp /opt/dolphin/Tursiops_truncatus*.bt* .
+```
+
+Now we are ready to map our sequencing reads on the dolphin genome:
+```
+bowtie2
+```
+
 
 ## Taxonomic classification of the trimmed reads
 
 We will use Kaiju for the classification of the produced contigs. As we are mainly interested in detecting the viral sequences in our dataset and we want to reduce the computing time and the memory needed, we have built a viruses-only database.
 
 ```bash
-cd Dol1_assembly
-
-kaiju -t ~/kaiju/kaijudb/nodes.dmp -f ~/kaiju/kaijudb/kaiju_db.fmi -i Dol1_trimmed_R1.fastq -j Dol1_trimmed_R2.fastq -o Dol1_trimmed_reads_kaiju.out
+kaiju -t /opt/kaijudb/nodes.dmp -f /opt/kaijudb/kaiju_db.fmi -i Dol1_trimmed_R1.fastq -j Dol1_trimmed_R2.fastq -o Dol1_trimmed_reads_kaiju.out
 ```
 
 In order to visualise the results, we will produce a Krona chart
 
 ```bash
-kaiju2krona -t ~/kaiju/kaijudb/nodes.dmp -n ~/kaiju/kaijudb/names.dmp -i Dol1_trimmed_reads_kaiju.out -o Dol1_trimmed_reads_kaiju.krona -u
+kaiju2krona -t /opt/kaijudb/nodes.dmp -n /opt/kaijudb/names.dmp -i Dol1_trimmed_reads_kaiju.out -o Dol1_trimmed_reads_kaiju.krona -u
 
 ktImportText -o Dol1_trimmed_reads_kaiju.krona.html Dol1_trimmed_reads_kaiju.krona
 
@@ -75,7 +119,7 @@ ktImportText -o Dol1_trimmed_reads_kaiju.krona.html Dol1_trimmed_reads_kaiju.kro
 Then we copy it locally to visualise in our web browser.
 From the terminal on our laptop, we move to the place where we want to have the chart (cd) and then copy:
 ```bash
-scp studentX@ebiokit_ip:~/dolphin/results/Dol1_assembly/*.html .
+scp studentX@ebiokit_ip:~/dolphin/results/*krona.html .
 ```
 
 !!! note
@@ -99,13 +143,13 @@ The resulting assembly can be found under `Dol1_assembly/final.contigs.fa`.
 We will use Kaiju again with the same viruses-only database for the classification of the produced contigs.
 
 ```bash
-cd Dol1Dol1_assembly
+cd Dol1_assembly
 
 kaiju -t /opt/kaiju/kaijudb/nodes.dmp -f /opt/kaiju/kaijudb/kaiju_db.fmi -i final.contigs.fa -o Dol1_contigs_kaiju.out
 ```
 Then we produce the Krona chart:
 ```bash
-kaiju2krona -t ~/kaiju/kaijudb/nodes.dmp -n ~/kaiju/kaijudb/names.dmp -i Dol1_contigs_kaiju.out -o Dol1_contigs_kaiju.krona -u
+kaiju2krona -t /opt/kaijudb/nodes.dmp -n /opt/kaijudb/names.dmp -i Dol1_contigs_kaiju.out -o Dol1_contigs_kaiju.krona -u
 
 ktImportText -o Dol1_contigs_kaiju.krona.html Dol1_contigs_kaiju.krona
 ```
@@ -131,8 +175,7 @@ Let's go for a little practice of your Unix skills!
 Once we have this file, we want to sort all the sequences headers by the sequence length (len=X):
 
 ```
-TODO: test
-IFS=$'\=';sort -k4 -n -r headers_file.txt
+cat final.contigs.fa | grep ">" | sed s/len=// | sort -k4,4n | cut -d ' ' -f1 | cut -c2- | tail -1
 ```
 
 !!! question

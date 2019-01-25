@@ -4,21 +4,35 @@ After you have de novo assembled your genome sequencing reads into contigs, it i
 
 Prokka is a “wrapper”; it collects together several pieces of software (from various authors), and so avoids “re-inventing the wheel”.
 
-Prokka finds and annotates features (both protein coding regions and RNA genes, i.e. tRNA, rRNA) present on on a sequence. Prokka uses a two-step process for the annotation of protein coding regions: first, protein coding regions on the genome are identified using [Prodigal](http://prodigal.ornl.gov); second, the function of the encoded protein is predicted by similarity to proteins in one of many protein or protein domain databases. Prokka is a software tool that can be used to annotate bacterial, archaeal and viral genomes quickly, generating standard output files in GenBank, EMBL and gff formats. More information about Prokka can be found [here](https://github.com/tseemann/prokka).
+Prokka finds and annotates features (both protein coding regions and RNA genes, i.e. tRNA, rRNA) present on on a sequence. Prokka uses a two-step process for the annotation of protein coding regions: first, protein coding regions on the genome are identified using [Prodigal](http://compbio.ornl.gov/prodigal/); second, the function of the encoded protein is predicted by similarity to proteins in one of many protein or protein domain databases. Prokka is a software tool that can be used to annotate bacterial, archaeal and viral genomes quickly, generating standard output files in GenBank, EMBL and gff formats. More information about Prokka can be found [here](https://github.com/tseemann/prokka).
 
 ## Input data
 
-Prokka requires assembled contigs. You will need your best assembly from the assembly tutorial.
+Prokka requires assembled contigs. You can prepare you working directory for this annotation tutorial.
 
-Alternatively, you can download an assembly [here](https://raw.githubusercontent.com/HadrienG/tutorials/master/data/assembly.fasta)
+You will download an improved assembly of *Mycoplasma genitalium* into you data directory:
+
+```
+curl -O -J -L https://osf.io/7eaky/download
+```
+
+You will also need a proteins set specific of Mycoplasma for the annotation. Here is a file containing the Mycoplasma proteins retrieved from Swiss-Prot database (3041 sequences, file ```uniprot_mycoplasma-reviewed.faa```):
+```
+curl -O -J -L https://osf.io/rysu7/download
+```
+
 
 ## Running prokka
 
+First we would like to rename the contigs (optional):
 ```
-module load prokka
-awk '/^>/{print ">ctg" ++i; next}{print}' < assembly.fasta > good_contigs.fasta
+awk '/^>/{print ">ctg" ++i; next}{print}' < m_genetalium_improved.fasta > m_genetalium_good_contigs.fasta
+```
+
+Then we run prokka:
+```
 prokka --outdir annotation --kingdom Bacteria \
---proteins m_genitalium.faa good_contigs.fasta
+--proteins uniprot_mycoplasma-reviewed.faa m_genetalium_good_contigs.fasta
 ```
 
 Once Prokka has finished, examine each of its output files.

@@ -381,8 +381,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#annotation-of-the-genomes" title="Annotation of the genomes" class="md-nav__link">
-    Annotation of the genomes
+  <a href="#assemble-and-annotate-the-strains" title="Assemble and Annotate the strains" class="md-nav__link">
+    Assemble and Annotate the strains
   </a>
   
 </li>
@@ -589,8 +589,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#annotation-of-the-genomes" title="Annotation of the genomes" class="md-nav__link">
-    Annotation of the genomes
+  <a href="#assemble-and-annotate-the-strains" title="Assemble and Annotate the strains" class="md-nav__link">
+    Assemble and Annotate the strains
   </a>
   
 </li>
@@ -632,95 +632,88 @@
 <p>In this tutorial we will learn how to determine a pan-genome from a collection of isolate genomes.</p>
 <p>This tutorial is inspired from <a href="https://github.com/microgenomics/tutorials/blob/master/pangenome.md">Genome annotation and Pangenome Analysis</a> from the CBIB in Santiago, Chile</p>
 <h2 id="getting-the-data">Getting the data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
-<p>We'll use six <em>Listeria monocytogenes</em> genomes in this tutorial.</p>
-<div class="codehilite"><pre><span></span>wget https://github.com/HadrienG/tutorials/blob/master/data/pangenome.tar.gz
-tar xzf pangenome.tar.gz
-<span class="nb">cd</span> pangenome
+<p>We'll data from <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006258">this article</a> and analyse the core and accessory genomes of <em>E. coli strains</em></p>
+<p>Firstly, download the supplementary csv file containing information on all the strains using in the study.</p>
+<ul>
+<li><a href="https://doi.org/10.1371/journal.pcbi.1006258.s010">Link</a></li>
+</ul>
+<p>Then, open it in Excel (or any software that opens .csv files) and select 32 strains.
+Download these 32 strains from the ENA website!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively you can use <a href="https://github.com/enasequence/enaBrowserTools">ena browser tools</a> to download the files.
+It is available as a bioconda recipe.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="c1"># for getting 10 random strains at the command-line</span>
+cut -d<span class="s1">&#39;,&#39;</span> -f <span class="m">1</span> journal.pcbi.1006258.s010.csv <span class="p">|</span> tail -n +2 <span class="p">|</span> shuf <span class="p">|</span> head -10 &gt; strains.txt
+cat strains.txt <span class="p">|</span> parallel enaGroupGet -f fastq <span class="o">{}</span>
 </pre></div>
 
 
-<p>These genomes correspond to isolates of <em>L. monocytogenes</em> reported in</p>
-<blockquote>
-<p>Xiangyu Deng, Adam M Phillippy, Zengxin Li, Steven L Salzberg and Wei Zhang. (2010) Probing the pan-genome of Listeria monocytogenes: new insights into intraspecific niche expansion and genomic diversification. doi:10.1186/1471-2164-11-500</p>
-</blockquote>
-<p>The six genomes you downloaded were selected based on their level of completeness (finished; contigs, etc) and their genotype (type I-III):</p>
-<table>
-<thead>
-<tr>
-<th>Genome Assembly</th>
-<th>Genome Accession</th>
-<th>Genotype</th>
-<th>Sequenced by</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GCA_000026705</td>
-<td>FM242711</td>
-<td>type I</td>
-<td>Institut_Pasteur</td>
-<td>Finished</td>
-</tr>
-<tr>
-<td>GCA_000008285</td>
-<td>AE017262</td>
-<td>type I</td>
-<td>TIGR</td>
-<td>Finished</td>
-</tr>
-<tr>
-<td>GCA_000168815</td>
-<td>AATL00000000</td>
-<td>type I</td>
-<td>Broad Institute</td>
-<td>79 contigs</td>
-</tr>
-<tr>
-<td>GCA_000196035</td>
-<td>AL591824</td>
-<td>type II</td>
-<td>European Consortium</td>
-<td>Finished</td>
-</tr>
-<tr>
-<td>GCA_000168635</td>
-<td>AARW00000000</td>
-<td>type II</td>
-<td>Broad Institute</td>
-<td>25 contigs</td>
-</tr>
-<tr>
-<td>GCA_000021185</td>
-<td>CP001175</td>
-<td>type III</td>
-<td>MSU</td>
-<td>Finished</td>
-</tr>
-</tbody>
-</table>
-<h2 id="annotation-of-the-genomes">Annotation of the genomes<a class="headerlink" href="#annotation-of-the-genomes" title="Permanent link">&para;</a></h2>
-<p>By annotating the genomes we mean to add information regarding genes, their location, strandedness, and features and attributes. Now that you have the genomes, we need to annotate them to determine the location and attributes of the genes contained in them. We will use Prokka for the annotation.</p>
-<div class="codehilite"><pre><span></span>prokka --kingdom Bacteria --outdir prokka_GCA_000008285 --genus Listeria --locustag GCA_000008285 GCA_000008285.1_ASM828v1_genomic.fna
+<p>if you wish to use the same strains as your instructor:</p>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/s43mv/download
+cat strains.txt <span class="p">|</span> parallel enaGroupGet -f fastq <span class="o">{}</span>
 </pre></div>
 
 
-<p>Annotate the 6 genomes, by replacing the <code>-outdir</code> and <code>-locustag</code> and <code>fasta file</code> accordingly.</p>
+<p>and then put all the reads in the same directory</p>
+<div class="codehilite"><pre><span></span>mkdir reads
+mv ERS*/*/*.fastq.gz reads/
+rm -r ERS*
+</pre></div>
+
+
+<h2 id="assemble-and-annotate-the-strains">Assemble and Annotate the strains<a class="headerlink" href="#assemble-and-annotate-the-strains" title="Permanent link">&para;</a></h2>
+<p>You'll assemble your strains with megahit.</p>
+<div class="codehilite"><pre><span></span>mkdir assemblies
+<span class="k">for</span> r1 in reads/*_1.fastq.gz
+<span class="k">do</span>
+    <span class="nv">prefix</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$r1</span> _1.fastq.gz<span class="k">)</span>
+    <span class="nv">r2</span><span class="o">=</span>reads/<span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>_2.fastq.gz
+    megahit -1 <span class="nv">$r1</span> -2 <span class="nv">$r2</span> -o <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span> --out-prefix <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span> 
+    mv <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>/<span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>.contigs.fa assemblies/
+    rm -r <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>
+<span class="k">done</span>
+</pre></div>
+
+
+<p>and use prokka to annotate</p>
+<div class="codehilite"><pre><span></span>mkdir annotation
+<span class="k">for</span> assembly in assemblies/*.fa
+<span class="k">do</span>
+    <span class="nv">prefix</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$assembly</span> .contigs.fa<span class="k">)</span>
+    prokka --usegenus --genus Escherichia --species coli --strain <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span> <span class="se">\</span>
+        --outdir <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span> --prefix <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span> <span class="si">${</span><span class="nv">assembly</span><span class="si">}</span> 
+    mv <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>/<span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>.gff annotation/
+    rm -r <span class="si">${</span><span class="nv">prefix</span><span class="si">}</span>
+<span class="k">done</span>
+</pre></div>
+
+
 <h2 id="pan-genome-analysis_1">Pan-genome analysis<a class="headerlink" href="#pan-genome-analysis_1" title="Permanent link">&para;</a></h2>
-<p>put all the .gff files in the same folder (e.g., ./gff) and run Roary</p>
-<p><code>roary -f results -e -n -v gff/*.gff</code></p>
+<p>put all the .gff files in the same folder (e.g., <code>./gff</code>) and run Roary</p>
+<div class="codehilite"><pre><span></span>roary -f roary -e -n -v annotation/*.gff
+</pre></div>
+
+
 <p>Roary will get all the coding sequences, convert them into protein, and create pre-clusters. Then, using BLASTP and MCL, Roary will create clusters, and check for paralogs. Finally, Roary will take every isolate and order them by presence/absence of orthologs. The summary output is present in the <code>summary_statistics.txt</code> file.</p>
 <p>Additionally, Roary produces a <code>gene_presence_absence.csv</code> file that can be opened in any spreadsheet software to manually explore the results. In this file, you will find information such as gene name and gene annotation, and, of course, whether a gene is present in a genome or not.</p>
 <h2 id="plotting-the-result">Plotting the result<a class="headerlink" href="#plotting-the-result" title="Permanent link">&para;</a></h2>
 <p>Roary comes with a python script that allows you to generate a few plots to graphically assess your analysis output.</p>
 <p>First, we need to generate a tree file from the alignment generated by Roary:</p>
-<div class="codehilite"><pre><span></span>FastTree –nt –gtr core_gene_alignment.aln &gt; my_tree.newick
+<div class="codehilite"><pre><span></span>cd roary
+FastTree –nt –gtr core_gene_alignment.aln &gt; my_tree.newick
 </pre></div>
 
 
-<p>Then we can plot the Roary results:</p>
-<div class="codehilite"><pre><span></span>roary_plots.py my_tree.newick gene_presence_absence.csv
+<p>Then we can plot the Roary results with <code>roary_plots.py</code>, a community contriubuted python script to visualise roary results:</p>
+<div class="codehilite"><pre><span></span>wget https://raw.githubusercontent.com/sanger-pathogens/Roary/master/contrib/roary_plots/roary_plots.py
+python roary_plots.py
+roary_plots.py my_tree.newick gene_presence_absence.csv
 </pre></div>
+
+
+<p>then look at the 3 <code>/png</code> files that have been generated</p>
                 
                   
                 

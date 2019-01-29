@@ -362,6 +362,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#lecture" title="Lecture" class="md-nav__link">
+    Lecture
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#input-data" title="Input data" class="md-nav__link">
     Input data
   </a>
@@ -575,6 +582,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#lecture" title="Lecture" class="md-nav__link">
+    Lecture
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#input-data" title="Input data" class="md-nav__link">
     Input data
   </a>
@@ -615,17 +629,33 @@
                 
                 
                 <h1 id="genome-annotation">Genome Annotation<a class="headerlink" href="#genome-annotation" title="Permanent link">&para;</a></h1>
+<h2 id="lecture">Lecture<a class="headerlink" href="#lecture" title="Permanent link">&para;</a></h2>
+<p><br></p>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTERGc6gJyJeGylr6xzXvioMFixfI6x9XIT8QHqC8XIq8cP3KHe6PUuumbMrunSCVlbFhFJaVh2wvMh/embed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
 <p>After you have de novo assembled your genome sequencing reads into contigs, it is useful to know what genomic features are on those contigs. The process of identifying and labelling those features is called genome annotation.</p>
-<p>Prokka is a “wrapper”; it collects together several pieces of software (from various authors), and so avoids “re-inventing the wheel”.</p>
-<p>Prokka finds and annotates features (both protein coding regions and RNA genes, i.e. tRNA, rRNA) present on on a sequence. Prokka uses a two-step process for the annotation of protein coding regions: first, protein coding regions on the genome are identified using <a href="http://prodigal.ornl.gov">Prodigal</a>; second, the function of the encoded protein is predicted by similarity to proteins in one of many protein or protein domain databases. Prokka is a software tool that can be used to annotate bacterial, archaeal and viral genomes quickly, generating standard output files in GenBank, EMBL and gff formats. More information about Prokka can be found <a href="https://github.com/tseemann/prokka">here</a>.</p>
+<p>Prokka is a "wrapper"; it collects together several pieces of software (from various authors), and so avoids "re-inventing the wheel".</p>
+<p>Prokka finds and annotates features (both protein coding regions and RNA genes, i.e. tRNA, rRNA) present on on a sequence. Prokka uses a two-step process for the annotation of protein coding regions: first, protein coding regions on the genome are identified using <a href="http://compbio.ornl.gov/prodigal/">Prodigal</a>; second, the function of the encoded protein is predicted by similarity to proteins in one of many protein or protein domain databases. Prokka is a software tool that can be used to annotate bacterial, archaeal and viral genomes quickly, generating standard output files in GenBank, EMBL and gff formats. More information about Prokka can be found <a href="https://github.com/tseemann/prokka">here</a>.</p>
 <h2 id="input-data">Input data<a class="headerlink" href="#input-data" title="Permanent link">&para;</a></h2>
-<p>Prokka requires assembled contigs. You will need your best assembly from the assembly tutorial.</p>
-<p>Alternatively, you can download an assembly <a href="https://raw.githubusercontent.com/HadrienG/tutorials/master/data/assembly.fasta">here</a></p>
+<p>Prokka requires assembled contigs. You can prepare you working directory for this annotation tutorial.</p>
+<div class="codehilite"><pre><span></span>mkdir ~/annotation
+<span class="nb">cd</span> ~/annotation
+</pre></div>
+
+
+<p>You will download an improved assembly of <em>Mycoplasma genitalium</em> into you data directory:</p>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/7eaky/download
+</pre></div>
+
+
+<p>You will also need a proteins set specific of Mycoplasma for the annotation. Here is a file containing the Mycoplasma proteins retrieved from Swiss-Prot database (3041 sequences)</p>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/xjm3n/download
+</pre></div>
+
+
 <h2 id="running-prokka">Running prokka<a class="headerlink" href="#running-prokka" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">load</span> <span class="n">prokka</span>
-<span class="n">awk</span> <span class="s">&#39;/^&gt;/{print &quot;&gt;ctg&quot; ++i; next}{print}&#39;</span> &lt; <span class="n">assembly</span>.<span class="n">fasta</span> &gt; <span class="n">good_contigs</span>.<span class="n">fasta</span>
-<span class="n">prokka</span> --<span class="n">outdir</span> <span class="n">annotation</span> --<span class="n">kingdom</span> <span class="n">Bacteria</span> \
---<span class="n">proteins</span> <span class="n">m_genitalium</span>.<span class="n">faa</span> <span class="n">good_contigs</span>.<span class="n">fasta</span>
+<div class="codehilite"><pre><span></span>prokka --outdir annotation --kingdom Bacteria <span class="se">\</span>
+--proteins uniprot_mycoplasma_reviewed.faa m_genetalium_improved.fasta
 </pre></div>
 
 

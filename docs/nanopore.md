@@ -51,7 +51,7 @@ wtpoa-cns -i assembly.ctg.lay -fo assembly.ctg.fa
 
 ## Polishing
 
-Since the miniasm assembly likely contains a lot if errors, we correct it with Illumina reads.
+Since the assembly likely contains a lot if errors, we correct it with Illumina reads.
 
 First we map the short reads against the assembly
 
@@ -82,7 +82,7 @@ Go to [https://www.ncbi.nlm.nih.gov](https://www.ncbi.nlm.nih.gov) and search fo
 Download the associated genome in fasta format and rename it to `ecoli_ref.fasta`
 
 ```bash
-nucmer --maxmatch -c 100 -p ecoli ERR1147227_trimmed.fastq ecoli_ref.fasta
+nucmer --maxmatch -c 100 -p ecoli assembly_polished.fasta ecoli_ref.fasta
 mummerplot --fat --filter --png --large -p ecoli ecoli.delta
 ```
 
@@ -91,7 +91,7 @@ then take a look at `ecoli.png`
 ### compare metrics
 
 !!! note
-First you need to assembly the illumina data
+First you need to assemble the illumina data
 
 Then run busco and quast on the 3 assemblies
 
@@ -100,12 +100,10 @@ which assembly would you say is the best?
 
 ## Annotation
 
-If you havw time, train your annotation skills by running prokka on your genome!
+If you have time, train your annotation skills by running prokka on your genome!
 
 ```bash
-awk '/^>/{print ">ctg" ++i; next}{print}' < assembly_polished.fasta \
-    > assembly_polished_formatted.fasta
-prokka --outdir annotation --kingdom Bacteria assembly_polished_formatted.fasta
+prokka --outdir annotation --kingdom Bacteria assembly_polished.fasta
 ```
 
 You can open the output to see how it went

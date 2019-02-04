@@ -734,8 +734,8 @@ curl -O -J -L https://osf.io/zax3c/download
 <h2 id="assembly">Assembly<a class="headerlink" href="#assembly" title="Permanent link">&para;</a></h2>
 <p>We assemble the reads using wtdbg2 (version &gt; 2.3)</p>
 <div class="codehilite"><pre><span></span>head -n <span class="m">20000</span> ecoli_allreads.fasta &gt; subset.fasta
-wtdbg2 -x rs -i subset.fasta -fo assembly
-wtpoa-cns -i assembly.ctg.lay -fo assembly.ctg.fa
+wtdbg2 -x ont -i subset.fasta -fo assembly
+wtpoa-cns -i assembly.ctg.lay.gz -fo assembly.ctg.fa
 </pre></div>
 
 
@@ -745,13 +745,13 @@ wtpoa-cns -i assembly.ctg.lay -fo assembly.ctg.fa
 <div class="codehilite"><pre><span></span>bowtie2-build assembly.ctg.fa assembly
 bowtie2 -x assembly -1 ecoli_hiseq_R1.fastq.gz -2 ecoli_hiseq_R2.fastq.gz | \
     samtools view -bS -o assembly_short_reads.bam
-samtools sort assembly_short.bam -o assembly_short_sorted.bam
+samtools sort assembly_short_reads.bam -o assembly_short_sorted.bam
 samtools index assembly_short_sorted.bam
 </pre></div>
 
 
 <p>then we run the consensus step</p>
-<div class="codehilite"><pre><span></span>samtools view assembly_short_sorted.bam | ./wtpoa-cns -t 16 -x sam-sr \
+<div class="codehilite"><pre><span></span>samtools view assembly_short_sorted.bam | wtpoa-cns -t 16 -x sam-sr \
     -d assembly.ctg.fa -i - -fo assembly_polished.fasta
 </pre></div>
 

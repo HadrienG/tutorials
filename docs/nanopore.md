@@ -45,8 +45,8 @@ We assemble the reads using wtdbg2 (version > 2.3)
 
 ```bash
 head -n 20000 ecoli_allreads.fasta > subset.fasta
-wtdbg2 -x rs -i subset.fasta -fo assembly
-wtpoa-cns -i assembly.ctg.lay -fo assembly.ctg.fa
+wtdbg2 -x ont -i subset.fasta -fo assembly
+wtpoa-cns -i assembly.ctg.lay.gz -fo assembly.ctg.fa
 ```
 
 ## Polishing
@@ -59,14 +59,14 @@ First we map the short reads against the assembly
 bowtie2-build assembly.ctg.fa assembly
 bowtie2 -x assembly -1 ecoli_hiseq_R1.fastq.gz -2 ecoli_hiseq_R2.fastq.gz | \
     samtools view -bS -o assembly_short_reads.bam
-samtools sort assembly_short.bam -o assembly_short_sorted.bam
+samtools sort assembly_short_reads.bam -o assembly_short_sorted.bam
 samtools index assembly_short_sorted.bam
 ```
 
 then we run the consensus step
 
 ```
-samtools view assembly_short_sorted.bam | ./wtpoa-cns -t 16 -x sam-sr \
+samtools view assembly_short_sorted.bam | wtpoa-cns -t 16 -x sam-sr \
     -d assembly.ctg.fa -i - -fo assembly_polished.fasta
 ```
 

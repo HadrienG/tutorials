@@ -45,26 +45,18 @@ fastqc Dol1_*.fastq.gz
 !!! question
     Compared to single genome sequencing, which graphs differ?
 
-Removing adapters with Scythe
+## Quality control with Fastp
+We will removing the adapters and trim by quality.
 
-The first thing we need is the adapters to trim off
-
+Now we run fastp our read files
 ```bash
-curl -O -J -L https://osf.io/v24pt/download
+fastp -i Dol1_S19_L001_R1_001.fastq.gz -o Dol1_trimmed_R1.fastq \
+ -I Dol1_S19_L001_R2_001.fastq.gz -O Dol1_trimmed_R2.fastq \
+ --detect_adapter_for_pe --length_required 30 \
+ --cut_front --cut_tail --cut_mean_quality 20
 ```
 
-Now we run scythe on both our read files
-```bash
-scythe -a adapters.fasta -o Dol1_adapt_R1.fastq Dol1_S19_L001_R1_001.fastq.gz
-scythe -a adapters.fasta -o Dol1_adapt_R2.fastq Dol1_S19_L001_R2_001.fastq.gz
-```
-
-Now we'll trim the reads using sickle
-
-```
-sickle pe -f Dol1_adapt_R1.fastq -r Dol1_adapt_R2.fastq -t sanger \
-    -o Dol1_trimmed_R1.fastq -p Dol1_trimmed_R2.fastq -s /dev/null -q 25
-```
+Check the html report produced.
 
 !!! question
     How many reads were trimmed?
@@ -72,84 +64,113 @@ sickle pe -f Dol1_adapt_R1.fastq -r Dol1_adapt_R2.fastq -t sanger \
 ## Removing the host sequences by mapping/aligning on the dolphin genome
 
 For this we will use Bowtie2.
-We have downloaded the genome of Tursiops truncatus from Ensembl (fasta file).
+We have downloaded the genome of Tursiops truncatus from Ensembl (fasta file). Then we have run the following command to produce the indexes of the dolphin genome for Bowtie2 (do not run it, we have pre-calculated the results for you):
 
-Alternatively, you can get it from ensembl FTP:
-```
-curl -O -J -L ftp://ftp.ensembl.org/pub/release-94/fasta/tursiops_truncatus/dna/Tursiops_truncatus.turTru1.dna.toplevel.fa.gz
-```
-
-Then we have built the Bowtie2 indexes for this genomes using the following command (do not run it, we have pre-calculated the results for you):
 ```
 bowtie2-build Tursiops_truncatus.turTru1.dna.toplevel.fa Tursiops_truncatus
 ```
 
-First we will copy the bowtie indexed of the dolphin genome into our results directory:
+Because this step takes a while, we have precomputed the index files, you can get them from here:
 
 ```
-cp /opt/dolphin/Tursiops_truncatus*.bt* .
+curl ...
+```
+
+First we will extract the bowtie indexes of the dolphin genome into our results directory:
+
+```
+tar -xzvf ...
 ```
 
 Now we are ready to map our sequencing reads on the dolphin genome:
 ```
-bowtie2
+bowtie2 -x host_genome/Tursiops_truncatus \
+-1 Dol1_trimmed_R1.fastq -2 Dol1_trimmed_R2.fastq \
+-S dol_map.sam --un-conc Dol_reads_unmapped.fastq --threads 4
 ```
-
+!!! question
+    How many reads mapped on the dolphin genome?
 
 ## Taxonomic classification of the trimmed reads
 
-We will use Kaiju for the classification of the produced contigs. As we are mainly interested in detecting the viral sequences in our dataset and we want to reduce the computing time and the memory needed, we have built a viruses-only database.
+We will use Kaiju for the classification of the produced contigs. As we are mainly interested in detecting the viral sequences in our dataset and we want to reduce the computing time and the memory needed, we will build a viruses-only database.
 
 ```bash
-kaiju -t /opt/kaijudb/nodes.dmp -f /opt/kaijudb/kaiju_db.fmi -i Dol1_trimmed_R1.fastq -j Dol1_trimmed_R2.fastq -o Dol1_trimmed_reads_kaiju.out
+# Kaiju needs to be installed
+cd
+mkdir -p databases/kaijudb
+cd databases/kaijudb
+makeDB.sh -v
 ```
 
-In order to visualise the results, we will produce a Krona chart
+Once the database built, Kaiju tells us that we need only 3 files:
+Then other files and directories can be removed
 
 ```bash
-kaiju2krona -t /opt/kaijudb/nodes.dmp -n /opt/kaijudb/names.dmp -i Dol1_trimmed_reads_kaiju.out -o Dol1_trimmed_reads_kaiju.krona -u
+# Removing un-needed things
+rm -r genomes/
+rm kaiju_db.bwt
+rm kaiju_db.sa
+rm merged.dmp
+rm kaiju_db.faa
+```
 
-ktImportText -o Dol1_trimmed_reads_kaiju.krona.html Dol1_trimmed_reads_kaiju.krona
+We are now ready to run Kaiju on our trimmed reads
+
+```bash
+cd dolphin/results
+kaiju -t ~/databases/kaijudb/nodes.dmp -f ~/databases/kaijudb/kaiju_db.fmi \
+ -i Dol_reads_unmapped.1.fastq -j Dol_reads_unmapped.2.fastq \
+ -o Dol1_reads_kaiju.out
+```
+
+In order to visualise the results, we will produce a Krona chart.
+This step requires to have KronaTools installed:
+```
+conda install -c bioconda krona
+```
+
+```bash
+kaiju2krona -t ~/databases/kaijudb/nodes.dmp -n ~/databases/kaijudb/names.dmp \
+-i Dol1_reads_kaiju.out -o Dol1_reads_kaiju.krona -u
+
+ktImportText -o Dol1_reads_kaiju.krona.html Dol1_reads_kaiju.krona
 
 ```
 
 !!! note
     If we were interested in bacteria and had a databases containing them, we could also use the command kaijuReport to get a text summary. Unfortunately, it does not provide taxonomic levels for viruses.
 
-Then we copy it locally to visualise in our web browser.
-From the terminal on our laptop, we move to the place where we want to have the chart (cd) and then copy:
-```bash
-scp studentX@ebiokit_ip:~/dolphin/results/*krona.html .
-```
+Then we copy the produced html file locally to visualise in our web browser.
 
-!!! note
-    You need to change the X by your student number and *ebiokit_ip* by the correct ip address provided by your instructor
 
 ## Assembly
 
 Megahit will be used for the *de novo* assembly of the metagenome.
 
 ```
-megahit -1 Dol1_trimmed_R1.fastq -2 Dol1_trimmed_R2.fastq -o Dol1_assembly
+megahit -1 Dol_reads_unmapped.1.fastq -2 Dol_reads_unmapped.2.fastq -o assembly
 ```
 
-The resulting assembly can be found under `Dol1_assembly/final.contigs.fa`.
+The resulting assembly can be found under `assembly/final.contigs.fa`.
 
 !!! question
     How many contigs does this assembly contain? Is there any long contig?
 
-## Taxonomic classification
+## Taxonomic classification of contigs
 
 We will use Kaiju again with the same viruses-only database for the classification of the produced contigs.
 
 ```bash
-cd Dol1_assembly
+cd assembly
 
-kaiju -t /opt/kaiju/kaijudb/nodes.dmp -f /opt/kaiju/kaijudb/kaiju_db.fmi -i final.contigs.fa -o Dol1_contigs_kaiju.out
+kaiju -t ~/databases/kaijudb/nodes.dmp -f ~/databases/kaijudb/kaiju_db.fmi \
+ -i final.contigs.fa -o Dol1_contigs_kaiju.out
 ```
 Then we produce the Krona chart:
 ```bash
-kaiju2krona -t /opt/kaijudb/nodes.dmp -n /opt/kaijudb/names.dmp -i Dol1_contigs_kaiju.out -o Dol1_contigs_kaiju.krona -u
+kaiju2krona -t ~/databases/kaijudb/nodes.dmp -n ~/databases/kaijudb/names.dmp \
+ -i Dol1_contigs_kaiju.out -o Dol1_contigs_kaiju.krona -u
 
 ktImportText -o Dol1_contigs_kaiju.krona.html Dol1_contigs_kaiju.krona
 ```
@@ -162,7 +183,7 @@ ktImportText -o Dol1_contigs_kaiju.krona.html Dol1_contigs_kaiju.krona
 Let's go for a little practice of your Unix skills!
 
 !!! question
-    Find a way to save all the contigs headers. They look like this:
+    Find a way to to find the longest contig. They look like this:
 ```
 >k141_1 flag=1 multi=1.0000 len=301
 >k141_2 flag=1 multi=1.0000 len=303
@@ -170,12 +191,12 @@ Let's go for a little practice of your Unix skills!
 
 **hint 1**: all lines containing '>'
 
-**hint 2**: use grep and the file redirection
+**hint 2**: use grep and sed
 
 Once we have this file, we want to sort all the sequences headers by the sequence length (len=X):
 
-```
-cat final.contigs.fa | grep ">" | sed s/len=// | sort -k4,4n | cut -d ' ' -f1 | cut -c2- | tail -1
+```bash
+cat final.contigs.fa | grep ">" | sed s/len=// | sort -k4,4n | tail -1
 ```
 
 !!! question
@@ -183,7 +204,7 @@ cat final.contigs.fa | grep ">" | sed s/len=// | sort -k4,4n | cut -d ' ' -f1 | 
 
 Now that you have identified the sequence header or id of the longest contig, you want to save it to a fasta file.
 
-```
+```bash
 grep -i '>k141_XXX' -A 1 > longest_contig.fasta
 ```
 
@@ -205,26 +226,27 @@ classification status (C/U), sequence id, assigned TaxID.
 
 ## Genome annotation of the contig of interest
 
-Once the contig to annotate is extracted and saved in the file longest_contig.fasta, we will use Prodigal to detect ORFs (Open Reading Frames) in order to predict genes and their resulting proteins.
+Once the contig to annotate is extracted and saved in the file longest_contig.fasta, we will use Prokka to detect ORFs (Open Reading Frames) in order to predict genes and their resulting proteins.
+
+First, go to Uniprot database and retrieve a set of protein sequences
+beloonging to adenoviruses. Save the file as `adenovirus.faa` and copy it in
+your results directory.
 
 ```bash
-prodigal -i longest_contig.fasta -g 1 -o longest_contig_prodigal.gff -f gff -a longest_contig_prodigal_prot.faa -s longest_contig_prodigal_genes.fasta
+prokka --outdir annotation --kingdom Viruses \
+--proteins adenovirus.faa longest_contig.fasta
 ```
 
 !!! question
     How many genes and proteins were predicted?
 
-Now that we have done the structural annotation, *i.e.* prediction of the genes genomic location, we will proceed to the functional annotation, *i.e.* predict the proteins functions. We will use Blast to do this.
-
-```
-blastp ...
-```
-
 ## Visualization and manual curation.
 
-If there is some time left, you can download Ugene from the eBioKit and install is on your computer.
-Then you can copy the produced gff file and add the functions to the predicted proteins.
+If there is some time left, you can visualise the produced annotation (gff file)
+in Ugene or Artemis for example.
 
-## Alternative solution for annotation of prokaryotic and viral genomes
 
-For doing the structural and functional annotation by using one single tool, we recommend to use [Prokka]().
+## Go further with proteins functions
+
+For the predicted proteins that are left "hypotetical", you can try running
+[Interproscan](https://www.ebi.ac.uk/interpro/search/sequence-search) on them to get more information on domains and motifs.

@@ -1,6 +1,6 @@
 # Viral Metagenome from a dolphin sample: hunting for a disease causing virus
 
-In this tutorial you will learn how to investigate metagenomic data and retrieve draft genome from an assembled metagenome.
+In this tutorial you will learn how to investigate metagenomics data and retrieve draft genome from an assembled metagenome.
 
 We will use a real dataset published in 2017 in a study in dolphins,
 where fecal samples where prepared for viral metagenomics study.
@@ -53,7 +53,7 @@ Now we run fastp our read files
 fastp -i Dol1_S19_L001_R1_001.fastq.gz -o Dol1_trimmed_R1.fastq \
  -I Dol1_S19_L001_R2_001.fastq.gz -O Dol1_trimmed_R2.fastq \
  --detect_adapter_for_pe --length_required 30 \
- --cut_front --cut_tail --cut_mean_quality 20
+ --cut_front --cut_tail --cut_mean_quality 10
 ```
 
 Check the html report produced.
@@ -73,13 +73,13 @@ bowtie2-build Tursiops_truncatus.turTru1.dna.toplevel.fa Tursiops_truncatus
 Because this step takes a while, we have precomputed the index files, you can get them from here:
 
 ```
-curl ...
+curl -O -J -L https://osf.io/wfk9t/download
 ```
 
 First we will extract the bowtie indexes of the dolphin genome into our results directory:
 
 ```
-tar -xzvf ...
+tar -xzvf host_genome.tar.gz
 ```
 
 Now we are ready to map our sequencing reads on the dolphin genome:
@@ -229,7 +229,7 @@ classification status (C/U), sequence id, assigned TaxID.
 Once the contig to annotate is extracted and saved in the file longest_contig.fasta, we will use Prokka to detect ORFs (Open Reading Frames) in order to predict genes and their resulting proteins.
 
 First, go to Uniprot database and retrieve a set of protein sequences
-beloonging to adenoviruses. Save the file as `adenovirus.faa` and copy it in
+belonging to adenoviruses. Save the file as `adenovirus.faa` and copy it in
 your results directory.
 
 ```bash

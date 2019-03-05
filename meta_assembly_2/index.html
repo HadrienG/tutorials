@@ -612,13 +612,17 @@ diamond makedb --in uniprot_sprot.fasta.gz --db uniprot_sprot -p <span class="m"
 </div>
 <p>It is very possible the swissprot database is too small for finding meaningful hits for undersequenced / poorly known organisms.</p>
 <p>Let us try with another piece of software, kraken2</p>
-<div class="codehilite"><pre><span></span>curl -O https://ccb.jhu.edu/software/kraken2/dl/minikraken2_v1_8GB.tgz
-tar xf minikraken2_v1_8GB.tgz 
+<div class="codehilite"><pre><span></span>sudo mkdir /mnt/kraken2
+<span class="nb">cd</span> /mnt/kraken2
+sudo curl -O https://ccb.jhu.edu/software/kraken2/dl/minikraken2_v1_8GB.tgz
+sudo tar xf minikraken2_v1_8GB.tgz 
+sudo chmod +r *
+<span class="nb">cd</span> -
 </pre></div>
 
 
-<p>and then</p>
-<div class="codehilite"><pre><span></span>kraken2 --memory-mapping --db . --threads <span class="m">4</span> --output bin2_kraken.txt --report bin2_kraken_report.txt metabat/bin.2.fa
+<p>and then (don't forget to move back to your results directory if you haven't)</p>
+<div class="codehilite"><pre><span></span>kraken2 --memory-mapping --db /mnt/kraken2 --threads <span class="m">4</span> --output bin2_kraken.txt --report bin2_kraken_report.txt metabat/bin.2.fa
 </pre></div>
 
 

@@ -68,21 +68,6 @@ cd sub_100000
 We'll use FastQC to check the quality of our data.
 FastQC should be already installed on your VM, so you need to type
 
-```
-fastqc
-```
-
-When FastQC has started you can select the fastq file you just downloaded with `file -> open`  
-What do you think about the quality of the reads? Do they need trimming? Are there still adapters
-present? Overrepresented sequences?
-
-
-!!! note
-    FastQC can be downloaded and run on a Windows or Linux computer without installation.
-    It is available [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-
-Alternatively, run fastqc on the command-line:
-
 ```bash
 fastqc *.fastq
 ```
@@ -138,22 +123,8 @@ Kraken includes a script called `kraken-report` to transform this file into a "t
 
 Pavian is a web application for exploring metagenomics classification results.
 
-First, go in Rstudio server by typing the address to your server in your browser:
 
-`http://MY_IP_ADDRESS:8787/`
-
-where you replace `MY_IP_ADDRESS` by the IP address of your Virtual Machine.
-
-!!! note
-    To access Rstudio server on the virtual machine, you'll need a password.
-    Ask your instructor for the password!
-
-!!! note
-    If you wish, you may work on Rstudio on your own laptop if it is powerful enough.
-    You will need an up-to-date version of R, and can install the necessary packages using [this script](https://osf.io/a7kqz/download)
-
-
-Install and run Pavian:
+Install and run Pavian from R:
 
 
 ```R

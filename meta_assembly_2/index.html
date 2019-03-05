@@ -579,8 +579,8 @@ In this tutorial, you'll learn a few ways of identyfying (or attempting to ident
 <p>This tutorial focuses on one particular genome bin but you can download the necessary data by executing the code block below.</p>
 <div class="codehilite"><pre><span></span>mkdir -p ~/mag/data
 <span class="nb">cd</span> ~/mag/data
-<span class="c1"># TODO link here</span>
-chmod -w *.fa.gz
+curl -O -J -L https://osf.io/d65jm/download
+chmod -w *.fa
 </pre></div>
 
 
@@ -628,22 +628,16 @@ tar xf minikraken2_v1_8GB.tgz
 </div>
 <h2 id="functional-annotation">Functional annotation<a class="headerlink" href="#functional-annotation" title="Permanent link">&para;</a></h2>
 <p>Now that we have at least a genus for our organism, let us try to look at what it does:</p>
-<div class="codehilite"><pre><span></span><span class="c1"># TODO prokka download</span>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/7k5tv/download
 </pre></div>
 
 
-<p>then we download the Actinobacteria models necessary for the functional annotation</p>
-<div class="codehilite"><pre><span></span>mkdir /home/student/miniconda3/lib/python2.7/site-packages/data
-download_eggnog_data.py actNOG
+<p>then we add functional categories to our genes using eggnog-mapper:</p>
+<div class="codehilite"><pre><span></span>emapper.py --data_dir /mnt/nog/ -d actNOG -i annotation/bin.2/bin.2.faa --no_refine -o bin2_NOG
 </pre></div>
 
 
-<p>then we add functional categories to our genes:</p>
-<div class="codehilite"><pre><span></span>emapper.py -d actNOG -i annotation/bin.2/bin.2.faa --no_refine -o bin2_NOG
-</pre></div>
-
-
-<p>and we download <code>bin2_NOG.emapper.annotations</code> to our own computers</p>
+<p>and we download <code>bin2_NOG.emapper.annotations</code> to our own computers for downstream analysis</p>
 <h2 id="rpob-phylogeny">rpoB phylogeny<a class="headerlink" href="#rpob-phylogeny" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>

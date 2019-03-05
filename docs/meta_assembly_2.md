@@ -13,8 +13,8 @@ This tutorial focuses on one particular genome bin but you can download the nece
 ```bash
 mkdir -p ~/mag/data
 cd ~/mag/data
-# TODO link here
-chmod -w *.fa.gz
+curl -O -J -L https://osf.io/d65jm/download
+chmod -w *.fa
 ```
 
 ## Ribosomal RNA
@@ -72,23 +72,16 @@ kraken2 --memory-mapping --db . --threads 4 --output bin2_kraken.txt --report bi
 Now that we have at least a genus for our organism, let us try to look at what it does:
 
 ```bash
-# TODO prokka download
+curl -O -J -L https://osf.io/7k5tv/download
 ```
 
-then we download the Actinobacteria models necessary for the functional annotation
+then we add functional categories to our genes using eggnog-mapper:
 
 ```bash
-mkdir /home/student/miniconda3/lib/python2.7/site-packages/data
-download_eggnog_data.py actNOG
+emapper.py --data_dir /mnt/nog/ -d actNOG -i annotation/bin.2/bin.2.faa --no_refine -o bin2_NOG
 ```
 
-then we add functional categories to our genes:
-
-```bash
-emapper.py -d actNOG -i annotation/bin.2/bin.2.faa --no_refine -o bin2_NOG
-```
-
-and we download `bin2_NOG.emapper.annotations` to our own computers
+and we download `bin2_NOG.emapper.annotations` to our own computers for downstream analysis
 
 ## rpoB phylogeny
 

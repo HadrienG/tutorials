@@ -35,11 +35,6 @@ pages:
         - Metabarcoding: 16S.md
         - Whole Metagenome Sequencing: wms.md
         - Metagenome assembly: meta_assembly.md
+        - Metagenome assembly (continued): meta_assembly_2.md
         - RNA-Seq: rna.md
         - Introduction to Nanopore Sequencing: nanopore.md
-    - Microbiome week:
-        - The command-line: command_line.md
-        - Quality Control and Trimming: qc.md
-        - Metabarcoding: 16S.md
-        - Whole Metagenome Sequencing: wms.md
-        - Metagenome assembly: meta_assembly.md

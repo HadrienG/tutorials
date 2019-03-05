@@ -36,7 +36,7 @@
     
     
       
-        <title>Introduction to Nanopore Sequencing - Bioinformatics Tutorials</title>
+        <title>Metagenome assembly (continued) - Bioinformatics Tutorials</title>
       
     
     
@@ -99,7 +99,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#introduction-to-nanopore-sequencing" tabindex="1" class="md-skip">
+      <a href="#metagenome-assembly-and-binning-continued" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -125,7 +125,7 @@
                 Bioinformatics Tutorials
               </span>
               <span class="md-header-nav__topic">
-                Introduction to Nanopore Sequencing
+                Metagenome assembly (continued)
               </span>
             
           
@@ -393,11 +393,77 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../meta_assembly_2/" title="Metagenome assembly (continued)" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Metagenome assembly (continued)
+      </label>
+    
+    <a href="./" title="Metagenome assembly (continued)" class="md-nav__link md-nav__link--active">
       Metagenome assembly (continued)
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-the-data" title="Getting the Data" class="md-nav__link">
+    Getting the Data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ribosomal-rna" title="Ribosomal RNA" class="md-nav__link">
+    Ribosomal RNA
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assigning-taxonomy-to-each-contig" title="Assigning taxonomy to each contig" class="md-nav__link">
+    Assigning taxonomy to each contig
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functional-annotation" title="Functional annotation" class="md-nav__link">
+    Functional annotation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rpob-phylogeny" title="rpoB phylogeny" class="md-nav__link">
+    rpoB phylogeny
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -417,104 +483,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Introduction to Nanopore Sequencing
-      </label>
-    
-    <a href="./" title="Introduction to Nanopore Sequencing" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../nanopore/" title="Introduction to Nanopore Sequencing" class="md-nav__link">
       Introduction to Nanopore Sequencing
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#get-the-data" title="Get the Data" class="md-nav__link">
-    Get the Data
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adapter-trimming" title="Adapter trimming" class="md-nav__link">
-    Adapter trimming
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#assembly" title="Assembly" class="md-nav__link">
-    Assembly
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#polishing" title="Polishing" class="md-nav__link">
-    Polishing
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compare-with-the-existing-assembly-and-an-illumina-only-assembly" title="Compare with the existing assembly and an illumina only assembly" class="md-nav__link">
-    Compare with the existing assembly and an illumina only assembly
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#an-existing-assembly" title="an existing assembly" class="md-nav__link">
-    an existing assembly
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compare-metrics" title="compare metrics" class="md-nav__link">
-    compare metrics
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#annotation" title="Annotation" class="md-nav__link">
-    Annotation
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -544,63 +517,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#get-the-data" title="Get the Data" class="md-nav__link">
-    Get the Data
+  <a href="#getting-the-data" title="Getting the Data" class="md-nav__link">
+    Getting the Data
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#adapter-trimming" title="Adapter trimming" class="md-nav__link">
-    Adapter trimming
+  <a href="#ribosomal-rna" title="Ribosomal RNA" class="md-nav__link">
+    Ribosomal RNA
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#assembly" title="Assembly" class="md-nav__link">
-    Assembly
+  <a href="#assigning-taxonomy-to-each-contig" title="Assigning taxonomy to each contig" class="md-nav__link">
+    Assigning taxonomy to each contig
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#polishing" title="Polishing" class="md-nav__link">
-    Polishing
+  <a href="#functional-annotation" title="Functional annotation" class="md-nav__link">
+    Functional annotation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#compare-with-the-existing-assembly-and-an-illumina-only-assembly" title="Compare with the existing assembly and an illumina only assembly" class="md-nav__link">
-    Compare with the existing assembly and an illumina only assembly
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#an-existing-assembly" title="an existing assembly" class="md-nav__link">
-    an existing assembly
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compare-metrics" title="compare metrics" class="md-nav__link">
-    compare metrics
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#annotation" title="Annotation" class="md-nav__link">
-    Annotation
+  <a href="#rpob-phylogeny" title="rpoB phylogeny" class="md-nav__link">
+    rpoB phylogeny
   </a>
   
 </li>
@@ -621,106 +567,90 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/nanopore.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/meta_assembly_2.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="introduction-to-nanopore-sequencing">Introduction to Nanopore Sequencing<a class="headerlink" href="#introduction-to-nanopore-sequencing" title="Permanent link">&para;</a></h1>
-<p>In this tutorial we will assemble the <em>E. coli</em> genome using a mix of long, error-prone reads from the MinION (Oxford Nanopore) and short reads from a HiSeq instrument (Illumina).</p>
-<p>The MinION data used in this tutorial come a test run by the <a href="http://lab.loman.net/2015/09/24/first-sqk-map-006-experiment/">Loman lab</a>.<br />
-The Illumina data were simulated using <a href="https://github.com/HadrienG/InSilicoSeq">InSilicoSeq</a></p>
-<h2 id="get-the-data">Get the Data<a class="headerlink" href="#get-the-data" title="Permanent link">&para;</a></h2>
-<p>First download the nanopore data</p>
-<div class="codehilite"><pre><span></span>wget http://s3.climb.ac.uk/nanopore/ecoli_allreads.fasta
+                <h1 id="metagenome-assembly-and-binning-continued">Metagenome assembly and binning (continued)<a class="headerlink" href="#metagenome-assembly-and-binning-continued" title="Permanent link">&para;</a></h1>
+<p>In the previous tutorial  we have seen how to recover draft genomes from raw metagenomic data.
+But we do not know what kind of organisms we have yet!</p>
+<p>Identyfying an unknown species from a genome is not always easy, especially if the species has not been described before.
+In this tutorial, you'll learn a few ways of identyfying (or attempting to identidy) an unkown genome</p>
+<h2 id="getting-the-data">Getting the Data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
+<p>This tutorial focuses on one particular genome bin but you can download the necessary data by executing the code block below.</p>
+<div class="codehilite"><pre><span></span>mkdir -p ~/mag/data
+<span class="nb">cd</span> ~/mag/data
+<span class="c1"># TODO link here</span>
+chmod -w *.fa.gz
 </pre></div>
 
 
-<p>You will not need the HiSeq data right away, but you can start the download in another window</p>
-<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/pxk7f/download
-curl -O -J -L https://osf.io/zax3c/download
+<h2 id="ribosomal-rna">Ribosomal RNA<a class="headerlink" href="#ribosomal-rna" title="Permanent link">&para;</a></h2>
+<p>The simplest thing we can do is search our draft genome for rRNA genes.
+Since these genes are usually quite conserved across species/genera, it could give us a broad idea of our organism</p>
+<div class="codehilite"><pre><span></span>barrnap -o bin2_rrna.fa bin.2.fa
+cat bin2_rrna.fa
 </pre></div>
 
 
-<p>look at basic stats of the nanopore reads</p>
-<div class="codehilite"><pre><span></span>assembly-stats ecoli_allreads.fasta
+<p>Now, Use the online Blast service to search similar sequences to the rRNA we obtained.</p>
+<h2 id="assigning-taxonomy-to-each-contig">Assigning taxonomy to each contig<a class="headerlink" href="#assigning-taxonomy-to-each-contig" title="Permanent link">&para;</a></h2>
+<p>We'll use diamond against the swissprot database for quickly assigning taxonomy to our contigs.</p>
+<p>First, we download and build the database</p>
+<div class="codehilite"><pre><span></span>curl -O ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+diamond makedb --in uniprot_sprot.fasta.gz --db uniprot_sprot -p <span class="m">4</span>
 </pre></div>
 
 
-<div class="admonition question">
-<p class="admonition-title">Question</p>
-</div>
-<p>How many nanopore reads do we have?</p>
-<div class="admonition question">
-<p class="admonition-title">Question</p>
-</div>
-<p>How long is the longest read?</p>
-<div class="admonition question">
-<p class="admonition-title">Question</p>
-</div>
-<p>What is the average read length?</p>
-<h2 id="adapter-trimming">Adapter trimming<a class="headerlink" href="#adapter-trimming" title="Permanent link">&para;</a></h2>
-<p>The guppy basecaller, i.e. the program that transform raw electrical signal in fastq files, already demultiplex and trim for us.</p>
-<h2 id="assembly">Assembly<a class="headerlink" href="#assembly" title="Permanent link">&para;</a></h2>
-<p>We assemble the reads using wtdbg2 (version &gt; 2.3)</p>
-<div class="codehilite"><pre><span></span>head -n <span class="m">20000</span> ecoli_allreads.fasta &gt; subset.fasta
-wtdbg2 -x ont -i subset.fasta -fo assembly
-wtpoa-cns -i assembly.ctg.lay.gz -fo assembly.ctg.fa
-</pre></div>
-
-
-<h2 id="polishing">Polishing<a class="headerlink" href="#polishing" title="Permanent link">&para;</a></h2>
-<p>Since the assembly likely contains a lot of errors, we correct it with Illumina reads.</p>
-<p>First we map the short reads against the assembly</p>
-<div class="codehilite"><pre><span></span>bowtie2-build assembly.ctg.fa assembly
-bowtie2 -x assembly -1 ecoli_hiseq_R1.fastq.gz -2 ecoli_hiseq_R2.fastq.gz | \
-    samtools view -bS -o assembly_short_reads.bam
-samtools sort assembly_short_reads.bam -o assembly_short_sorted.bam
-samtools index assembly_short_sorted.bam
-</pre></div>
-
-
-<p>then we run the consensus step</p>
-<div class="codehilite"><pre><span></span>samtools view assembly_short_sorted.bam | wtpoa-cns -t 16 -x sam-sr \
-    -d assembly.ctg.fa -i - -fo assembly_polished.fasta
-</pre></div>
-
-
-<p>which will correct eventual misamatches in our assembly and write the new improved assembly to <code>assembly_polished.fasta</code></p>
-<p>For better results we should perform more than one round of polishing.</p>
-<h2 id="compare-with-the-existing-assembly-and-an-illumina-only-assembly">Compare with the existing assembly and an illumina only assembly<a class="headerlink" href="#compare-with-the-existing-assembly-and-an-illumina-only-assembly" title="Permanent link">&para;</a></h2>
-<h3 id="an-existing-assembly">an existing assembly<a class="headerlink" href="#an-existing-assembly" title="Permanent link">&para;</a></h3>
-<p>Go to <a href="https://www.ncbi.nlm.nih.gov">https://www.ncbi.nlm.nih.gov</a> and search for NC_000913.
-Download the associated genome in fasta format and rename it to <code>ecoli_ref.fasta</code></p>
-<div class="codehilite"><pre><span></span>nucmer --maxmatch -c <span class="m">100</span> -p ecoli assembly_polished.fasta ecoli_ref.fasta
-mummerplot --fat --filter --png --large -p ecoli ecoli.delta
-</pre></div>
-
-
-<p>then take a look at <code>ecoli.png</code></p>
-<h3 id="compare-metrics">compare metrics<a class="headerlink" href="#compare-metrics" title="Permanent link">&para;</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-</div>
-<p>First you need to assemble the illumina data</p>
-<p>Then run busco and quast on the 3 assemblies</p>
-<div class="admonition question">
-<p class="admonition-title">Question</p>
-</div>
-<p>which assembly would you say is the best?</p>
-<h2 id="annotation">Annotation<a class="headerlink" href="#annotation" title="Permanent link">&para;</a></h2>
-<p>If you have time, train your annotation skills by running prokka on your genome!</p>
-<div class="codehilite"><pre><span></span>prokka --outdir annotation --kingdom Bacteria assembly_polished.fasta
-</pre></div>
-
-
-<p>You can open the output to see how it went</p>
-<div class="codehilite"><pre><span></span>cat annotation/*.txt
+<p>then we run diamond</p>
+<div class="codehilite"><pre><span></span>diamond blastx -p <span class="m">4</span> -q bin.2.fa -f <span class="m">6</span> -d uniprot_sprot.dmnd -o bin2_diamond.txt
 </pre></div>
 
 
 <div class="admonition question">
 <p class="admonition-title">Question</p>
+<p>How did that go? Did we find anything meaningful?</p>
 </div>
-<p>Does it fit your expectations? How many genes were you expecting?</p>
+<p>It is very possible the swissprot database is too small for finding meaningful hits for undersequenced / poorly known organisms.</p>
+<p>Let us try with another piece of software, kraken2</p>
+<div class="codehilite"><pre><span></span>curl -O https://ccb.jhu.edu/software/kraken2/dl/minikraken2_v1_8GB.tgz
+tar xf minikraken2_v1_8GB.tgz 
+</pre></div>
+
+
+<p>and then</p>
+<div class="codehilite"><pre><span></span>kraken2 --memory-mapping --db . --threads <span class="m">4</span> --output bin2_kraken.txt --report bin2_kraken_report.txt metabat/bin.2.fa
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Does this confirm our initial diagnostic? What kind of organism do we have?</p>
+</div>
+<h2 id="functional-annotation">Functional annotation<a class="headerlink" href="#functional-annotation" title="Permanent link">&para;</a></h2>
+<p>Now that we have at least a genus for our organism, let us try to look at what it does:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># TODO prokka download</span>
+</pre></div>
+
+
+<p>then we download the Actinobacteria models necessary for the functional annotation</p>
+<div class="codehilite"><pre><span></span>mkdir /home/student/miniconda3/lib/python2.7/site-packages/data
+download_eggnog_data.py actNOG
+</pre></div>
+
+
+<p>then we add functional categories to our genes:</p>
+<div class="codehilite"><pre><span></span>emapper.py -d actNOG -i annotation/bin.2/bin.2.faa --no_refine -o bin2_NOG
+</pre></div>
+
+
+<p>and we download <code>bin2_NOG.emapper.annotations</code> to our own computers</p>
+<h2 id="rpob-phylogeny">rpoB phylogeny<a class="headerlink" href="#rpob-phylogeny" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We're about to produce a gene tree.
+Phylogenetic trees based on one gene must be interpreted very carefully, and may not reflect the actual phylogeny of the species</p>
+</div>
+<p><em>Coming soon</em></p>
                 
                   
                 
@@ -741,7 +671,7 @@ mummerplot --fat --filter --png --large -p ecoli ecoli.delta
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../rna/" title="RNA-Seq" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../meta_assembly/" title="Metagenome assembly" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -750,11 +680,25 @@ mummerplot --fat --filter --png --large -p ecoli ecoli.delta
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                RNA-Seq
+                Metagenome assembly
               </span>
             </div>
           </a>
         
+        
+          <a href="../rna/" title="RNA-Seq" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                RNA-Seq
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>

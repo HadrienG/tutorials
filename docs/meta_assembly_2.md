@@ -54,14 +54,18 @@ It is very possible the swissprot database is too small for finding meaningful h
 Let us try with another piece of software, kraken2
 
 ```bash
-curl -O https://ccb.jhu.edu/software/kraken2/dl/minikraken2_v1_8GB.tgz
-tar xf minikraken2_v1_8GB.tgz 
+sudo mkdir /mnt/kraken2
+cd /mnt/kraken2
+sudo curl -O https://ccb.jhu.edu/software/kraken2/dl/minikraken2_v1_8GB.tgz
+sudo tar xf minikraken2_v1_8GB.tgz 
+sudo chmod +r *
+cd -
 ```
 
-and then
+and then (don't forget to move back to your results directory if you haven't)
 
 ```bash
-kraken2 --memory-mapping --db . --threads 4 --output bin2_kraken.txt --report bin2_kraken_report.txt metabat/bin.2.fa
+kraken2 --memory-mapping --db /mnt/kraken2 --threads 4 --output bin2_kraken.txt --report bin2_kraken_report.txt metabat/bin.2.fa
 ```
 
 !!! question

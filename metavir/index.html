@@ -1,0 +1,826 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
+    
+    
+      
+        <title>Viral Metagenome from a dolphin sample: hunting for a disease causing virus - Bioinformatics Tutorials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.572ca0f0.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#e91e63">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="pink" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#viral-metagenome-from-a-dolphin-sample-hunting-for-a-disease-causing-virus" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Bioinformatics Tutorials" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Bioinformatics Tutorials
+              </span>
+              <span class="md-header-nav__topic">
+                Viral Metagenome from a dolphin sample: hunting for a disease causing virus
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/HadrienG/tutorials/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      HadrienG/tutorials
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Bioinformatics Tutorials" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Bioinformatics Tutorials
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/HadrienG/tutorials/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      HadrienG/tutorials
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Individual lessons
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Individual lessons
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../command_line/" title="The command-line" class="md-nav__link">
+      The command-line
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../file_formats/" title="File Formats" class="md-nav__link">
+      File Formats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../qc/" title="Quality Control and Trimming" class="md-nav__link">
+      Quality Control and Trimming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mapping/" title="Mapping and Variant Calling" class="md-nav__link">
+      Mapping and Variant Calling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../assembly/" title="De-novo Genome Assembly" class="md-nav__link">
+      De-novo Genome Assembly
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Genome Annotation" class="md-nav__link">
+      Genome Annotation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pan_genome/" title="Pan-Genome Analysis" class="md-nav__link">
+      Pan-Genome Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../16S/" title="Metabarcoding" class="md-nav__link">
+      Metabarcoding
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../wms/" title="Whole Metagenome Sequencing" class="md-nav__link">
+      Whole Metagenome Sequencing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../meta_assembly/" title="Metagenome assembly" class="md-nav__link">
+      Metagenome assembly
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../meta_assembly_2/" title="Metagenome assembly (continued)" class="md-nav__link">
+      Metagenome assembly (continued)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../rna/" title="RNA-Seq" class="md-nav__link">
+      RNA-Seq
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nanopore/" title="Introduction to Nanopore Sequencing" class="md-nav__link">
+      Introduction to Nanopore Sequencing
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-the-data" title="Getting the Data" class="md-nav__link">
+    Getting the Data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-control" title="Quality Control" class="md-nav__link">
+    Quality Control
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-control-with-fastp" title="Quality control with Fastp" class="md-nav__link">
+    Quality control with Fastp
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#removing-the-host-sequences-by-mappingaligning-on-the-dolphin-genome" title="Removing the host sequences by mapping/aligning on the dolphin genome" class="md-nav__link">
+    Removing the host sequences by mapping/aligning on the dolphin genome
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taxonomic-classification-of-the-trimmed-reads" title="Taxonomic classification of the trimmed reads" class="md-nav__link">
+    Taxonomic classification of the trimmed reads
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assembly" title="Assembly" class="md-nav__link">
+    Assembly
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taxonomic-classification-of-contigs" title="Taxonomic classification of contigs" class="md-nav__link">
+    Taxonomic classification of contigs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extraction-of-the-contig-of-interest" title="Extraction of the contig of interest" class="md-nav__link">
+    Extraction of the contig of interest
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genome-annotation-of-the-contig-of-interest" title="Genome annotation of the contig of interest" class="md-nav__link">
+    Genome annotation of the contig of interest
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-and-manual-curation" title="Visualization and manual curation." class="md-nav__link">
+    Visualization and manual curation.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#go-further-with-proteins-functions" title="Go further with proteins functions" class="md-nav__link">
+    Go further with proteins functions
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/HadrienG/tutorials/edit/master/docs/metavir.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="viral-metagenome-from-a-dolphin-sample-hunting-for-a-disease-causing-virus">Viral Metagenome from a dolphin sample: hunting for a disease causing virus<a class="headerlink" href="#viral-metagenome-from-a-dolphin-sample-hunting-for-a-disease-causing-virus" title="Permanent link">&para;</a></h1>
+<p>In this tutorial you will learn how to investigate metagenomics data and retrieve draft genome from an assembled metagenome.</p>
+<p>We will use a real dataset published in 2017 in a study in dolphins,
+where fecal samples where prepared for viral metagenomics study.
+The dolphin had a self-limiting gastroenteritis of suspected viral origin.</p>
+<h2 id="getting-the-data">Getting the Data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
+<p>First, create an appropriate directory to put the data:</p>
+<div class="codehilite"><pre><span></span>mkdir -p ~/dolphin/data
+<span class="nb">cd</span> ~/dolphin/data
+</pre></div>
+
+
+<p>You can download them from here:</p>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/4x6qs/download
+curl -O -J -L https://osf.io/z2xed/download
+</pre></div>
+
+
+<p>Alternatively, your instructor will let you know where to get the dataset from.</p>
+<p>You should get 2 compressed files:</p>
+<div class="codehilite"><pre><span></span>Dol1_S19_L001_R1_001.fastq.gz
+Dol1_S19_L001_R2_001.fastq.gz
+</pre></div>
+
+
+<h2 id="quality-control">Quality Control<a class="headerlink" href="#quality-control" title="Permanent link">&para;</a></h2>
+<p>We will use FastQC to check the quality of our data, as well as fastp for trimming the bad quality part of the reads.
+If you need a refresher on how and why to check the quality of sequence data, please check the <a href="qc">Quality Control and Trimming</a> tutorial</p>
+<div class="codehilite"><pre><span></span>mkdir -p ~/dolphin/results
+<span class="nb">cd</span> ~/dolphin/results
+ln -s ~/dolphin/data/Dol1* .
+fastqc Dol1_*.fastq.gz
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What is the average read length? The average quality?</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Compared to single genome sequencing, which graphs differ?</p>
+</div>
+<h2 id="quality-control-with-fastp">Quality control with Fastp<a class="headerlink" href="#quality-control-with-fastp" title="Permanent link">&para;</a></h2>
+<p>We will removing the adapters and trim by quality.</p>
+<p>Now we run fastp our read files</p>
+<div class="codehilite"><pre><span></span>fastp -i Dol1_S19_L001_R1_001.fastq.gz -o Dol1_trimmed_R1.fastq <span class="se">\</span>
+ -I Dol1_S19_L001_R2_001.fastq.gz -O Dol1_trimmed_R2.fastq <span class="se">\</span>
+ --detect_adapter_for_pe --length_required <span class="m">30</span> <span class="se">\</span>
+ --cut_front --cut_tail --cut_mean_quality <span class="m">10</span>
+</pre></div>
+
+
+<p>Check the html report produced.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many reads were trimmed?</p>
+</div>
+<h2 id="removing-the-host-sequences-by-mappingaligning-on-the-dolphin-genome">Removing the host sequences by mapping/aligning on the dolphin genome<a class="headerlink" href="#removing-the-host-sequences-by-mappingaligning-on-the-dolphin-genome" title="Permanent link">&para;</a></h2>
+<p>For this we will use Bowtie2.
+We have downloaded the genome of Tursiops truncatus from Ensembl (fasta file). Then we have run the following command to produce the indexes of the dolphin genome for Bowtie2 (do not run it, we have pre-calculated the results for you):</p>
+<div class="codehilite"><pre><span></span>bowtie2-build Tursiops_truncatus.turTru1.dna.toplevel.fa Tursiops_truncatus
+</pre></div>
+
+
+<p>Because this step takes a while, we have precomputed the index files, you can get them from here:</p>
+<div class="codehilite"><pre><span></span>curl -O -J -L https://osf.io/wfk9t/download
+</pre></div>
+
+
+<p>First we will extract the bowtie indexes of the dolphin genome into our results directory:</p>
+<div class="codehilite"><pre><span></span>tar -xzvf host_genome.tar.gz
+</pre></div>
+
+
+<p>Now we are ready to map our sequencing reads on the dolphin genome:</p>
+<div class="codehilite"><pre><span></span>bowtie2 -x host_genome/Tursiops_truncatus \
+-1 Dol1_trimmed_R1.fastq -2 Dol1_trimmed_R2.fastq \
+-S dol_map.sam --un-conc Dol_reads_unmapped.fastq --threads 4
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many reads mapped on the dolphin genome?</p>
+</div>
+<h2 id="taxonomic-classification-of-the-trimmed-reads">Taxonomic classification of the trimmed reads<a class="headerlink" href="#taxonomic-classification-of-the-trimmed-reads" title="Permanent link">&para;</a></h2>
+<p>We will use Kaiju for the classification of the produced contigs. As we are mainly interested in detecting the viral sequences in our dataset and we want to reduce the computing time and the memory needed, we will build a viruses-only database.</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Kaiju needs to be installed</span>
+<span class="nb">cd</span>
+mkdir -p databases/kaijudb
+<span class="nb">cd</span> databases/kaijudb
+makeDB.sh -v
+</pre></div>
+
+
+<p>Once the database built, Kaiju tells us that we need only 3 files:
+Then other files and directories can be removed</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Removing un-needed things</span>
+rm -r genomes/
+rm kaiju_db.bwt
+rm kaiju_db.sa
+rm merged.dmp
+rm kaiju_db.faa
+</pre></div>
+
+
+<p>We are now ready to run Kaiju on our trimmed reads</p>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> dolphin/results
+kaiju -t ~/databases/kaijudb/nodes.dmp -f ~/databases/kaijudb/kaiju_db.fmi <span class="se">\</span>
+ -i Dol_reads_unmapped.1.fastq -j Dol_reads_unmapped.2.fastq <span class="se">\</span>
+ -o Dol1_reads_kaiju.out
+</pre></div>
+
+
+<p>In order to visualise the results, we will produce a Krona chart.
+This step requires to have KronaTools installed:</p>
+<div class="codehilite"><pre><span></span>conda install -c bioconda krona
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>kaiju2krona -t ~/databases/kaijudb/nodes.dmp -n ~/databases/kaijudb/names.dmp <span class="se">\</span>
+-i Dol1_reads_kaiju.out -o Dol1_reads_kaiju.krona -u
+
+ktImportText -o Dol1_reads_kaiju.krona.html Dol1_reads_kaiju.krona
+</pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If we were interested in bacteria and had a databases containing them, we could also use the command kaijuReport to get a text summary. Unfortunately, it does not provide taxonomic levels for viruses.</p>
+</div>
+<p>Then we copy the produced html file locally to visualise in our web browser.</p>
+<h2 id="assembly">Assembly<a class="headerlink" href="#assembly" title="Permanent link">&para;</a></h2>
+<p>Megahit will be used for the <em>de novo</em> assembly of the metagenome.</p>
+<div class="codehilite"><pre><span></span>megahit -1 Dol_reads_unmapped.1.fastq -2 Dol_reads_unmapped.2.fastq -o assembly
+</pre></div>
+
+
+<p>The resulting assembly can be found under <code>assembly/final.contigs.fa</code>.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many contigs does this assembly contain? Is there any long contig?</p>
+</div>
+<h2 id="taxonomic-classification-of-contigs">Taxonomic classification of contigs<a class="headerlink" href="#taxonomic-classification-of-contigs" title="Permanent link">&para;</a></h2>
+<p>We will use Kaiju again with the same viruses-only database for the classification of the produced contigs.</p>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> assembly
+
+kaiju -t ~/databases/kaijudb/nodes.dmp -f ~/databases/kaijudb/kaiju_db.fmi <span class="se">\</span>
+ -i final.contigs.fa -o Dol1_contigs_kaiju.out
+</pre></div>
+
+
+<p>Then we produce the Krona chart:</p>
+<div class="codehilite"><pre><span></span>kaiju2krona -t ~/databases/kaijudb/nodes.dmp -n ~/databases/kaijudb/names.dmp <span class="se">\</span>
+ -i Dol1_contigs_kaiju.out -o Dol1_contigs_kaiju.krona -u
+
+ktImportText -o Dol1_contigs_kaiju.krona.html Dol1_contigs_kaiju.krona
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Does the classification of contigs produce different results than the classification of reads?</p>
+</div>
+<h2 id="extraction-of-the-contig-of-interest">Extraction of the contig of interest<a class="headerlink" href="#extraction-of-the-contig-of-interest" title="Permanent link">&para;</a></h2>
+<p>Let's go for a little practice of your Unix skills!</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Find a way to to find the longest contig. They look like this:</p>
+</div>
+<div class="codehilite"><pre><span></span>&gt;k141_1 flag=1 multi=1.0000 len=301
+&gt;k141_2 flag=1 multi=1.0000 len=303
+</pre></div>
+
+
+<p><strong>hint 1</strong>: all lines containing '&gt;'</p>
+<p><strong>hint 2</strong>: use grep and sed</p>
+<p>Once we have this file, we want to sort all the sequences headers by the sequence length (len=X):</p>
+<div class="codehilite"><pre><span></span>cat final.contigs.fa <span class="p">|</span> grep <span class="s2">&quot;&gt;&quot;</span> <span class="p">|</span> sed s/len<span class="o">=</span>// <span class="p">|</span> sort -k4,4n <span class="p">|</span> tail -1
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What is the size of the longest contig?</p>
+</div>
+<p>Now that you have identified the sequence header or id of the longest contig, you want to save it to a fasta file.</p>
+<div class="codehilite"><pre><span></span>grep -i <span class="s1">&#39;&gt;k141_XXX&#39;</span> -A <span class="m">1</span> &gt; longest_contig.fasta
+</pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You need to replace the XXX by the correct header.
+The option -A 1 of grep allows to print 1 line additionally to the matching line (which enables to print the full sequence that corresponds to one line).
+Test with -A 2 (without the redirection to longest_contig.fasta) to see what happens.</p>
+</div>
+<p>Now that you have identified the longest contig, you will check in Kaiju results what was the taxon assigned to this contig.</p>
+<p>Have a look at the file <strong>Dol1_contigs_kaiju.out</strong>. It is structured in 3 columns:
+classification status (C/U), sequence id, assigned TaxID.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Identify the TaxID of the longest contig and search on NCBI Taxonomy database to which species it corresponds to.</p>
+</div>
+<h2 id="genome-annotation-of-the-contig-of-interest">Genome annotation of the contig of interest<a class="headerlink" href="#genome-annotation-of-the-contig-of-interest" title="Permanent link">&para;</a></h2>
+<p>Once the contig to annotate is extracted and saved in the file longest_contig.fasta, we will use Prokka to detect ORFs (Open Reading Frames) in order to predict genes and their resulting proteins.</p>
+<p>First, go to Uniprot database and retrieve a set of protein sequences
+belonging to adenoviruses. Save the file as <code>adenovirus.faa</code> and copy it in
+your results directory.</p>
+<div class="codehilite"><pre><span></span>prokka --outdir annotation --kingdom Viruses <span class="se">\</span>
+--proteins adenovirus.faa longest_contig.fasta
+</pre></div>
+
+
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How many genes and proteins were predicted?</p>
+</div>
+<h2 id="visualization-and-manual-curation">Visualization and manual curation.<a class="headerlink" href="#visualization-and-manual-curation" title="Permanent link">&para;</a></h2>
+<p>If there is some time left, you can visualise the produced annotation (gff file)
+in Ugene or Artemis for example.</p>
+<h2 id="go-further-with-proteins-functions">Go further with proteins functions<a class="headerlink" href="#go-further-with-proteins-functions" title="Permanent link">&para;</a></h2>
+<p>For the predicted proteins that are left "hypotetical", you can try running
+<a href="https://www.ebi.ac.uk/interpro/search/sequence-search">Interproscan</a> on them to get more information on domains and motifs.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/HadrienG" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/HGourle" class="md-footer-social__link fa fa-twitter"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.b41f3d20.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

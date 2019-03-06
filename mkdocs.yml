@@ -36,5 +36,6 @@ pages:
         - Whole Metagenome Sequencing: wms.md
         - Metagenome assembly: meta_assembly.md
         - Metagenome assembly (continued): meta_assembly_2.md
+        - Viral metagenomics: metavir.md
         - RNA-Seq: rna.md
         - Introduction to Nanopore Sequencing: nanopore.md

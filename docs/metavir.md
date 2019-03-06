@@ -29,7 +29,7 @@ Dol1_S19_L001_R2_001.fastq.gz
 
 ## Quality Control
 
-We will use FastQC to check the quality of our data, as well as sickle for trimming the bad quality part of the reads.
+We will use FastQC to check the quality of our data, as well as fastp for trimming the bad quality part of the reads.
 If you need a refresher on how and why to check the quality of sequence data, please check the [Quality Control and Trimming](qc) tutorial
 
 ```bash

@@ -196,7 +196,7 @@ Let's go for a little practice of your Unix skills!
 Once we have this file, we want to sort all the sequences headers by the sequence length (len=X):
 
 ```bash
-cat final.contigs.fa | grep ">" | sed s/len=// | sort -k4,4n | tail -1
+cat final.contigs.fa | grep ">" | sed s/len=// | sort -k4n | tail -1
 ```
 
 !!! question
@@ -205,7 +205,7 @@ cat final.contigs.fa | grep ">" | sed s/len=// | sort -k4,4n | tail -1
 Now that you have identified the sequence header or id of the longest contig, you want to save it to a fasta file.
 
 ```bash
-grep -i '>k141_XXX' -A 1 > longest_contig.fasta
+grep -i '>k141_XXX' -A 1 final.contigs.fa > longest_contig.fasta
 ```
 
 !!! note

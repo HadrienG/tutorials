@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.3.0">
     
     
       
@@ -51,7 +51,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
+      <script src="../assets/javascripts/modernizr.962652e9.js"></script>
     
     
       
@@ -62,6 +62,9 @@
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
+    
+    
+      
     
     
   </head>
@@ -845,7 +848,7 @@ ktImportText -o Dol1_contigs_kaiju.krona.html Dol1_contigs_kaiju.krona
 <p><strong>hint 1</strong>: all lines containing '&gt;'</p>
 <p><strong>hint 2</strong>: use grep and sed</p>
 <p>Once we have this file, we want to sort all the sequences headers by the sequence length (len=X):</p>
-<div class="codehilite"><pre><span></span>cat final.contigs.fa <span class="p">|</span> grep <span class="s2">&quot;&gt;&quot;</span> <span class="p">|</span> sed s/len<span class="o">=</span>// <span class="p">|</span> sort -k4,4n <span class="p">|</span> tail -1
+<div class="codehilite"><pre><span></span>cat final.contigs.fa <span class="p">|</span> grep <span class="s2">&quot;&gt;&quot;</span> <span class="p">|</span> sed s/len<span class="o">=</span>// <span class="p">|</span> sort -k4n <span class="p">|</span> tail -1
 </pre></div>
 
 
@@ -854,7 +857,7 @@ ktImportText -o Dol1_contigs_kaiju.krona.html Dol1_contigs_kaiju.krona
 <p>What is the size of the longest contig?</p>
 </div>
 <p>Now that you have identified the sequence header or id of the longest contig, you want to save it to a fasta file.</p>
-<div class="codehilite"><pre><span></span>grep -i <span class="s1">&#39;&gt;k141_XXX&#39;</span> -A <span class="m">1</span> &gt; longest_contig.fasta
+<div class="codehilite"><pre><span></span>grep -i <span class="s1">&#39;&gt;k141_XXX&#39;</span> -A <span class="m">1</span> final.contigs.fa &gt; longest_contig.fasta
 </pre></div>
 
 
@@ -971,12 +974,9 @@ in Ugene or Artemis for example.</p>
       
     </div>
     
-      <script src="../assets/javascripts/application.b41f3d20.js"></script>
+      <script src="../assets/javascripts/application.a353778b.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
-      
-    
-    
       
     
   </body>

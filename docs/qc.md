@@ -223,7 +223,7 @@ Let's run MultiQC in our current directory
 multiqc .
 ```
 
-You can download the report or view it by clickinh on the link below
+You can download the report or view it by clicking on the link below
 
 - [multiqc_report.html](data/fastqc/multiqc_report.html)
 

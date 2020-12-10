@@ -69,7 +69,7 @@ samtools view -hSbo SRR957824.bam SRR957824.sam
 Sort the bam file per position in the genome and index it
 
 ```bash
-samtools sort SRR957824.bam SRR2584857.sorted.bam
+samtools sort SRR957824.bam -o SRR2584857.sorted.bam
 samtools index SRR2584857.sorted.bam
 ```
 

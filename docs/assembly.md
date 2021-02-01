@@ -153,7 +153,7 @@ We will run `busco` to try to find marker genes in our assembly. Marker genes ar
 First we need to download and unpack the bacterial datasets used by `busco`
 
 ```bash
-wget http://busco.ezlab.org/datasets/bacteria_odb9.tar.gz
+wget http://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
 tar xzf bacteria_odb9.tar.gz
 ```
 

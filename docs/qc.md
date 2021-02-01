@@ -21,7 +21,7 @@ The raw data were deposited at the European Nucleotide Archive, under the access
 You could go to the ENA [website](http://www.ebi.ac.uk/ena) and search for the run with the accession SRR957824.
 
 However these files contain about 3 million reads and are therefore quite big.
-We are only gonna use a subset of the original dataset for this tutorial.
+We are only going to use a subset of the original dataset for this tutorial.
 
 First create a `data/` directory in your home folder
 
@@ -162,8 +162,8 @@ curl -O -J -L https://osf.io/v24pt/download
 Now we run scythe on both our read files
 
 ```bash
-scythe -a adapters.fasta -o SRR957824_adapt_R1.fastq SRR957824_500K_R1.fastq.gz
-scythe -a adapters.fasta -o SRR957824_adapt_R2.fastq SRR957824_500K_R2.fastq.gz
+scythe -a adapters.fasta SRR957824_500K_R1.fastq.gz -o SRR957824_adapt_R1.fastq 
+scythe -a adapters.fasta SRR957824_500K_R2.fastq.gz -o SRR957824_adapt_R2.fastq 
 ```
 
 !!! question

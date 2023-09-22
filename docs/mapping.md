@@ -41,8 +41,8 @@ bowtie2-build pO157_Sakai.fasta.gz pO157_Sakai
 Now we are ready to map our reads
 
 ```bash
-bowtie2 -x pO157_Sakai -1 SRR957824_trimmed_R1.fastq.gz \
-    -2 SRR957824_trimmed_R2.fastq.gz -S SRR957824.sam
+bowtie2 -x pO157_Sakai -1 SRR957824_trimmed_R1.fastq \
+    -2 SRR957824_trimmed_R2.fastq -S SRR957824.sam
 ```
 
 The output of the mapping will be in the SAM format.
@@ -95,8 +95,7 @@ For an EHEC O157 outbreak you could use it to identify the source, for instance.
 We can call the variants using `samtools mpileup`
 
 ```bash
-samtools mpileup -uD -f pO157_Sakai.fasta.gz SRR2584857.sorted.bam | \
-    bcftools view - > variants.vcf
+bcftools mpileup -f pO157_Sakai.fasta.gz SRR2584857.sorted.bam
 ```
 
 You can read about the structure of vcf files [here](file_formats.md).
